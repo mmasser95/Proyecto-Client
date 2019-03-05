@@ -231,6 +231,7 @@ export default {
             if (res.status === 200) {
               //TODO Mejorar aviso
               window.alert("Guardado");
+              this.$router.push('/buscarLibro');
             }
           })
           .catch(err => {

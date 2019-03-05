@@ -9,6 +9,7 @@ import adminLogin from "@/components/admin";
 import nuevolibro from "@/components/libro/nuevoLibro";
 import nuevoAutor from "@/components/autor/nuevoAutor";
 import verLibro from "@/components/libro/verLibro";
+import editarLibro from '@/components/libro/editarLibro';
 import nuevaOferta from "@/components/oferta/nuevaOferta";
 Vue.use(Router);
 
@@ -42,6 +43,11 @@ export default new Router({
     {
       path: "/verLibro/:libroID",
       component: verLibro,
+      props: true
+    },
+    {
+      path: '/editarLibro/:idLibro',
+      component: editarLibro,
       props: true
     },
     {

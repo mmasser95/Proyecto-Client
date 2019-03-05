@@ -1,6 +1,6 @@
 import axios from "axios";
 import { store } from "./store/";
-const api = "https://1qnrvynnnq.sse.codesandbox.io/api";
+const api = "https://proyecto-final-api.herokuapp.com/api";
 
 export class APIService {
   constructor() {}
@@ -99,6 +99,17 @@ export class APIService {
         }
       };
       return axios.post(url, datos, config).then(res => res);
+    }
+  }
+  deleteLibro(ids){
+    if(store.getters.isLoggedIn){
+      const url = `${api}/libro/${ids}`;
+      const config = {
+        headers: {
+          authorization: `Bearer ${store.getters.isLoggedIn.token}`
+        }
+      };
+      return axios.delete(url, config).then(res => res);
     }
   }
 }

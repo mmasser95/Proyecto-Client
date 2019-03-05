@@ -9,14 +9,14 @@
             v-model="form.valid"
           >
             <v-layout row wrap>
-              <v-flex xs8>
+              <v-flex xs12 sm8>
                 <v-text-field
                   v-model="form.datos.importe"
                   :rules="form.rules.importe"
                   label="Importe"
                 ></v-text-field>
               </v-flex>
-              <v-flex xs4>
+              <v-flex xs12 sm4>
                 <v-select
                   :items="form.selct"
                   label="Moneda"
@@ -24,6 +24,7 @@
                 ></v-select>
               </v-flex>
             </v-layout>
+            
             <v-layout row wrap>
               <v-flex xs12>
                 <v-btn dark color="teal" type="submit">Publicar Oferta</v-btn>
@@ -77,10 +78,12 @@ export default {
           .then(res => {
             console.log(res);
             window.alert("Oferta publicada");
-            this.$refs.formulario.reset();
+            this.$router.push('/buscarlibro')
           })
           .catch(err => {
             console.log(err);
+            window.alert('Error')
+            this.$refs.formulario.reset();
           });
       }
     }

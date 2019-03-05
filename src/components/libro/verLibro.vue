@@ -55,8 +55,8 @@
             </v-card-title>
             <v-card-actions v-if="tipoUser.tipo == 'admin'">
               <v-spacer></v-spacer>
-              <v-btn flat color="teal">Editar</v-btn>
-              <v-btn flat color="red">Eliminar</v-btn>
+              <v-btn flat color="teal" :to="pagEditar">Editar</v-btn>
+              <v-btn flat color="red" @click='eliminarLibro'>Eliminar</v-btn>
             </v-card-actions>
           </v-card>
         </v-flex>
@@ -86,15 +86,29 @@ export default {
         ]
       },
       libro: {},
+      pagEditar:'',
       autor: {},
       items: []
     };
+  },
+  methods:{
+    eliminarLibro(){
+      apiService.deleteLibro(this.libroID)
+        .then((res) => {
+          window.alert('Borrado')
+          this.$router.push('/buscarlibro')
+        })
+        .catch((err) => {
+          window.alert('Ha habido un error '+ err)
+        });
+    }
   },
   created: function() {
     if (!this.isLoggedIn) {
       this.$router.push("/");
       return false;
     }
+    this.pagEditar=`/editarLibro/${this.libroID}`;
     apiService
       .getLibro(this.libroID)
       .then(res => {
