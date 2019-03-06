@@ -113,7 +113,7 @@
                   </v-menu>
                 </v-flex>
               </v-layout>
-              <v-layout row wrpa>
+              <v-layout row wrap>
                 <v-flex xs12 sm4>
                   <v-text-field v-model="form.Genero" label="Género">
                   </v-text-field>

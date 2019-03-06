@@ -24,7 +24,6 @@
                 ></v-select>
               </v-flex>
             </v-layout>
-            
             <v-layout row wrap>
               <v-flex xs12>
                 <v-btn dark color="teal" type="submit">Publicar Oferta</v-btn>
@@ -38,36 +37,38 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import { APIService } from "../../APIService";
+
+import { mapGetters } from 'vuex';
+
+import { APIService } from '@/APIService';
 const apiService = new APIService();
 export default {
-  name: "nuevaOferta",
+  name: 'nuevaOferta',
   computed: {
-    ...mapGetters(["isLoggedIn", "myId"])
+    ...mapGetters(['isLoggedIn', 'myId']),
   },
-  props: ["libroId"],
+  props: ['libroId'],
   data: () => {
     return {
       form: {
         valid: false,
-        selct: [{ text: "EUR", value: "EUR" }, { text: "USD", value: "USD" }],
+        selct: [{ text: 'EUR', value: 'EUR' }, { text: 'USD', value: 'USD' }],
         datos: {
-          importe: "",
-          moneda: "",
+          importe: '',
+          moneda: '',
           estado: 1,
-          id_libro: "",
-          id_user: ""
+          id_libro: '',
+          id_user: '',
         },
         rules: {
           importe: [
-            v => !isNaN(v) || "El importe debe ser un numero",
+            v => !isNaN(v) || 'El importe debe ser un numero',
             v =>
               /^(\d){1,9}(\.(\d){0,2})?$/g.test(v) ||
-              "Introduce un importe correcto"
-          ]
-        }
-      }
+              'Introduce un importe correcto',
+          ],
+        },
+      },
     };
   },
   methods: {
@@ -75,27 +76,28 @@ export default {
       if (this.form.valid) {
         apiService
           .postOferta(this.form.datos)
-          .then(res => {
+          .then((res) => {
             console.log(res);
-            window.alert("Oferta publicada");
-            this.$router.push('/buscarlibro')
+            window.alert('Oferta publicada');
+            this.$router.push('/buscarlibro');
           })
-          .catch(err => {
+          .catch((err) => {
             console.log(err);
-            window.alert('Error')
+            window.alert('Error');
             this.$refs.formulario.reset();
           });
       }
-    }
+    },
   },
-  created: function() {
+  created: () => {
     if (!this.isLoggedIn) {
-      this.$router.push("/");
+      this.$router.push('/');
       return false;
     }
     this.form.datos.id_libro = this.libroId;
     this.form.datos.id_user = this.myId.idd;
-  }
+    return true;
+  },
 };
 </script>
 

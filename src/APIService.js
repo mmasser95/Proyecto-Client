@@ -101,6 +101,17 @@ export class APIService {
       return axios.post(url, datos, config).then(res => res);
     }
   }
+  putLibro(ids,update){
+    if(store.getters.isLoggedIn){
+      const url = `${api}/libro/${ids}`;
+      const config = {
+        headers: {
+          authorization: `Bearer ${store.getters.isLoggedIn.token}`
+        }
+      };
+      return axios.put(url,update,config).then(res => res);
+    }
+  }
   deleteLibro(ids){
     if(store.getters.isLoggedIn){
       const url = `${api}/libro/${ids}`;

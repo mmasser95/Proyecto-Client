@@ -39,8 +39,8 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import { APIService } from "../APIService";
+import { mapGetters } from 'vuex';
+import { APIService } from '../APIService';
 const apiService = new APIService();
 export default {
   name: "adminLogin",
@@ -76,8 +76,7 @@ export default {
         };
         apiService
           .signinAdmin(datos)
-          .then(res => {
-            console.log(res.data.message);
+          .then((res) => {
             this.$store.dispatch({
               type: "authenticate",
               token: res.data.token
@@ -92,34 +91,34 @@ export default {
             });
             apiService
               .getAdmin(this.myId.idd)
-              .then(res => {
+              .then((res) => {
                 this.$store.dispatch({
                   type: "setInfo",
                   email: res.data.admin.email,
                   username: res.data.admin.username
                 });
-                this.$router.push("/");
+                this.$router.push('/');
               })
-              .catch(err => {
+              .catch((err) => {
                 this.alert.dis = true;
-                this.alert.type = "warning";
-                this.alert.color = "yellow";
+                this.alert.type = 'warning';
+                this.alert.color = 'yellow';
                 this.alert.message = `Status: ${err.response.status} ${
                   err.response.data.message
                 }`;
               });
           })
-          .catch(err => {
+          .catch((err) => {
             this.alert.dis = true;
-            this.alert.type = "error";
-            this.alert.color = "red";
+            this.alert.type = 'error';
+            this.alert.color = 'blue';
             this.alert.message = `Status${err.response.status} ${
               err.response.data.message
             }`;
           });
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
