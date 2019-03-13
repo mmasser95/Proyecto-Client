@@ -27,7 +27,7 @@
               required
               @click:append="form.passShow = !form.passShow;"
             ></v-text-field>
-            <v-btn block dark color="teal" type="submit"
+            <v-btn id="submitbtn" block dark color="teal" type="submit"
               ><v-icon>vpn_key</v-icon> Login</v-btn
             >
           </v-form>
@@ -69,6 +69,8 @@ export default {
   methods: {
     loginAdmin() {
       if (this.form.valid) {
+        let sbtn = document.getElementById('submitbtn');
+        sbtn.disabled = true;
         let fr = this.form;
         let datos = {
           email: fr.email,
@@ -92,6 +94,7 @@ export default {
             apiService
               .getAdmin(this.myId.idd)
               .then((res) => {
+                sbtn.disabled=false;
                 this.$store.dispatch({
                   type: "setInfo",
                   email: res.data.admin.email,
@@ -100,6 +103,7 @@ export default {
                 this.$router.push('/');
               })
               .catch((err) => {
+                sbtn.disabled=false;
                 this.alert.dis = true;
                 this.alert.type = 'warning';
                 this.alert.color = 'yellow';
@@ -109,6 +113,7 @@ export default {
               });
           })
           .catch((err) => {
+            sbtn.disabled = false;
             this.alert.dis = true;
             this.alert.type = 'error';
             this.alert.color = 'blue';

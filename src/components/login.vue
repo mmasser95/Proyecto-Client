@@ -30,7 +30,7 @@
               required
               @click:append="form.passShow = !form.passShow;"
             ></v-text-field>
-            <v-btn type="submit" form="form1" dark color="teal">Login</v-btn>
+            <v-btn id="submitbtn" type="submit" form="form1" dark color="teal">Login</v-btn>
           </v-form>
           {{ myId }}
         </v-flex>
@@ -78,6 +78,8 @@ export default {
   methods: {
     doLogin() {
       if (this.form.valid) {
+        let sbtn=document.getElementById('submitbtn');
+        sbtn.disabled=true;
         const datos = {
           email: this.form.email,
           pass: this.form.pass,
@@ -105,8 +107,10 @@ export default {
                   username: resp.data.user.username,
                 });
                 this.$router.push('/');
+                sbtn.disabled=false;
               })
               .catch((err) => {
+                sbtn.disabled=false;
                 this.alert.statee = true;
                 this.alert.type = 'warning';
                 this.alert.color = 'yellow';
@@ -115,6 +119,7 @@ export default {
               });
           })
           .catch((err) => {
+            sbtn.disabled=false;
             this.alert.statee = true;
             this.alert.type = 'error';
             this.alert.color = 'red';

@@ -63,6 +63,21 @@
       </v-layout>
       <v-layout row wrap> <v-flex></v-flex> </v-layout>
     </v-container>
+    <v-dialog v-model="dialog" width="500">
+      <v-card class="text-xs-center">
+        <v-card-title>Guardado</v-card-title>
+        <v-card-text>Guardado correctamente</v-card-text>
+        <v-divider></v-divider>
+        <v-card-action>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="green"
+            flat
+            @click="dialog=false"
+          ></v-btn>
+        </v-card-action>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -78,6 +93,7 @@ export default {
   props: ["libroID"],
   data: () => {
     return {
+      dialog:false,
       tabla: {
         ofertas: [],
         headers: [

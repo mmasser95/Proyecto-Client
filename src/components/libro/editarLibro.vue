@@ -153,6 +153,21 @@
             </v-container>
           </v-form>
         </v-flex>
+        <v-dialog v-model="dialog" width="500">
+          <v-card class="text-xs-center">
+            <v-card-title>Error</v-card-title>
+            <v-card-text>{{errorText}}</v-card-text>
+            <v-divider></v-divider>
+            <v-card-action>
+              <v-spacer></v-spacer>
+              <v-btn 
+                color="red"
+                flat
+                @click="dialog=false"
+              >Ok</v-btn>
+            </v-card-action>
+          </v-card>
+        </v-dialog>
       </v-layout>
     </v-container>
   </div>
@@ -168,6 +183,8 @@ export default {
   props:['idLibro'],
   data:()=>{
     return{
+      errorText:'',
+      dialog:false,
       libro:{},
       autores:[],
       menu1:false,
@@ -185,15 +202,15 @@ export default {
           Genero:'',
           Tapa:'',
           Sinopsis:'',
-          Paginas:''
+          Paginas:'',
         },
         rules:{
           Titulo: [v => !!v || "El titulo es requerido"],
           Editorial: [v => !!v || "La editorial es requerida"],
           Edicion: [v => v > 0 || "La edicion es requerida"],
           Paginas: [v => v >= 0 || "Si no lo sabes, pon 0"]
-        }
-      }
+        },
+      },
     }
   },
   watch:{
@@ -202,7 +219,7 @@ export default {
     },
     menu2(val){
       val && this.$nextTick(() => (this.$refs.picker.activePicker = "YEAR"));
-    }
+    },
   },
   methods:{
     save1(){
@@ -217,9 +234,12 @@ export default {
         apiService
           .putLibro(this.form.datos._id, this.form.datos)
           .then((res) => {
-            console.log(res.data.status);
+            if(res.status==200){
+              this.$router.push(`/verLibro/${this.form.datos._id}`);
+            }
           }).catch((err) => {
-            console.log(err.response.data.status);
+            this.errorText='Error al guardar el libro';
+            this.dialog=true;
           });
       }
     },
