@@ -89,7 +89,7 @@ export default {
       }
     },
   },
-  created: () => {
+  created: function() {
     if (!this.isLoggedIn) {
       this.$router.push('/');
       return false;
