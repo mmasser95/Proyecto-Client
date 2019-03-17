@@ -20,8 +20,7 @@
                     v-model="form.Apellidos"
                     :rules="fform.rules.apellidos"
                     required
-                  >
-                  </v-text-field>
+                  ></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm4>
                   <v-menu
@@ -56,7 +55,7 @@
               <v-layout row wrap>
                 <v-flex xs12>
                   <v-btn block dark color="teal" type="submit" form="form1">
-                    <v-icon>backup</v-icon> Guardar
+                    <v-icon>backup</v-icon>Guardar
                   </v-btn>
                 </v-flex>
               </v-layout>

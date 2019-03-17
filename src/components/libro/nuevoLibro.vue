@@ -5,8 +5,8 @@
         <v-flex>
           <v-form id="form" @submit.prevent="subirLibro" v-model="form.valid">
             <v-container>
-              <v-layout row wrap
-                ><v-flex xs12 sm4>
+              <v-layout row wrap>
+                <v-flex xs12 sm4>
                   <v-text-field
                     type="number"
                     label="ISBN"
@@ -21,16 +21,17 @@
                     v-model="form.Titulo"
                     :rules="form.rules.Titulo"
                     required
-                  >
-                  </v-text-field> </v-flex
-                ><v-flex xs12 sm4>
+                  ></v-text-field>
+                </v-flex>
+                <v-flex xs12 sm4>
                   <v-text-field
                     label="Editorial"
                     v-model="form.Editorial"
                     :rules="form.rules.Editorial"
                     required
-                  ></v-text-field></v-flex
-              ></v-layout>
+                  ></v-text-field>
+                </v-flex>
+              </v-layout>
               <v-layout row wrap>
                 <v-flex xs12 sm6>
                   <v-text-field
@@ -115,8 +116,7 @@
               </v-layout>
               <v-layout row wrap>
                 <v-flex xs12 sm4>
-                  <v-text-field v-model="form.Genero" label="Género">
-                  </v-text-field>
+                  <v-text-field v-model="form.Genero" label="Género"></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm4>
                   <v-text-field v-model="form.Tapa" label="Tapa"></v-text-field>
@@ -144,7 +144,7 @@
                 <v-flex></v-flex>
                 <v-flex xs12 sm4>
                   <v-btn block dark color="teal" type="submit" form="form">
-                    <v-icon>backup</v-icon> Guardar
+                    <v-icon>backup</v-icon>Guardar
                   </v-btn>
                 </v-flex>
                 <v-flex></v-flex>
@@ -231,7 +231,7 @@ export default {
             if (res.status === 200) {
               //TODO Mejorar aviso
               window.alert("Guardado");
-              this.$router.push('/buscarLibro');
+              this.$router.push("/buscarLibro");
             }
           })
           .catch(err => {

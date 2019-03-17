@@ -1,9 +1,14 @@
 import axios from "axios";
 import { store } from "./store/";
 const api = "https://proyecto-final-api.herokuapp.com/api";
-
+function getHeaders(){
+  return {
+    headers: { authorization: `Bearer ${store.getters.isLoggedIn.token}` }
+  }
+}
 export class APIService {
   constructor() {}
+  //Login
   signinUser(data) {
     const url = `${api}/user/signin`;
     return axios.post(url, data).then(res => res);
@@ -13,10 +18,12 @@ export class APIService {
     const url = `${api}/admin/signin`;
     return axios.post(url, data).then(res => res);
   }
+  //Registro
   signUpUser(data) {
     const url = `${api}/user`;
     return axios.post(url, data).then(res => res);
   }
+  //Libros
   getLibros() {
     const url = `${api}/libro`;
     return axios.get(url).then(res => res);
@@ -40,87 +47,51 @@ export class APIService {
   getAdmin(ids) {
     if (store.getters.isLoggedIn) {
       const url = `${api}/admin/${ids}`;
-      const config = {
-        headers: { authorization: `Bearer ${store.getters.isLoggedIn.token}` }
-      };
-      return axios.get(url, config).then(res => res);
+      return axios.get(url, getHeaders()).then(res => res);
     }
     return false;
   }
   getUser(ids) {
     if (store.getters.isLoggedIn) {
       const url = `${api}/user/${ids}`;
-      const config = {
-        headers: { authorization: `Bearer ${store.getters.isLoggedIn.token}` }
-      };
-      return axios.get(url, config).then(res => res);
+      return axios.get(url, getHeaders()).then(res => res);
     }
     return false;
   }
   getDirecciones() {
     if (store.getters.isLoggedIn) {
       const url = `${api}/user/${store.getters.myId.idd}/direccion`;
-      const config = {
-        headers: {
-          authorization: `Bearer ${store.getters.isLoggedIn.token}`
-        }
-      };
-      return axios.get(url, config).then(res => res);
+      return axios.get(url, getHeaders()).then(res => res);
     }
   }
   postLibro(datos) {
     if (store.getters.isLoggedIn) {
       const url = `${api}/libro`;
-      const config = {
-        headers: {
-          authorization: `Bearer ${store.getters.isLoggedIn.token}`
-        }
-      };
-      return axios.post(url, datos, config).then(res => res);
+      return axios.post(url, datos, getHeaders()).then(res => res);
     }
   }
   postAutor(datos) {
     if (store.getters.isLoggedIn) {
       const url = `${api}/autor`;
-      const config = {
-        headers: {
-          authorization: `Bearer ${store.getters.isLoggedIn.token}`
-        }
-      };
-      return axios.post(url, datos, config).then(res => res);
+      return axios.post(url, datos, getHeaders()).then(res => res);
     }
   }
   postOferta(datos) {
     if (store.getters.isLoggedIn) {
       const url = `${api}/oferta`;
-      const config = {
-        headers: {
-          authorization: `Bearer ${store.getters.isLoggedIn.token}`
-        }
-      };
-      return axios.post(url, datos, config).then(res => res);
+      return axios.post(url, datos, getHeaders()).then(res => res);
     }
   }
   putLibro(ids,update){
     if(store.getters.isLoggedIn){
       const url = `${api}/libro/${ids}`;
-      const config = {
-        headers: {
-          authorization: `Bearer ${store.getters.isLoggedIn.token}`
-        }
-      };
-      return axios.put(url,update,config).then(res => res);
+      return axios.put(url,update,getHeaders()).then(res => res);
     }
   }
   deleteLibro(ids){
     if(store.getters.isLoggedIn){
       const url = `${api}/libro/${ids}`;
-      const config = {
-        headers: {
-          authorization: `Bearer ${store.getters.isLoggedIn.token}`
-        }
-      };
-      return axios.delete(url, config).then(res => res);
+      return axios.delete(url, getHeaders()).then(res => res);
     }
   }
 }

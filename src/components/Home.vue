@@ -1,15 +1,11 @@
 <template>
   <div class="home">
     <v-carousel>
-      <v-carousel-item
-        v-for="(img, i) in carouselItems"
-        :key="i"
-        :src="img.src"
-      ></v-carousel-item>
+      <v-carousel-item v-for="(img, i) in carouselItems" :key="i" :src="img.src"></v-carousel-item>
     </v-carousel>
     <div class="text-xs-center mt-5">
       <h1>WalaBook</h1>
-      <h2 class="subheading ">Intercambio de libros de segunda mano</h2>
+      <h2 class="subheading">Intercambio de libros de segunda mano</h2>
     </div>
     <div class="text-xs-justify mt-5">
       <p>
@@ -26,15 +22,14 @@
       <h1>¿Quieres empezar ya?</h1>
       <h2 class="subheading mb-4">¡Registrate! Es gratis</h2>
       <v-btn dark color="teal" to="/registro">
-        <v-icon dark>create</v-icon> Registro</v-btn
-      >
+        <v-icon dark>create</v-icon>Registro
+      </v-btn>
     </div>
     <div class="text-xs-center mt-5" v-if="isLoggedIn">
       <h1>Primeros pasos</h1>
       <h2 class="subheading mb-4">¿Por dónde empezar?</h2>
       <v-btn dark color="teal" to="/buscarLibro">
-        <v-icon dark>search</v-icon>
-        Buscar Libro
+        <v-icon dark>search</v-icon>Buscar Libro
       </v-btn>
     </div>
   </div>

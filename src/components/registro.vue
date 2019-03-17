@@ -4,24 +4,17 @@
       <v-layout row child-flex justify-center align-center wrap>
         <v-flex xs-12 sm-3></v-flex>
         <v-flex xs-12 sm-6>
-          <div class="text-xs-center"><h1>Registro</h1></div>
-          <v-alert :value="alert.dis" :color="alert.color">{{
+          <div class="text-xs-center">
+            <h1>Registro</h1>
+          </div>
+          <v-alert :value="alert.dis" :color="alert.color">
+            {{
             alert.message
-          }}</v-alert>
+            }}
+          </v-alert>
           <v-form v-model="form.valid" @submit.prevent="doSignUp">
-            <v-text-field
-              v-model="form.nombre"
-              label="Nombre"
-              :rules="form.rules.nombre"
-              required
-            >
-            </v-text-field>
-            <v-text-field
-              v-model="form.email"
-              label="E-mail"
-              :rules="form.rules.email"
-              required
-            ></v-text-field>
+            <v-text-field v-model="form.nombre" label="Nombre" :rules="form.rules.nombre" required></v-text-field>
+            <v-text-field v-model="form.email" label="E-mail" :rules="form.rules.email" required></v-text-field>
             <v-text-field
               v-model="form.pass"
               :append-icon="form.passShow ? 'visibility_off' : 'visibility'"
@@ -30,8 +23,7 @@
               label="Contraseña"
               required
               @click:append="form.passShow = !form.passShow;"
-            >
-            </v-text-field>
+            ></v-text-field>
             <v-text-field
               v-model="form.repass"
               :append-icon="form.passShow ? 'visibility_off' : 'visibility'"
@@ -41,9 +33,9 @@
               required
               @click:append="form.passShow = !form.passShow;"
             ></v-text-field>
-            <v-btn block dark color="teal" type="submit"
-              ><v-icon>create</v-icon> Registrate</v-btn
-            >
+            <v-btn block dark color="teal" type="submit">
+              <v-icon>create</v-icon>Registrate
+            </v-btn>
           </v-form>
         </v-flex>
         <v-flex xs-12 sm-3></v-flex>
