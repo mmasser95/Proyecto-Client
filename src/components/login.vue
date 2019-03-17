@@ -53,6 +53,7 @@ export default {
   },
   data() {
     return {
+      statelogin:false,
       alert: {
         statee: false,
         message: '',
@@ -78,8 +79,11 @@ export default {
   methods: {
     doLogin() {
       if (this.form.valid) {
-        let sbtn=document.getElementById('submitbtn');
-        sbtn.disabled=true;
+        let sbtn=this.statelogin;
+        if(sbtn===true){
+          return false;
+        }
+        sbtn=true;
         const datos = {
           email: this.form.email,
           pass: this.form.pass,
@@ -107,7 +111,7 @@ export default {
                   username: resp.data.user.username,
                 });
                 this.$router.push('/');
-                sbtn.disabled=false;
+                sbtn=false;
               })
               .catch((err) => {
                 sbtn.disabled=false;
@@ -119,7 +123,7 @@ export default {
               });
           })
           .catch((err) => {
-            sbtn.disabled=false;
+            sbtn=false;
             this.alert.statee = true;
             this.alert.type = 'error';
             this.alert.color = 'red';
