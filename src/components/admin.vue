@@ -47,6 +47,7 @@ export default {
   computed: { ...mapGetters(["isLoggedIn", "myId"]) },
   data: () => {
     return {
+      statelogin:false,
       alert: { dis: false, message: "", type: "error", color: "red" },
       form: {
         valid: false,
@@ -69,8 +70,11 @@ export default {
   methods: {
     loginAdmin() {
       if (this.form.valid) {
-        let sbtn = document.getElementById('submitbtn');
-        sbtn.disabled = true;
+        let sbtn=this.statelogin;
+        if(sbtn===true){
+          return false;
+        }
+        sbtn=true;
         let fr = this.form;
         let datos = {
           email: fr.email,
@@ -94,7 +98,7 @@ export default {
             apiService
               .getAdmin(this.myId.idd)
               .then((res) => {
-                sbtn.disabled=false;
+                sbtn=false;
                 this.$store.dispatch({
                   type: "setInfo",
                   email: res.data.admin.email,
@@ -103,7 +107,7 @@ export default {
                 this.$router.push('/');
               })
               .catch((err) => {
-                sbtn.disabled=false;
+                sbtn=false;
                 this.alert.dis = true;
                 this.alert.type = 'warning';
                 this.alert.color = 'yellow';
@@ -113,7 +117,7 @@ export default {
               });
           })
           .catch((err) => {
-            sbtn.disabled = false;
+            sbtn = false;
             this.alert.dis = true;
             this.alert.type = 'error';
             this.alert.color = 'blue';
