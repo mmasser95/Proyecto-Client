@@ -1,23 +1,24 @@
 <template>
   <v-app>
-    <v-toolbar app dark color="teal"
-      ><v-toolbar-side-icon
-        @click.stop="drawer = !drawer;"
-      ></v-toolbar-side-icon>
+    <v-toolbar app dark color="teal">
+      <v-toolbar-side-icon @click.stop="drawer = !drawer;"></v-toolbar-side-icon>
       <v-toolbar-title>WalaBook</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-sm-and-down">
-        <v-btn flat v-if="!isLoggedIn" to="/login"
-          ><v-icon v-if="!isLoggedIn">lock</v-icon> Login</v-btn
-        >
+        <v-btn flat v-if="!isLoggedIn" to="/login">
+          <v-icon v-if="!isLoggedIn">lock</v-icon>Login
+        </v-btn>
         <v-btn flat v-if="isLoggedIn">
-          <v-icon>lock_open</v-icon>Hola {{ myInfo.email.username }}
+          <v-icon>lock_open</v-icon>
+          Hola {{ myInfo.email.username }}
         </v-btn>
       </v-toolbar-items>
       <v-toolbar-items class="hidden-md-and-up">
-        <v-btn icon> <v-icon>drag_indicator</v-icon> </v-btn>
-      </v-toolbar-items></v-toolbar
-    >
+        <v-btn icon>
+          <v-icon>drag_indicator</v-icon>
+        </v-btn>
+      </v-toolbar-items>
+    </v-toolbar>
     <v-navigation-drawer app v-model="drawer" absolute temporary>
       <v-img
         v-if="isLoggedIn.token"
@@ -38,11 +39,11 @@
           <!-- Item sin submenu -->
           <v-list-tile :to="item.href" v-if="item.href">
             <v-list-tile-action>
-              <v-icon> {{ item.icon }} </v-icon>
+              <v-icon>{{ item.icon }}</v-icon>
             </v-list-tile-action>
 
             <v-list-tile-content>
-              <v-list-tile-title> {{ item.title }} </v-list-tile-title>
+              <v-list-tile-title>{{ item.title }}</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
           <!-- Item con submenu -->
@@ -51,11 +52,7 @@
               <v-list-tile-title>{{ item.title }}</v-list-tile-title>
             </v-list-tile>
             <!-- Creación del submenu -->
-            <v-list-tile
-              v-for="sub in item.submenu"
-              :key="sub.title"
-              :to="sub.href"
-            >
+            <v-list-tile v-for="sub in item.submenu" :key="sub.title" :to="sub.href">
               <v-list-tile-title v-text="sub.title"></v-list-tile-title>
               <v-list-tile-action>
                 <v-icon v-text="sub.icon"></v-icon>
@@ -65,12 +62,15 @@
         </div>
       </v-list>
     </v-navigation-drawer>
-    <v-content
-      ><v-container fluid>
+    <v-content>
+      <v-container fluid>
         <v-layout>
-          <v-flex><router-view></router-view></v-flex>
-        </v-layout> </v-container
-    ></v-content>
+          <v-flex>
+            <router-view></router-view>
+          </v-flex>
+        </v-layout>
+      </v-container>
+    </v-content>
 
     <v-footer app dark height="auto">
       <v-card class="flex" flat tile>
@@ -78,8 +78,8 @@
           <strong class="subheading">WalaBook</strong>
           <v-spacer></v-spacer>
         </v-card-title>
-        <v-card-actions class="grey darken-3 justify-center">
-          &copy;2019 - <strong>Martí Masot</strong>
+        <v-card-actions class="grey darken-3 justify-center">&copy;2019 -
+          <strong>Martí Masot</strong>
         </v-card-actions>
       </v-card>
     </v-footer>

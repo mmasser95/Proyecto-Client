@@ -1,13 +1,14 @@
-import Vue from "vue";
-import Vuex from "vuex";
+import Vue from 'vue';
+import Vuex from 'vuex';
+
 Vue.use(Vuex);
 export const store = new Vuex.Store({
   state: {
-    token: "",
-    idd: "",
-    email: "",
-    username: "",
-    tipo: ""
+    token: '',
+    idd: '',
+    email: '',
+    username: '',
+    tipo: '',
   },
   getters: {
     tipoUser(state) {
@@ -21,7 +22,7 @@ export const store = new Vuex.Store({
     },
     myInfo(state) {
       return { idd: state.idd, email: state.email, username: state.username };
-    }
+    },
   },
   mutations: {
     setTipo(state, { tipo }) {
@@ -36,13 +37,13 @@ export const store = new Vuex.Store({
     setInfo(state, { email, username }) {
       state.email = email;
       state.username = username;
-    }
+    },
   },
   actions: {
-    authenticate: ({ commit }, token) => commit("setToken", { token }),
-    authenticate2: ({ commit }, idd) => commit("setId", { idd }),
-    authenticate3: ({ commit }, tipo) => commit("setTipo", { tipo }),
+    authenticate: ({ commit }, token) => commit('setToken', { token }),
+    authenticate2: ({ commit }, idd) => commit('setId', { idd }),
+    authenticate3: ({ commit }, tipo) => commit('setTipo', { tipo }),
     setInfo: ({ commit }, email, username) =>
-      commit("setInfo", { email, username })
-  }
+      commit('setInfo', { email, username }),
+  },
 });

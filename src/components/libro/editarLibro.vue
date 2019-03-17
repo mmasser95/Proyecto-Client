@@ -36,16 +36,17 @@
                 <v-flex xs12 sm6>
                   <v-combobox
                     label="Autor"
-                    :item-text='autores.text'
-                    :item-value='autores.valu'
-                    :items='autores'
-                    :key='autores.valu'
+                    :item-text="autores.text"
+                    :item-value="autores.valu"
+                    :items="autores"
+                    :key="autores.valu"
                     v-model="form.datos.Autor"
                     chips
                   ></v-combobox>
                 </v-flex>
               </v-layout>
-              <v-layout row wrap><!-- DatePickers -->
+              <v-layout row wrap>
+                <!-- DatePickers -->
                 <v-flex xs12 sm6>
                   <v-menu
                     ref="menu1"
@@ -105,16 +106,10 @@
               </v-layout>
               <v-layout row wrap>
                 <v-flex xs12 sm4>
-                  <v-text-field
-                    v-model="form.datos.Genero"
-                    label="Género"
-                  ></v-text-field>
+                  <v-text-field v-model="form.datos.Genero" label="Género"></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm4>
-                  <v-text-field
-                    v-model="form.datos.Tapa"
-                    label="Tapa"
-                  ></v-text-field>
+                  <v-text-field v-model="form.datos.Tapa" label="Tapa"></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm4>
                   <v-text-field
@@ -128,9 +123,9 @@
               <v-layout row wrap>
                 <v-flex xs12>
                   <v-textarea
-                    label='Sinopsis'
-                    row='2'
-                    hint='Sinopsis breve del libro'
+                    label="Sinopsis"
+                    row="2"
+                    hint="Sinopsis breve del libro"
                     v-model="form.datos.Sinopsis"
                   ></v-textarea>
                 </v-flex>
@@ -138,14 +133,8 @@
               <v-layout row wrap>
                 <v-flex></v-flex>
                 <v-flex xs12 sm4>
-                  <v-btn
-                    block
-                    dark
-                    color="teal"
-                    type='submit'
-                    form='form'
-                  >
-                    <v-icon>backup</v-icon> Guardar
+                  <v-btn block dark color="teal" type="submit" form="form">
+                    <v-icon>backup</v-icon>Guardar
                   </v-btn>
                 </v-flex>
                 <v-flex></v-flex>
@@ -160,11 +149,7 @@
             <v-divider></v-divider>
             <v-card-action>
               <v-spacer></v-spacer>
-              <v-btn 
-                color="red"
-                flat
-                @click="dialog=false"
-              >Ok</v-btn>
+              <v-btn color="red" flat @click="dialog=false">Ok</v-btn>
             </v-card-action>
           </v-card>
         </v-dialog>
@@ -174,118 +159,124 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex';
-import moment from 'moment';
-import {APIService} from '@/APIService';
+import { mapGetters } from "vuex";
+import moment from "moment";
+import { APIService } from "@/APIService";
 const apiService = new APIService();
 export default {
-  name:'editarLibro',
-  props:['idLibro'],
-  data:()=>{
-    return{
-      errorText:'',
-      dialog:false,
-      libro:{},
-      autores:[],
-      menu1:false,
-      menu2:false,
-      form:{
-        valid:false,
-        datos:{
-          ISBN:'',
-          Titulo:'',
-          Editorial:'',
-          Edicion:'',
-          Autor:'',
-          Fecha_Publicacion:null,
-          Fecha_Edicion:null,
-          Genero:'',
-          Tapa:'',
-          Sinopsis:'',
-          Paginas:'',
+  name: "editarLibro",
+  props: ["idLibro"],
+  data: () => {
+    return {
+      errorText: "",
+      dialog: false,
+      libro: {},
+      autores: [],
+      menu1: false,
+      menu2: false,
+      form: {
+        valid: false,
+        datos: {
+          ISBN: "",
+          Titulo: "",
+          Editorial: "",
+          Edicion: "",
+          Autor: "",
+          Fecha_Publicacion: null,
+          Fecha_Edicion: null,
+          Genero: "",
+          Tapa: "",
+          Sinopsis: "",
+          Paginas: ""
         },
-        rules:{
+        rules: {
           Titulo: [v => !!v || "El titulo es requerido"],
           Editorial: [v => !!v || "La editorial es requerida"],
           Edicion: [v => v > 0 || "La edicion es requerida"],
           Paginas: [v => v >= 0 || "Si no lo sabes, pon 0"]
-        },
-      },
+        }
+      }
+    };
+  },
+  watch: {
+    menu1(val) {
+      val && this.$nextTick(() => (this.$refs.picker.activePicker = "YEAR"));
+    },
+    menu2(val) {
+      val && this.$nextTick(() => (this.$refs.picker.activePicker = "YEAR"));
     }
   },
-  watch:{
-    menu1(val){
-      val && this.$nextTick(() => (this.$refs.picker.activePicker = "YEAR"));
-    },
-    menu2(val){
-      val && this.$nextTick(() => (this.$refs.picker.activePicker = "YEAR"));
-    },
-  },
-  methods:{
-    save1(){
+  methods: {
+    save1() {
       this.$refs.menu1.save(this.form.datos.Fecha_Publicacion);
     },
-    save2(){
+    save2() {
       this.$refs.menu2.save(this.form.datos.Fecha_Edicion);
     },
-    editarLibro(){
-      if(this.form.valid){
-        this.form.datos.Autor=this.form.datos.Autor.valu;
+    editarLibro() {
+      if (this.form.valid) {
+        this.form.datos.Autor = this.form.datos.Autor.valu;
         apiService
           .putLibro(this.form.datos._id, this.form.datos)
-          .then((res) => {
-            if(res.status==200){
+          .then(res => {
+            if (res.status == 200) {
               this.$router.push(`/verLibro/${this.form.datos._id}`);
             }
-          }).catch((err) => {
-            this.errorText='Error al guardar el libro';
-            this.dialog=true;
+          })
+          .catch(err => {
+            this.errorText = "Error al guardar el libro";
+            this.dialog = true;
           });
       }
-    },
+    }
   },
-  computed:{
-    ...mapGetters(['isLoggedIn', 'tipoUser']),
+  computed: {
+    ...mapGetters(["isLoggedIn", "tipoUser"])
   },
-  created:function(){
-    if(!this.isLoggedIn || this.tipoUser.tipo!='admin'){
-      this.$router.push('/');
+  created: function() {
+    if (!this.isLoggedIn || this.tipoUser.tipo != "admin") {
+      this.$router.push("/");
       return false;
     }
     apiService
       .getAutores()
-      .then((res) => {
+      .then(res => {
         for (const autor of res.data.autores) {
-          this.autores.push(
-            {
-              text:autor.Nombre + " " + autor.Apellidos,
-              valu:autor._id
-            },
-          )
+          this.autores.push({
+            text: autor.Nombre + " " + autor.Apellidos,
+            valu: autor._id
+          });
         }
-      }).catch((err) => {
-        window.alert('Ha habido un error');
-        this.$router.push('/');
+      })
+      .catch(err => {
+        window.alert("Ha habido un error");
+        this.$router.push("/");
       });
     apiService
       .getLibro(this.idLibro)
-      .then((res) => {
+      .then(res => {
         this.form.datos = res.data.libro;
-        this.form.datos.Fecha_Publicacion = moment(this.form.datos.Fecha_Publicacion).format('YYYY-MM-DD')
-        this.form.datos.Fecha_Edicion = moment(this.form.datos.Fecha_Edicion).format('YYYY-MM-DD')
+        this.form.datos.Fecha_Publicacion = moment(
+          this.form.datos.Fecha_Publicacion
+        ).format("YYYY-MM-DD");
+        this.form.datos.Fecha_Edicion = moment(
+          this.form.datos.Fecha_Edicion
+        ).format("YYYY-MM-DD");
         apiService
           .getAutor(this.form.datos.Autor)
-          .then((resp) => {
-            this.form.datos.Autor={
-              text: resp.data.autor.Nombre + ' ' + resp.data.autor.Apellidos,
+          .then(resp => {
+            this.form.datos.Autor = {
+              text: resp.data.autor.Nombre + " " + resp.data.autor.Apellidos,
               valu: resp.data.autor._id
-              };
-          }).catch((err) => {
-            this.$router.push('/');
+            };
+          })
+          .catch(err => {
+            this.$router.push("/");
           });
-      }).catch((err) => {
-        this.$router.push('/');
+      })
+      .catch(err => {
+        this.$router.push("/");
       });
   }
-}
+};
 </script>

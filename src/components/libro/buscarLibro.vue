@@ -1,10 +1,6 @@
 <template>
   <div class="buscarLibro">
-    <v-data-table
-      :headers="tabla.headers"
-      :items="tabla.libros"
-      class="elevation-1"
-    >
+    <v-data-table :headers="tabla.headers" :items="tabla.libros" class="elevation-1">
       <template slot="items" slot-scope="props">
         <td>{{ props.item.ISBN }}</td>
         <td>{{ props.item.Titulo }}</td>
@@ -12,9 +8,9 @@
         <td>{{ props.item.Edicion }}</td>
         <td>{{ props.item.Autor }}</td>
         <td>
-          <v-btn :to="props.item.Ver" color="teal" dark
-            ><v-icon>remove_red_eye</v-icon></v-btn
-          >
+          <v-btn :to="props.item.Ver" color="teal" dark>
+            <v-icon>remove_red_eye</v-icon>
+          </v-btn>
         </td>
         <td>
           <v-btn color="teal" dark :to="props.item.Oferta">
