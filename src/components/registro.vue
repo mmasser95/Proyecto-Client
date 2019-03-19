@@ -5,7 +5,7 @@
         <v-flex xs-12 sm-3></v-flex>
         <v-flex xs-12 sm-6>
           <div class="text-xs-center">
-            <h1>Registro</h1>
+            <h1 class="font-weight-bold">Registro</h1>
           </div>
           <v-alert :value="alert.dis" :color="alert.color">
             {{
@@ -33,7 +33,7 @@
               required
               @click:append="form.passShow = !form.passShow;"
             ></v-text-field>
-            <v-btn block dark color="teal" type="submit">
+            <v-btn block dark class="font-weight-black" color="teal" type="submit">
               <v-icon>create</v-icon>Registrate
             </v-btn>
           </v-form>

@@ -2,7 +2,7 @@
   <v-app>
     <v-toolbar app dark color="teal">
       <v-toolbar-side-icon @click.stop="drawer = !drawer;"></v-toolbar-side-icon>
-      <v-toolbar-title>WalaBook</v-toolbar-title>
+      <v-toolbar-title class="font-weight-black">WalaBook</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-sm-and-down">
         <v-btn flat v-if="!isLoggedIn" to="/login">
@@ -19,7 +19,7 @@
         </v-btn>
       </v-toolbar-items>
     </v-toolbar>
-    <v-navigation-drawer app v-model="drawer" absolute temporary>
+    <v-navigation-drawer app v-model="drawer" id="navi" absolute temporary>
       <v-img
         v-if="isLoggedIn.token"
         :aspect-ratio="16 / 9"
@@ -74,10 +74,6 @@
 
     <v-footer app dark height="auto">
       <v-card class="flex" flat tile>
-        <v-card-title class="teal">
-          <strong class="subheading">WalaBook</strong>
-          <v-spacer></v-spacer>
-        </v-card-title>
         <v-card-actions class="grey darken-3 justify-center">&copy;2019 -
           <strong>Martí Masot</strong>
         </v-card-actions>
@@ -88,6 +84,7 @@
 
 <script>
 import { mapGetters } from "vuex";
+
 export default {
   name: "App",
   computed: {
@@ -178,12 +175,18 @@ export default {
       drawer: null
     };
   },
-  methods: {}
+  methods: {},
+  created:function(){
+    this.$router.push('/');
+  }
 };
 </script>
 <style>
-v-app {
-  font-family: Nova Square, cursive !important;
+.application {
+  font-family: Exo !important;
+}
+#navi{
+  position: fixed;
 }
 </style>
 

@@ -55,6 +55,10 @@ export default new Router({
       component: nuevaOferta,
       props: true,
     },
+    {
+      path: '',
+      component: Home,
+    },
   ],
   linkActiveClass: 'active',
   mode: 'history',

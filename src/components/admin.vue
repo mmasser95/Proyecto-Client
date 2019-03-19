@@ -5,7 +5,7 @@
         <v-flex xs-12 sm-3></v-flex>
         <v-flex xs-12 sm-6>
           <div class="text-xs-center mt-5">
-            <h1>Login</h1>
+            <h1 class="font-weight-bold">Login</h1>
             <p class="subheading">Admin</p>
           </div>
           <v-alert :value="alert.dis" :type="alert.type" :color="alert.color">
@@ -24,7 +24,7 @@
               required
               @click:append="form.passShow = !form.passShow;"
             ></v-text-field>
-            <v-btn id="submitbtn" block dark color="teal" type="submit">
+            <v-btn id="submitbtn" block dark color="teal" class="font-weight-black" type="submit">
               <v-icon>vpn_key</v-icon>Login
             </v-btn>
           </v-form>

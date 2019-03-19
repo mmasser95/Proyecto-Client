@@ -5,7 +5,7 @@
         <v-flex xs-12 sm-3></v-flex>
         <v-flex xs-12 sm-6>
           <div class="text-xs-center">
-            <h1>Login</h1>
+            <h1 class="font-weight-bold">Login</h1>
             <p class="subheading">Usuario</p>
           </div>
           <v-alert :value="alert.statee" :type="alert.type" :color="alert.color">{{ alert.message }}</v-alert>
@@ -20,7 +20,7 @@
               required
               @click:append="form.passShow = !form.passShow;"
             ></v-text-field>
-            <v-btn id="submitbtn" type="submit" form="form1" dark color="teal">Login</v-btn>
+            <v-btn id="submitbtn" class="font-weight-black" type="submit" form="form1" dark color="teal">Login</v-btn>
           </v-form>
           {{ myId }}
         </v-flex>
