@@ -29,7 +29,7 @@
       <h1>Primeros pasos</h1>
       <h2 class="subheading mb-4">¿Por dónde empezar?</h2>
       <v-btn dark color="teal" to="/buscarLibro">
-        <v-icon dark>search</v-icon>Buscar Libro
+        <v-icon dark>search</v-icon><pre> </pre>Buscar Libro
       </v-btn>
     </div>
   </div>

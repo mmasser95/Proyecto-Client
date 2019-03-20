@@ -134,7 +134,7 @@
                 <v-flex></v-flex>
                 <v-flex xs12 sm4>
                   <v-btn block dark color="teal" type="submit" form="form">
-                    <v-icon>backup</v-icon>Guardar
+                    <v-icon>backup</v-icon><pre> </pre>Guardar
                   </v-btn>
                 </v-flex>
                 <v-flex></v-flex>

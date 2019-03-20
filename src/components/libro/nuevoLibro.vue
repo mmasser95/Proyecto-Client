@@ -66,6 +66,7 @@
                     lazy
                     transition="scale-transition"
                     offset-y
+                    bottom
                     full-width
                     min-width="290px"
                   >
@@ -94,6 +95,9 @@
                     lazy
                     transition="scale-transition"
                     offset-y
+                    bottom
+                    offset-x
+                    left
                     full-width
                     min-width="290px"
                   >
@@ -144,7 +148,7 @@
                 <v-flex></v-flex>
                 <v-flex xs12 sm4>
                   <v-btn block dark color="teal" type="submit" form="form">
-                    <v-icon>backup</v-icon>Guardar
+                    <v-icon>backup</v-icon><pre> </pre>Guardar
                   </v-btn>
                 </v-flex>
                 <v-flex></v-flex>

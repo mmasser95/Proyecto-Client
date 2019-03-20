@@ -20,7 +20,7 @@
               required
               @click:append="form.passShow = !form.passShow;"
             ></v-text-field>
-            <v-btn id="submitbtn" class="font-weight-black" type="submit" form="form1" dark color="teal">Login</v-btn>
+            <v-btn id="submitbtn" class="font-weight-black" type="submit" form="form1" dark block color="teal"><v-icon>vpn_key</v-icon><pre> </pre>Login</v-btn>
           </v-form>
           {{ myId }}
         </v-flex>

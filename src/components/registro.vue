@@ -34,7 +34,7 @@
               @click:append="form.passShow = !form.passShow;"
             ></v-text-field>
             <v-btn block dark class="font-weight-black" color="teal" type="submit">
-              <v-icon>create</v-icon>Registrate
+              <v-icon>create</v-icon><pre> </pre>Registrate
             </v-btn>
           </v-form>
         </v-flex>

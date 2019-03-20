@@ -25,7 +25,7 @@
               @click:append="form.passShow = !form.passShow;"
             ></v-text-field>
             <v-btn id="submitbtn" block dark color="teal" class="font-weight-black" type="submit">
-              <v-icon>vpn_key</v-icon>Login
+              <v-icon>vpn_key</v-icon><pre> </pre>Login
             </v-btn>
           </v-form>
         </v-flex>

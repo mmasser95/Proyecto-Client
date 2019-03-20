@@ -8,6 +8,7 @@ import verLibro from '@/components/libro/verLibro';
 import Login from '@/components/login';
 import nuevaOferta from '@/components/oferta/nuevaOferta';
 import Registro from '@/components/registro';
+import verPerfil from '@/components/perfil/verPerfil';
 import Vue from 'vue';
 import Router from 'vue-router';
 
@@ -54,6 +55,10 @@ export default new Router({
       path: '/nuevaOferta/:libroId',
       component: nuevaOferta,
       props: true,
+    },
+    {
+      path:'/verPerfil',
+      component:verPerfil,
     },
     {
       path: '',

@@ -8,14 +8,30 @@
         <v-btn flat v-if="!isLoggedIn" to="/login">
           <v-icon v-if="!isLoggedIn">lock</v-icon>Login
         </v-btn>
-        <v-btn flat v-if="isLoggedIn">
-          <v-icon>lock_open</v-icon>
+        <v-btn flat v-if="!isLoggedIn" to="/registro">
+          <v-icon v-if="!isLoggedIn">create</v-icon>Registro
+        </v-btn>
+        <v-btn flat v-if="isLoggedIn" to="/verPerfil">
+          <v-icon>account_circle</v-icon>
           Hola {{ myInfo.email.username }}
+        </v-btn>
+        <v-btn flat v-if="isLoggedIn" to="/">
+          <v-icon>home</v-icon>
+          Home
         </v-btn>
       </v-toolbar-items>
       <v-toolbar-items class="hidden-md-and-up">
-        <v-btn icon>
-          <v-icon>drag_indicator</v-icon>
+        <v-btn flat v-if="!isLoggedIn" to="/login">
+          <v-icon v-if="!isLoggedIn">lock</v-icon>
+        </v-btn>
+        <v-btn flat v-if="!isLoggedIn" to="/registro">
+          <v-icon v-if="!isLoggedIn">create</v-icon>
+        </v-btn>
+        <v-btn flat v-if="isLoggedIn" to="/verPerfil">
+          <v-icon>account_circle</v-icon>
+        </v-btn>
+        <v-btn flat v-if="isLoggedIn" to="/">
+          <v-icon>home</v-icon>
         </v-btn>
       </v-toolbar-items>
     </v-toolbar>
@@ -117,16 +133,16 @@ export default {
               ]
             },
             {
-              title: "Mi perfil",
+              title: "Mi rincón",
               icon: "account_circle",
               submenu: [
                 { title: "Mis Ofertas", icon: "euro_symbol", href: "/oferta" },
+                { title: "Mis Pedidos", icon: "inbox", href: "/pedido" },
                 {
-                  title: "Mis Direcciones",
-                  icon: "picture_in_picture",
-                  href: "/misdirecciones"
-                },
-                { title: "Mis Pedidos", icon: "inbox", href: "/pedido" }
+                  title:'Mi perfil',
+                  icon:'account_circle',
+                  href:'/verPerfil'
+                }
               ]
             },
 

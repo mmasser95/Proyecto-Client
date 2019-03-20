@@ -1,17 +1,80 @@
 <template>
-  <div class="verPerfil"></div>
+  <div class="verPerfil">
+    <v-container>
+      <v-layout row wrap>
+        <v-flex xs12>
+          <h1 class="text-xs-center">{{user.username}}</h1>
+        </v-flex>
+      </v-layout>
+      <v-layout row wrap class="mt-5">
+        <v-flex></v-flex>
+        <v-flex xs12 sm10>
+          <h2 class="text-xs-center">Mi Perfil</h2>
+          <v-list>
+            <v-list-tile v-for="(item,i) in user" :key='i'>
+              <v-list-tile-action>
+                <v-icon>{{item.icn}}</v-icon>
+              </v-list-tile-action>
+              <v-list-tile-content>
+                <v-list-tile-title>{{item.title}}</v-list-tile-title>
+                <v-list-tile-sub-title>{{item.sub}}</v-list-tile-sub-title>
+              </v-list-tile-content>
+            </v-list-tile>
+          </v-list>
+        </v-flex>
+        <v-flex></v-flex>
+      </v-layout>
+      <v-layout row wrap class="mt-5">
+        <v-flex></v-flex>
+        <v-flex xs12 sm10>
+          <h2 class="text-xs-center">Mis direcciones</h2>
+          <v-list>
+            <v-list-tile v-for="(dir,i) in direcciones" :key='i'>
+              <v-list-tile-content>
+                <v-list-tile-title>Calle: {{dir.calle}}, {{dir.numero}}</v-list-tile-title>
+                <v-list-tile-sub-title>Direccion {{dir._id}}</v-list-tile-sub-title>
+              </v-list-tile-content>
+            </v-list-tile>
+          </v-list>
+        </v-flex>
+        <v-flex></v-flex>
+      </v-layout>
+    </v-container>
+  </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
 import { APIService } from "@/APIService";
+const apiService = new APIService();
 export default {
   name: "verPerfil",
   computed: {
-    ...mapGetters(["isLoggedIn"])
+    ...mapGetters(['isLoggedIn', 'myId']),
   },
   data: function() {
-    return {};
+    return {
+      user:[],
+      direcciones:[],
+    };
+  },
+  created:function () {
+    if(!this.isLoggedIn){
+      this.$router.push('/');
+      return false;
+    }
+    apiService
+      .getUser(this.myId.idd)
+      .then((res) => {
+        let usr=res.data.user;
+        this.user=[
+          {title:usr.username, sub:'Username', icn:'account_circle'},
+          {title:usr.email, sub:'E-mail', icn:'alternate_email'},
+        ]
+        this.direcciones=usr.direccion
+      }).catch((err) => {
+        console.log(err);
+      });
   }
 };
 </script>

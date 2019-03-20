@@ -55,7 +55,7 @@
               <v-layout row wrap>
                 <v-flex xs12>
                   <v-btn block dark color="teal" type="submit" form="form1">
-                    <v-icon>backup</v-icon>Guardar
+                    <v-icon>backup</v-icon><pre> </pre>Guardar
                   </v-btn>
                 </v-flex>
               </v-layout>
