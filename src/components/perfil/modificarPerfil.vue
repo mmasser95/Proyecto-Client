@@ -3,17 +3,19 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import { APIService } from "@/APIService";
+import { mapGetters } from 'vuex';
+import { APIService } from '@/APIService';
+
 export default {
-  name: "modificarPerfil",
+  name: 'modificarPerfil',
   computed: {
-    ...mapGetters(["isLoggedIn"])
+    ...mapGetters(['isLoggedIn']),
   },
-  data: function() {
+  data() {
     return {};
-  }
+  },
 };
+
 </script>
 
 <style>

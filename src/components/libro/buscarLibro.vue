@@ -23,63 +23,57 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import { APIService } from "@/APIService";
+import { mapGetters } from 'vuex';
+import { APIService } from '@/APIService';
+
 const apiService = new APIService();
 export default {
-  name: "buscarLibro",
+  name: 'buscarLibro',
   computed: {
-    ...mapGetters(["isLoggedIn"])
+    ...mapGetters(['isLoggedIn']),
   },
-  data: () => {
-    return {
-      autores: [],
-      tabla: {
-        libros: [],
-        headers: [
-          { text: "ISBN", value: "ISBN" },
-          { text: "Titulo", value: "Edicion" },
-          { text: "Editorial", value: "Editorial" },
-          { text: "Edicion", value: "Titulo" },
-          { text: "Autor", value: "Autor" },
-          { text: "Ver", value: "Ver" },
-          { text: "Oferta", value: "Oferta" }
-        ]
-      }
-    };
-  },
-  mounted: function() {
+  data: () => ({
+    autores: [],
+    tabla: {
+      libros: [],
+      headers: [
+        { text: 'ISBN', value: 'ISBN' },
+        { text: 'Titulo', value: 'Edicion' },
+        { text: 'Editorial', value: 'Editorial' },
+        { text: 'Edicion', value: 'Titulo' },
+        { text: 'Autor', value: 'Autor' },
+        { text: 'Ver', value: 'Ver' },
+        { text: 'Oferta', value: 'Oferta' },
+      ],
+    },
+  }),
+  mounted() {
     if (!this.isLoggedIn) {
-      this.$router.push("/");
+      this.$router.push('/');
       return false;
     }
     apiService
       .getAutores()
-      .then(res => {
+      .then((res) => {
         this.autores = res.data.autores;
         console.log(this.autores);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(`Error ${err}`);
         return false;
       });
     apiService
       .getLibros()
-      .then(res => {
-        let libros = res.data.libros;
-        for (let libro of libros) {
+      .then((res) => {
+        const libros = res.data.libros;
+        for (const libro of libros) {
           if (libro.Autor) {
             console.log(libro.Autor);
-            let autor = this.autores
-              .map(function(e) {
-                return e._id;
-              })
+            const autor = this.autores
+              .map(e => e._id)
               .indexOf(libro.Autor);
             if (autor) {
-              libro.Autor =
-                this.autores[autor].Nombre +
-                " " +
-                this.autores[autor].Apellidos;
+              libro.Autor = `${this.autores[autor].Nombre} ${this.autores[autor].Apellidos}`;
             }
           }
           libro.Ver = `/verLibro/${libro._id}`;
@@ -87,10 +81,10 @@ export default {
         }
         this.tabla.libros = libros;
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
-  }
+  },
 };
 </script>
 

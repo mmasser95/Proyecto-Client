@@ -1,29 +1,38 @@
-import axios from "axios";
-import { store } from "./store/";
-const api = "https://proyecto-final-api.herokuapp.com/api";
-function getHeaders(){
+import axios from 'axios';
+import { store } from './store/';
+
+const api = 'https://proyecto-final-api.herokuapp.com/api';
+function getHeaders() {
   return {
-    headers: { authorization: `Bearer ${store.getters.isLoggedIn.token}` }
-  }
+    headers: { authorization: `Bearer ${store.getters.isLoggedIn}` },
+  };
 }
 export class APIService {
   constructor() {}
-  //Login
+  // Login
   signinUser(data) {
     const url = `${api}/user/signin`;
     return axios.post(url, data).then(res => res);
   }
-
+  // Verificar Token
+  verificarLogin(data) {
+    const url = `${api}/user/verificar`;
+    return axios.post(url, data).then(res => res);
+  }
+  verificarAdminLogin(data){
+    const url = `${api}/admin/verificar`;
+    return axios.post(url, data).then(res => res);
+  }
   signinAdmin(data) {
     const url = `${api}/admin/signin`;
     return axios.post(url, data).then(res => res);
   }
-  //Registro
+  // Registro
   signUpUser(data) {
     const url = `${api}/user`;
     return axios.post(url, data).then(res => res);
   }
-  //Libros
+  // Libros
   getLibros() {
     const url = `${api}/libro`;
     return axios.get(url).then(res => res);
@@ -82,14 +91,14 @@ export class APIService {
       return axios.post(url, datos, getHeaders()).then(res => res);
     }
   }
-  putLibro(ids,update){
-    if(store.getters.isLoggedIn){
+  putLibro(ids, update) {
+    if (store.getters.isLoggedIn) {
       const url = `${api}/libro/${ids}`;
-      return axios.put(url,update,getHeaders()).then(res => res);
+      return axios.put(url, update, getHeaders()).then(res => res);
     }
   }
-  deleteLibro(ids){
-    if(store.getters.isLoggedIn){
+  deleteLibro(ids) {
+    if (store.getters.isLoggedIn) {
       const url = `${api}/libro/${ids}`;
       return axios.delete(url, getHeaders()).then(res => res);
     }

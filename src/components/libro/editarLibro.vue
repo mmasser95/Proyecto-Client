@@ -159,52 +159,51 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import moment from "moment";
-import { APIService } from "@/APIService";
+import { mapGetters } from 'vuex';
+import moment from 'moment';
+import { APIService } from '@/APIService';
+
 const apiService = new APIService();
 export default {
-  name: "editarLibro",
-  props: ["idLibro"],
-  data: () => {
-    return {
-      errorText: "",
-      dialog: false,
-      libro: {},
-      autores: [],
-      menu1: false,
-      menu2: false,
-      form: {
-        valid: false,
-        datos: {
-          ISBN: "",
-          Titulo: "",
-          Editorial: "",
-          Edicion: "",
-          Autor: "",
-          Fecha_Publicacion: null,
-          Fecha_Edicion: null,
-          Genero: "",
-          Tapa: "",
-          Sinopsis: "",
-          Paginas: ""
-        },
-        rules: {
-          Titulo: [v => !!v || "El titulo es requerido"],
-          Editorial: [v => !!v || "La editorial es requerida"],
-          Edicion: [v => v > 0 || "La edicion es requerida"],
-          Paginas: [v => v >= 0 || "Si no lo sabes, pon 0"]
-        }
-      }
-    };
-  },
+  name: 'editarLibro',
+  props: ['idLibro'],
+  data: () => ({
+    errorText: '',
+    dialog: false,
+    libro: {},
+    autores: [],
+    menu1: false,
+    menu2: false,
+    form: {
+      valid: false,
+      datos: {
+        ISBN: '',
+        Titulo: '',
+        Editorial: '',
+        Edicion: '',
+        Autor: '',
+        Fecha_Publicacion: null,
+        Fecha_Edicion: null,
+        Genero: '',
+        Tapa: '',
+        Sinopsis: '',
+        Paginas: '',
+      },
+      rules: {
+        Titulo: [v => !!v || 'El titulo es requerido'],
+        Editorial: [v => !!v || 'La editorial es requerida'],
+        Edicion: [v => v > 0 || 'La edicion es requerida'],
+        Paginas: [v => v >= 0 || 'Si no lo sabes, pon 0'],
+      },
+    },
+  }),
   watch: {
     menu1(val) {
-      val && this.$nextTick(() => (this.$refs.picker.activePicker = "YEAR"));
+      val && this.$nextTick(() => (this.$refs.picker.activePicker = 'YEAR'));
     },
     menu2(val) {
-      val && this.$nextTick(() => (this.$refs.picker.activePicker = "YEAR"));
-    }
+      val && this.$nextTick(() => (this.$refs.picker.activePicker = 'YEAR'));
+    },
   },
   methods: {
     save1() {
@@ -218,65 +217,64 @@ export default {
         this.form.datos.Autor = this.form.datos.Autor.valu;
         apiService
           .putLibro(this.form.datos._id, this.form.datos)
-          .then(res => {
+          .then((res) => {
             if (res.status == 200) {
               this.$router.push(`/verLibro/${this.form.datos._id}`);
             }
           })
-          .catch(err => {
-            this.errorText = "Error al guardar el libro";
+          .catch((err) => {
+            this.errorText = 'Error al guardar el libro';
             this.dialog = true;
           });
       }
-    }
+    },
   },
   computed: {
-    ...mapGetters(["isLoggedIn", "tipoUser"])
+    ...mapGetters(['isLoggedIn', 'tipoUser']),
   },
-  created: function() {
-    if (!this.isLoggedIn || this.tipoUser.tipo != "admin") {
-      this.$router.push("/");
+  created() {
+    if (!this.isLoggedIn || this.tipoUser != 'admin') {
+      this.$router.push('/');
       return false;
     }
     apiService
       .getAutores()
-      .then(res => {
+      .then((res) => {
         for (const autor of res.data.autores) {
           this.autores.push({
-            text: autor.Nombre + " " + autor.Apellidos,
-            valu: autor._id
+            text: `${autor.Nombre} ${autor.Apellidos}`,
+            valu: autor._id,
           });
         }
       })
-      .catch(err => {
-        window.alert("Ha habido un error");
-        this.$router.push("/");
+      .catch((err) => {
+        window.alert('Ha habido un error');
+        this.$router.push('/');
       });
     apiService
       .getLibro(this.idLibro)
-      .then(res => {
+      .then((res) => {
         this.form.datos = res.data.libro;
-        this.form.datos.Fecha_Publicacion = moment(
-          this.form.datos.Fecha_Publicacion
-        ).format("YYYY-MM-DD");
-        this.form.datos.Fecha_Edicion = moment(
-          this.form.datos.Fecha_Edicion
-        ).format("YYYY-MM-DD");
+        this.form.datos.Fecha_Publicacion = moment(this.form.datos.Fecha_Publicacion).format(
+          'YYYY-MM-DD',
+        );
+        this.form.datos.Fecha_Edicion = moment(this.form.datos.Fecha_Edicion).format('YYYY-MM-DD');
         apiService
           .getAutor(this.form.datos.Autor)
-          .then(resp => {
+          .then((resp) => {
             this.form.datos.Autor = {
-              text: resp.data.autor.Nombre + " " + resp.data.autor.Apellidos,
-              valu: resp.data.autor._id
+              text: `${resp.data.autor.Nombre} ${resp.data.autor.Apellidos}`,
+              valu: resp.data.autor._id,
             };
           })
-          .catch(err => {
-            this.$router.push("/");
+          .catch((err) => {
+            this.$router.push('/');
           });
       })
-      .catch(err => {
-        this.$router.push("/");
+      .catch((err) => {
+        this.$router.push('/');
       });
-  }
+  },
 };
+
 </script>

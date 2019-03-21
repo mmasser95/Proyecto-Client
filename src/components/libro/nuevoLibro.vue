@@ -161,61 +161,58 @@
   </div>
 </template>
 <script>
-import { APIService } from "@/APIService";
-import { mapGetters } from "vuex";
+import { APIService } from '@/APIService';
+import { mapGetters } from 'vuex';
+
 const apiService = new APIService();
 export default {
-  name: "nuevoLibro",
+  name: 'nuevoLibro',
   computed: {
-    ...mapGetters(["isLoggedIn", "tipoUser"])
+    ...mapGetters(['isLoggedIn', 'tipoUser']),
   },
-  data: () => {
-    return {
-      autores: [],
-      menu1: false,
-      menu2: false,
-      form: {
-        valid: false,
-        ISBN: "",
-        Titulo: "",
-        Editorial: "",
-        Edicion: "",
-        Autor: "",
-        Fecha_Publicacion: null,
-        Fecha_Edicion: null,
-        Genero: "",
-        Tapa: "",
-        Sinopsis: "",
-        Paginas: "",
-        rules: {
-          ISBN: [
-            v => !!v || "El ISBN es requerido",
-            v => !isNaN(v) || "Introduce solo numeros",
-            v =>
-              v.length >= 10 || "El ISBN debe tener como mínimo 10 caracteres",
-            v =>
-              v.length <= 13 || "El ISBN debe tener como máximo 13 caracteres"
-          ],
-          Titulo: [v => !!v || "El titulo es requerido"],
-          Editorial: [v => !!v || "La editorial es requerida"],
-          Edicion: [v => v > 0 || "La edicion es requerida"],
-          Paginas: [v => v >= 0 || "Si no lo sabes, pon 0"]
-        }
-      }
-    };
-  },
+  data: () => ({
+    autores: [],
+    menu1: false,
+    menu2: false,
+    form: {
+      valid: false,
+      ISBN: '',
+      Titulo: '',
+      Editorial: '',
+      Edicion: '',
+      Autor: '',
+      Fecha_Publicacion: null,
+      Fecha_Edicion: null,
+      Genero: '',
+      Tapa: '',
+      Sinopsis: '',
+      Paginas: '',
+      rules: {
+        ISBN: [
+          v => !!v || 'El ISBN es requerido',
+          v => !isNaN(v) || 'Introduce solo numeros',
+          v => v.length >= 10 || 'El ISBN debe tener como mínimo 10 caracteres',
+          v => v.length <= 13 || 'El ISBN debe tener como máximo 13 caracteres',
+        ],
+        Titulo: [v => !!v || 'El titulo es requerido'],
+        Editorial: [v => !!v || 'La editorial es requerida'],
+        Edicion: [v => v > 0 || 'La edicion es requerida'],
+        Paginas: [v => v >= 0 || 'Si no lo sabes, pon 0'],
+      },
+    },
+  }),
   watch: {
     menu1(val) {
-      val && this.$nextTick(() => (this.$refs.picker.activePicker = "YEAR"));
+      val && this.$nextTick(() => (this.$refs.picker.activePicker = 'YEAR'));
     },
     menu2(val) {
-      val && this.$nextTick(() => (this.$refs.picker.activePicker = "YEAR"));
-    }
+      val && this.$nextTick(() => (this.$refs.picker.activePicker = 'YEAR'));
+    },
   },
   methods: {
     subirLibro() {
-      let libro = this.form;
-      let datos = {
+      const libro = this.form;
+      const datos = {
         ISBN: libro.ISBN,
         Autor: libro.Autor.value,
         Titulo: libro.Titulo,
@@ -226,19 +223,19 @@ export default {
         Genero: libro.Genero,
         Tapa: libro.Tapa,
         Sinopsis: libro.Sinopsis,
-        Paginas: libro.Paginas
+        Paginas: libro.Paginas,
       };
       if (libro.valid) {
         apiService
           .postLibro(datos)
-          .then(res => {
+          .then((res) => {
             if (res.status === 200) {
-              //TODO Mejorar aviso
-              window.alert("Guardado");
-              this.$router.push("/buscarLibro");
+              // TODO Mejorar aviso
+              window.alert('Guardado');
+              this.$router.push('/buscarLibro');
             }
           })
-          .catch(err => {
+          .catch((err) => {
             console.log(err);
           });
       }
@@ -248,27 +245,27 @@ export default {
     },
     save2() {
       this.$refs.menu2.save(this.form.Fecha_Edicion);
-    }
+    },
   },
-  created: function() {
-    if (!this.isLoggedIn || this.tipoUser.tipo != "admin") {
-      this.$router.push("/");
+  created() {
+    if (!this.isLoggedIn || this.tipoUser != 'admin') {
+      this.$router.push('/');
       return false;
     }
     apiService
       .getAutores()
-      .then(res => {
-        for (let autor of res.data.autores) {
+      .then((res) => {
+        for (const autor of res.data.autores) {
           this.autores.push({
-            text: autor.Nombre + " " + autor.Apellidos,
-            value: autor._id
+            text: `${autor.Nombre} ${autor.Apellidos}`,
+            value: autor._id,
           });
         }
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
-  }
+  },
 };
 </script>
 <style></style>

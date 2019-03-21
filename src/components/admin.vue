@@ -36,34 +36,30 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import { APIService } from "../APIService";
+import { mapGetters } from 'vuex';
+import { APIService } from '../APIService';
+
 const apiService = new APIService();
 export default {
-  name: "adminLogin",
-  computed: { ...mapGetters(["isLoggedIn", "myId"]) },
-  data: () => {
-    return {
-      statelogin: false,
-      alert: { dis: false, message: "", type: "error", color: "red" },
-      form: {
-        valid: false,
-        passShow: false,
-        email: "",
-        pass: "",
-        rules: {
-          email: [
-            v => !!v || "El email es necesario",
-            v => /.+@.+/.test(v) || "Pon un email valido"
-          ],
-          pass: [
-            v => !!v || "La contraseña es necesaria",
-            v => v.length >= 6 || "La contraseña debe tener 6 caracteres"
-          ]
-        }
-      }
-    };
-  },
+  name: 'adminLogin',
+  computed: { ...mapGetters(['isLoggedIn', 'myId']) },
+  data: () => ({
+    statelogin: false,
+    alert: { dis: false, message: '', type: 'error', color: 'red' },
+    form: {
+      valid: false,
+      passShow: false,
+      email: '',
+      pass: '',
+      rules: {
+        email: [v => !!v || 'El email es necesario', v => /.+@.+/.test(v) || 'Pon un email valido'],
+        pass: [
+          v => !!v || 'La contraseña es necesaria',
+          v => v.length >= 6 || 'La contraseña debe tener 6 caracteres',
+        ],
+      },
+    },
+  }),
   methods: {
     loginAdmin() {
       if (this.form.valid) {
@@ -72,60 +68,57 @@ export default {
           return false;
         }
         sbtn = true;
-        let fr = this.form;
-        let datos = {
+        const fr = this.form;
+        const datos = {
           email: fr.email,
-          pass: fr.pass
+          pass: fr.pass,
         };
         apiService
           .signinAdmin(datos)
-          .then(res => {
+          .then((res) => {
             this.$store.dispatch({
-              type: "authenticate",
-              token: res.data.token
+              type: 'authenticate',
+              token: res.data.token,
             });
             this.$store.dispatch({
-              type: "authenticate2",
-              idd: res.data.idAdmin
+              type: 'authenticate2',
+              idd: res.data.idAdmin,
             });
             this.$store.dispatch({
-              type: "authenticate3",
-              tipo: "admin"
+              type: 'authenticate3',
+              tipo: 'admin',
             });
             apiService
-              .getAdmin(this.myId.idd)
-              .then(res => {
+              .getAdmin(this.myId)
+              .then((res) => {
                 sbtn = false;
                 this.$store.dispatch({
-                  type: "setInfo",
+                  type: 'setInfo',
                   email: res.data.admin.email,
-                  username: res.data.admin.username
+                  username: res.data.admin.username,
                 });
-                this.$router.push("/");
+                this.$router.push('/');
               })
-              .catch(err => {
+              .catch((err) => {
                 sbtn = false;
                 this.alert.dis = true;
-                this.alert.type = "warning";
-                this.alert.color = "yellow";
-                this.alert.message = `Status: ${err.response.status} ${
-                  err.response.data.message
-                }`;
+                this.alert.type = 'warning';
+                this.alert.color = 'yellow';
+                this.alert.message = `Status: ${err.response.status} ${err.response.data.message}`;
               });
           })
-          .catch(err => {
+          .catch((err) => {
             sbtn = false;
             this.alert.dis = true;
-            this.alert.type = "error";
-            this.alert.color = "blue";
-            this.alert.message = `Status${err.response.status} ${
-              err.response.data.message
-            }`;
+            this.alert.type = 'error';
+            this.alert.color = 'blue';
+            this.alert.message = `Status${err.response.status} ${err.response.data.message}`;
           });
       }
-    }
-  }
+    },
+  },
 };
+
 </script>
 
 <style></style>

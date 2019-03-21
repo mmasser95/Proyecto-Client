@@ -13,11 +13,10 @@
         </v-btn>
         <v-btn flat v-if="isLoggedIn" to="/verPerfil">
           <v-icon>account_circle</v-icon>
-          Hola {{ myInfo.email.username }}
+          Hola {{ myInfo.username }}
         </v-btn>
-        <v-btn flat v-if="isLoggedIn" to="/">
-          <v-icon>home</v-icon>
-          Home
+        <v-btn flat v-if="isLoggedIn" @click='logout'>
+          <v-icon>exit_to_app</v-icon>Logout
         </v-btn>
       </v-toolbar-items>
       <v-toolbar-items class="hidden-md-and-up">
@@ -30,22 +29,22 @@
         <v-btn flat v-if="isLoggedIn" to="/verPerfil">
           <v-icon>account_circle</v-icon>
         </v-btn>
-        <v-btn flat v-if="isLoggedIn" to="/">
-          <v-icon>home</v-icon>
+        <v-btn flat v-if="isLoggedIn" @click='logout'>
+          <v-icon>exit_to_app</v-icon>
         </v-btn>
       </v-toolbar-items>
     </v-toolbar>
     <v-navigation-drawer app v-model="drawer" id="navi" absolute temporary>
       <v-img
-        v-if="isLoggedIn.token"
+        v-if="isLoggedIn"
         :aspect-ratio="16 / 9"
         src="https://cdn.vuetifyjs.com/images/parallax/material.jpg"
       >
         <v-layout pa-2 column fill-height class="lightbox white--text">
           <v-spacer></v-spacer>
           <v-flex shrink>
-            <div class="subheading">{{ myInfo.email.username }}</div>
-            <div class="body-1">{{ myInfo.email.email }}</div>
+            <div class="subheading">{{ myInfo.username }}</div>
+            <div class="body-1">{{ myInfo.email }}</div>
           </v-flex>
         </v-layout>
       </v-img>
@@ -90,7 +89,8 @@
 
     <v-footer app dark height="auto">
       <v-card class="flex" flat tile>
-        <v-card-actions class="grey darken-3 justify-center">&copy;2019 -
+        <v-card-actions class="grey darken-3 justify-center">
+          &copy;2019 -
           <strong>Martí Masot</strong>
         </v-card-actions>
       </v-card>
@@ -99,109 +99,156 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
+import { APIService } from '@/APIService';
 
+const apiService = new APIService();
 export default {
-  name: "App",
+  name: 'App',
   computed: {
-    ...mapGetters(["isLoggedIn", "myInfo", "tipoUser"]),
-    menuses: function() {
+    ...mapGetters(['isLoggedIn', 'myInfo', 'tipoUser']),
+    menuses() {
       if (this.isLoggedIn) {
-        if (this.tipoUser.tipo === "user") {
+        if (this.tipoUser === 'user') {
           return [
-            { title: "Home", icon: "dashboard", href: "/" },
+            { title: 'Home', icon: 'dashboard', href: '/' },
             {
-              title: "Libros",
-              icon: "book",
+              title: 'Libros',
+              icon: 'book',
               submenu: [
                 {
-                  title: "Buscar Libro",
-                  icon: "search",
-                  href: "/buscarLibro"
-                }
-              ]
+                  title: 'Buscar Libro',
+                  icon: 'search',
+                  href: '/buscarLibro',
+                },
+              ],
             },
             {
-              title: "Autores",
-              icon: "face",
+              title: 'Autores',
+              icon: 'face',
               submenu: [
                 {
-                  title: "Buscar Autor",
-                  icon: "search",
-                  href: "/buscarAutor"
-                }
-              ]
+                  title: 'Buscar Autor',
+                  icon: 'search',
+                  href: '/buscarAutor',
+                },
+              ],
             },
             {
-              title: "Mi rincón",
-              icon: "account_circle",
+              title: 'Mi rincón',
+              icon: 'account_circle',
               submenu: [
-                { title: "Mis Ofertas", icon: "euro_symbol", href: "/oferta" },
-                { title: "Mis Pedidos", icon: "inbox", href: "/pedido" },
+                { title: 'Mis Ofertas', icon: 'euro_symbol', href: '/oferta' },
+                { title: 'Mis Pedidos', icon: 'inbox', href: '/pedido' },
                 {
-                  title:'Mi perfil',
-                  icon:'account_circle',
-                  href:'/verPerfil'
-                }
-              ]
+                  title: 'Mi perfil',
+                  icon: 'account_circle',
+                  href: '/verPerfil',
+                },
+              ],
             },
 
-            { title: "About", icon: "question_answer", href: "/about" }
+            { title: 'About', icon: 'question_answer', href: '/about' },
           ];
-        } else if (this.tipoUser.tipo === "admin") {
+        } else if (this.tipoUser === 'admin') {
           return [
-            { title: "Home", icon: "dashboard", href: "/" },
+            { title: 'Home', icon: 'dashboard', href: '/' },
             {
-              title: "Libros",
-              icon: "book",
+              title: 'Libros',
+              icon: 'book',
               submenu: [
                 {
-                  title: "BuscarLibro",
-                  icon: "search",
-                  href: "/buscarLibro"
+                  title: 'BuscarLibro',
+                  icon: 'search',
+                  href: '/buscarLibro',
                 },
-                { title: "Subir Libro", icon: "backup", href: "/nuevolibro" }
-              ]
+                { title: 'Subir Libro', icon: 'backup', href: '/nuevolibro' },
+              ],
             },
             {
-              title: "Autores",
-              icon: "face",
+              title: 'Autores',
+              icon: 'face',
               submenu: [
                 {
-                  title: "Buscar Autor",
-                  icon: "search",
-                  href: "/buscarAutor"
+                  title: 'Buscar Autor',
+                  icon: 'search',
+                  href: '/buscarAutor',
                 },
-                { title: "Subir Autor", icon: "backup", href: "/nuevoAutor" }
-              ]
-            }
+                { title: 'Subir Autor', icon: 'backup', href: '/nuevoAutor' },
+              ],
+            },
           ];
         }
       }
       return [
-        { title: "Home", icon: "dashboard", href: "/" },
-        { title: "Login", icon: "account_circle", href: "/login" },
-        { title: "Admin Login", icon: "vpn_key", href: "/admin" },
-        { title: "Registro", icon: "create", href: "/registro" }
+        { title: 'Home', icon: 'dashboard', href: '/' },
+        { title: 'Login', icon: 'account_circle', href: '/login' },
+        { title: 'Admin Login', icon: 'vpn_key', href: '/admin' },
+        { title: 'Registro', icon: 'create', href: '/registro' },
       ];
+    },
+  },
+  data: () => ({
+    drawer: null,
+  }),
+  methods: {
+    logout() {
+      localStorage.clear();
+      this.$router.go({ path: '/', force: true });
+    },
+  },
+  beforeCreate() {
+    const t = localStorage.getItem('storeToken');
+    if (t) {
+      const tip = localStorage.getItem('storeTipo');
+      if (tip == 'admin') {
+        console.log('admin');
+        apiService
+          .verificarAdminLogin({ token: t })
+          .then((result) => {
+            this.$store.dispatch({
+              type: 'initin',
+              token: result.data.token,
+              idd: localStorage.getItem('storeIdd'),
+              tipo: result.data.tipo,
+              email: localStorage.getItem('storeEmail'),
+              username: localStorage.getItem('storeUsername'),
+            });
+          })
+          .catch((err) => {
+            localStorage.clear();
+            this.$router.go({ path: '/', force: true });
+          });
+      } else {
+        apiService
+          .verificarLogin({ token: t })
+          .then((result) => {
+            this.$store.dispatch({
+              type: 'initin',
+              token: result.data.token,
+              idd: localStorage.getItem('storeIdd'),
+              tipo: result.data.tipo,
+              email: localStorage.getItem('storeEmail'),
+              username: localStorage.getItem('storeUsername'),
+            });
+          })
+          .catch((err) => {
+            localStorage.clear();
+            this.$router.go({ path: '/', force: true });
+          });
+      }
     }
+
+    console.log(this.isLoggedIn);
   },
-  data: () => {
-    return {
-      drawer: null
-    };
-  },
-  methods: {},
-  created:function(){
-    this.$router.push('/');
-  }
 };
+
 </script>
 <style>
 .application {
   font-family: Exo !important;
 }
-#navi{
+#navi {
   position: fixed;
 }
 </style>

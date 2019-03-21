@@ -3,21 +3,20 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
+
 export default {
-  name: "verOferta",
+  name: 'verOferta',
   computed: {
-    ...mapGetters(["isLoggedIn"])
+    ...mapGetters(['isLoggedIn']),
   },
-  data: () => {
-    return {};
-  },
-  created: function() {
+  data: () => ({}),
+  created() {
     if (!this.isLoggedIn) {
-      this.$router.push("/");
+      this.$router.push('/');
       return false;
     }
-  }
+  },
 };
 </script>
 

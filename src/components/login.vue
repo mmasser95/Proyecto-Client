@@ -31,38 +31,39 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import { APIService } from "../APIService";
+import { mapGetters } from 'vuex';
+import { APIService } from '../APIService';
+
 const APiService = new APIService();
 
 export default {
-  name: "login",
+  name: 'login',
   computed: {
-    ...mapGetters(["isLoggedIn", "myId"])
+    ...mapGetters(['isLoggedIn', 'myId']),
   },
   data() {
     return {
       statelogin: false,
       alert: {
         statee: false,
-        message: "",
-        type: "error",
-        color: "red"
+        message: '',
+        type: 'error',
+        color: 'red',
       },
       form: {
         valid: false,
-        email: "",
-        pass: "",
+        email: '',
+        pass: '',
         passShow: false,
         emailRules: [
-          v => !!v || "Email necesario",
-          v => /.+@.+/.test(v) || "Introduce un email valido"
+          v => !!v || 'Email necesario',
+          v => /.+@.+/.test(v) || 'Introduce un email valido',
         ],
         passRules: [
-          v => !!v || "Contraseña necesaria",
-          v => v.length >= 6 || "6 caracteres minimo"
-        ]
-      }
+          v => !!v || 'Contraseña necesaria',
+          v => v.length >= 6 || '6 caracteres minimo',
+        ],
+      },
     };
   },
   methods: {
@@ -75,56 +76,55 @@ export default {
         sbtn = true;
         const datos = {
           email: this.form.email,
-          pass: this.form.pass
+          pass: this.form.pass,
         };
         APiService.signinUser(datos)
-          .then(res => {
+          .then((res) => {
             this.$store.dispatch({
-              type: "authenticate",
-              token: res.data.token
+              type: 'authenticate',
+              token: res.data.token,
             });
             this.$store.dispatch({
-              type: "authenticate2",
-              idd: res.data.idUser
+              type: 'authenticate2',
+              idd: res.data.idUser,
             });
             this.$store.dispatch({
-              type: "authenticate3",
-              tipo: "user"
+              type: 'authenticate3',
+              tipo: 'user',
             });
             this.alert.statee = false;
-            APiService.getUser(this.myId.idd)
-              .then(resp => {
+            APiService.getUser(this.myId)
+              .then((resp) => {
                 this.$store.dispatch({
-                  type: "setInfo",
+                  type: 'setInfo',
                   email: resp.data.user.email,
-                  username: resp.data.user.username
+                  username: resp.data.user.username,
                 });
-                this.$router.push("/");
+                this.$router.push('/');
                 sbtn = false;
               })
-              .catch(err => {
-                sbtn.disabled = false;
+              .catch((err) => {
+                sbtn = false;
                 this.alert.statee = true;
-                this.alert.type = "warning";
-                this.alert.color = "yellow";
+                this.alert.type = 'warning';
+                this.alert.color = 'yellow';
                 this.alert.message = `Error ${err}`;
                 throw err;
               });
           })
-          .catch(err => {
+          .catch((err) => {
             sbtn = false;
             this.alert.statee = true;
-            this.alert.type = "error";
-            this.alert.color = "red";
-            this.alert.message = `Error en la autenticacion ${
-              err.response.data.message
-            }`;
+            this.alert.type = 'error';
+            this.alert.color = 'red';
+            this.alert.message = `Error en la autenticacion ${err.response.data.message}`;
           });
       }
       return false;
-    }
-  }
+    },
+  },
 };
+
 </script>
 
 <style scoped>

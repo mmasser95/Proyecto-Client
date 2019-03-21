@@ -53,7 +53,7 @@
                 </v-layout>
               </v-container>
             </v-card-title>
-            <v-card-actions v-if="tipoUser.tipo == 'admin'">
+            <v-card-actions v-if="tipoUser == 'admin'">
               <v-spacer></v-spacer>
               <v-btn flat color="teal" :to="pagEditar">Editar</v-btn>
               <v-btn flat color="red" @click='eliminarLibro'>Eliminar</v-btn>
@@ -82,96 +82,94 @@
 </template>
 
 <script>
-import { APIService } from "@/APIService";
-import { mapGetters } from "vuex";
+import { APIService } from '@/APIService';
+import { mapGetters } from 'vuex';
+
 const apiService = new APIService();
 export default {
-  name: "verLibro",
+  name: 'verLibro',
   computed: {
-    ...mapGetters(["isLoggedIn", "tipoUser"])
+    ...mapGetters(['isLoggedIn', 'tipoUser']),
   },
-  props: ["libroID"],
-  data: () => {
-    return {
-      dialog:false,
-      tabla: {
-        ofertas: [],
-        headers: [
-          { text: "Importe", value: "importe" },
-          { text: "Moneda", value: "moneda" }
-        ]
-      },
-      libro: {},
-      pagEditar:'',
-      autor: {},
-      items: []
-    };
-  },
-  methods:{
-    eliminarLibro(){
-      apiService.deleteLibro(this.libroID)
+  props: ['libroID'],
+  data: () => ({
+    dialog: false,
+    tabla: {
+      ofertas: [],
+      headers: [{ text: 'Importe', value: 'importe' }, { text: 'Moneda', value: 'moneda' }],
+    },
+    libro: {},
+    pagEditar: '',
+    autor: {},
+    items: [],
+  }),
+  methods: {
+    eliminarLibro() {
+      apiService
+        .deleteLibro(this.libroID)
         .then((res) => {
-          window.alert('Borrado')
-          this.$router.push('/buscarlibro')
+          window.alert('Borrado');
+          this.$router.push('/buscarlibro');
         })
         .catch((err) => {
-          window.alert('Ha habido un error '+ err)
+          window.alert(`Ha habido un error ${err}`);
         });
-    }
+    },
   },
-  created: function() {
+  created() {
     if (!this.isLoggedIn) {
-      this.$router.push("/");
+      this.$router.push('/');
       return false;
     }
-    this.pagEditar=`/editarLibro/${this.libroID}`;
+    this.pagEditar = `/editarLibro/${this.libroID}`;
     apiService
       .getLibro(this.libroID)
-      .then(res => {
+      .then((res) => {
         this.libro = res.data.libro;
-        let libro = this.libro;
-        let items = this.items;
+        const libro = this.libro;
+        const items = this.items;
         items.push({
           id: 1,
-          icon: "info",
+          icon: 'info',
           title: libro.ISBN,
-          sub: "ISBN"
+          sub: 'ISBN',
         });
         items.push({
           id: 2,
-          icon: "book",
+          icon: 'book',
           title: libro.Editorial,
-          sub: "Editorial"
+          sub: 'Editorial',
         });
 
-        if (this.libro.Autor)
+        if (this.libro.Autor) {
           apiService
             .getAutor(this.libro.Autor)
-            .then(res => {
+            .then((res) => {
               this.autor = res.data.autor;
               items.push({
                 id: 3,
-                icon: "face",
-                title: this.autor.Nombre + " " + this.autor.Apellidos,
-                sub: "Autor"
+                icon: 'face',
+                title: `${this.autor.Nombre} ${this.autor.Apellidos}`,
+                sub: 'Autor',
               });
             })
-            .catch(err => {
+            .catch((err) => {
               console.log(err);
             });
+        }
         apiService
           .getOfertasLibro(libro._id)
-          .then(res => {
+          .then((res) => {
             this.tabla.ofertas = res.data.ofertas;
           })
-          .catch(err => {
+          .catch((err) => {
             console.log(err);
           });
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
-  }
+  },
 };
 </script>
 

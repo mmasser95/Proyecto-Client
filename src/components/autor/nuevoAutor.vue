@@ -68,61 +68,60 @@
 </template>
 
 <script>
-import { APIService } from "@/APIService";
-import { mapGetters } from "vuex";
+import { APIService } from '@/APIService';
+import { mapGetters } from 'vuex';
+
 const apiService = new APIService();
 export default {
-  name: "nuevoAutor",
+  name: 'nuevoAutor',
   computed: {
-    ...mapGetters(["isLoggedIn", "tipoUser"])
+    ...mapGetters(['isLoggedIn', 'tipoUser']),
   },
-  data: () => {
-    return {
-      form: {
-        Nombre: "",
-        Apellidos: "",
-        Fecha_nacimiento: ""
+  data: () => ({
+    form: {
+      Nombre: '',
+      Apellidos: '',
+      Fecha_nacimiento: '',
+    },
+    menu1: false,
+    fform: {
+      valid: false,
+      rules: {
+        nombre: [v => !!v || 'El nombre es necesario'],
+        apellidos: [v => !!v || 'Los apellidos son necesario'],
       },
-      menu1: false,
-      fform: {
-        valid: false,
-        rules: {
-          nombre: [v => !!v || "El nombre es necesario"],
-          apellidos: [v => !!v || "Los apellidos son necesario"]
-        }
-      }
-    };
-  },
+    },
+  }),
   watch: {
     menu1(val) {
-      val && this.$nextTick(() => (this.$refs.picker.activePicker = "YEAR"));
-    }
+      val && this.$nextTick(() => (this.$refs.picker.activePicker = 'YEAR'));
+    },
   },
   methods: {
     subirAutor() {
       apiService
         .postAutor(this.form)
-        .then(res => {
+        .then((res) => {
           if (res.status == 200) {
-            window.alert("Guardado");
+            window.alert('Guardado');
           } else {
-            window.alert("Error");
+            window.alert('Error');
           }
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
         });
     },
     save1() {
       this.$refs.menu1.save(this.form.Fecha_nacimiento);
-    }
+    },
   },
-  created: function() {
-    if (!this.isLoggedIn || this.tipoUser.tipo != "admin") {
-      this.$router.push("/");
+  created() {
+    if (!this.isLoggedIn || this.tipoUser.tipo != 'admin') {
+      this.$router.push('/');
       return false;
     }
-  }
+  },
 };
 </script>
 

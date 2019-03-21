@@ -17,6 +17,9 @@ new Vue({
   el: '#app',
   router,
   store,
+  beforeCreate(){
+    this.$router.push('/');
+  },
   components: { App },
   render: h => h(App),
 });

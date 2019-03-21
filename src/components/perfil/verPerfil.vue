@@ -44,38 +44,41 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import { APIService } from "@/APIService";
+import { mapGetters } from 'vuex';
+import { APIService } from '@/APIService';
+
 const apiService = new APIService();
 export default {
-  name: "verPerfil",
+  name: 'verPerfil',
   computed: {
     ...mapGetters(['isLoggedIn', 'myId']),
   },
-  data: function() {
+  data() {
     return {
-      user:[],
-      direcciones:[],
+      user: [],
+      direcciones: [],
     };
   },
-  created:function () {
-    if(!this.isLoggedIn){
+  created() {
+    if (!this.isLoggedIn) {
       this.$router.push('/');
       return false;
     }
+    console.log(this.myId);
     apiService
-      .getUser(this.myId.idd)
+      .getUser(this.myId)
       .then((res) => {
-        let usr=res.data.user;
-        this.user=[
-          {title:usr.username, sub:'Username', icn:'account_circle'},
-          {title:usr.email, sub:'E-mail', icn:'alternate_email'},
-        ]
-        this.direcciones=usr.direccion
-      }).catch((err) => {
+        const usr = res.data.user;
+        this.user = [
+          { title: usr.username, sub: 'Username', icn: 'account_circle' },
+          { title: usr.email, sub: 'E-mail', icn: 'alternate_email' },
+        ];
+        this.direcciones = usr.direccion;
+      })
+      .catch((err) => {
         console.log(err);
       });
-  }
+  },
 };
 </script>
 

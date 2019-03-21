@@ -55,72 +55,67 @@
 </template>
 
 <script>
-import { APIService } from "../APIService";
-import { mapGetters } from "vuex";
+import { APIService } from '../APIService';
+import { mapGetters } from 'vuex';
+
 const APiService = new APIService();
 export default {
-  name: "registro",
+  name: 'registro',
   computed: {
-    ...mapGetters(["isLoggedIn"])
+    ...mapGetters(['isLoggedIn']),
   },
-  data: function() {
+  data() {
     return {
       dialog: false,
-      alert: { dis: false, message: "", color: "red" },
+      alert: { dis: false, message: '', color: 'red' },
       form: {
         valid: false,
         passShow: false,
-        nombre: "",
-        email: "",
-        pass: "",
-        repass: "",
+        nombre: '',
+        email: '',
+        pass: '',
+        repass: '',
         rules: {
           nombre: [
-            v => !!v || "Nombre obligatorio",
-            v => v.length >= 4 || "4 caracteres como mínimo",
-            v =>
-              v.length <= 20 || "El nombre no puede tener más de 20 caracteres"
+            v => !!v || 'Nombre obligatorio',
+            v => v.length >= 4 || '4 caracteres como mínimo',
+            v => v.length <= 20 || 'El nombre no puede tener más de 20 caracteres',
           ],
-          email: [
-            v => !!v || "Email Obligatorio",
-            v => /.+@.+/.test(v) || "Pon un email válido"
-          ],
-          pass: [
-            v => !!v || "Contraseña Obligatoria",
-            v => v.length >= 8 || "Mínimo 8 caracteres"
-          ]
-        }
-      }
+          email: [v => !!v || 'Email Obligatorio', v => /.+@.+/.test(v) || 'Pon un email válido'],
+          pass: [v => !!v || 'Contraseña Obligatoria', v => v.length >= 8 || 'Mínimo 8 caracteres'],
+        },
+      },
     };
   },
   methods: {
     doSignUp() {
       if (this.form.valid) {
-        let fr = this.form;
-        let datos = {
+        const fr = this.form;
+        const datos = {
           username: fr.nombre,
           apellidos: fr.apellidos,
           email: fr.email,
-          pass: fr.pass
+          pass: fr.pass,
         };
         APiService.signUpUser(datos)
-          .then(res => {
+          .then((res) => {
             this.dialog = true;
           })
-          .catch(err => {
+          .catch((err) => {
             this.alert.dis = true;
             this.alert.message = err.response.message;
-            this.alert.color = "red";
+            this.alert.color = 'red';
           });
       }
+    },
+  },
+  created() {
+    if (this.isLoggedIn.token) {
+      this.$router.push('/');
     }
   },
-  created: function() {
-    if (!!this.isLoggedIn.token) {
-      this.$router.push("/");
-    }
-  }
 };
+
 </script>
 
 <style></style>

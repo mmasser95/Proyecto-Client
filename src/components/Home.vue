@@ -36,25 +36,27 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from 'vuex';
+
 export default {
-  name: "Home",
+  name: 'Home',
   computed: {
-    ...mapGetters(["isLoggedIn"])
+    ...mapGetters(['isLoggedIn']),
   },
-  data: function() {
+  data() {
     return {
       carouselItems: [
-        { src: "https://jooinn.com/images/book-of-guidance.jpg" },
+        { src: 'https://jooinn.com/images/book-of-guidance.jpg' },
         {
           src:
-            "https://torange.biz/photofx/34/10/mirror-macro-blurring-top-bottom-book-old-clipart-34342.jpg"
+            'https://torange.biz/photofx/34/10/mirror-macro-blurring-top-bottom-book-old-clipart-34342.jpg',
         },
-        { src: "https://torange.biz/photo/34/HD/book-wisdom-34903.jpg" }
-      ]
+        { src: 'https://torange.biz/photo/34/HD/book-wisdom-34903.jpg' },
+      ],
     };
-  }
+  },
 };
+
 </script>
 
 <style></style>
