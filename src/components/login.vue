@@ -22,7 +22,6 @@
             ></v-text-field>
             <v-btn id="submitbtn" class="font-weight-black" type="submit" form="form1" dark block color="teal"><v-icon>vpn_key</v-icon><pre> </pre>Login</v-btn>
           </v-form>
-          {{ myId }}
         </v-flex>
         <v-flex xs-12 sm-3></v-flex>
       </v-layout>
@@ -57,7 +56,7 @@ export default {
         passShow: false,
         emailRules: [
           v => !!v || 'Email necesario',
-          v => /.+@.+/.test(v) || 'Introduce un email valido',
+          v => /^.+@.+\.((\w{3})|(\w{2}))$/.test(v) || 'Introduce un email valido',
         ],
         passRules: [
           v => !!v || 'Contraseña necesaria',

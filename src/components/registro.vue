@@ -81,7 +81,7 @@ export default {
             v => v.length >= 4 || '4 caracteres como mínimo',
             v => v.length <= 20 || 'El nombre no puede tener más de 20 caracteres',
           ],
-          email: [v => !!v || 'Email Obligatorio', v => /.+@.+/.test(v) || 'Pon un email válido'],
+          email: [v => !!v || 'Email Obligatorio', v => /^.+@.+\.((\w{3})|(\w{2}))$/.test(v) || 'Introduce un email valido',],
           pass: [v => !!v || 'Contraseña Obligatoria', v => v.length >= 8 || 'Mínimo 8 caracteres'],
         },
       },

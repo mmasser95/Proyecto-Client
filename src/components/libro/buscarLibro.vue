@@ -44,6 +44,12 @@
                       <v-list-tile-sub-title>Editorial</v-list-tile-sub-title>
                     </v-list-tile-content>  
                   </v-list-tile>
+                  <v-list-tile>
+                    <v-list-tile-content>
+                      <v-list-tile-title>{{props.item.Edicion}}</v-list-tile-title>
+                      <v-list-tile-sub-title>Edición</v-list-tile-sub-title>
+                    </v-list-tile-content>
+                  </v-list-tile>
                 </v-list>
               </v-card-text>
               <v-card-actions>
@@ -98,33 +104,30 @@ export default {
       .getAutores()
       .then((res) => {
         this.autores = res.data.autores;
-        console.log(this.autores);
+        apiService
+          .getLibros()
+          .then((res) => {
+            const libros = res.data.libros;
+            for (const libro of libros) {
+              if (libro.Autor) {
+                const autor = this.autores
+                  .map(e => e._id)
+                  .indexOf(libro.Autor);
+                if (autor) {
+                  libro.Autor = `${this.autores[autor].Nombre} ${this.autores[autor].Apellidos}`;
+                }
+              }
+              libro.Ver = `/verLibro/${libro._id}`;
+              libro.Oferta = `/nuevaOferta/${libro._id}`;
+            }
+            this.tabla.libros = libros;
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       })
       .catch((err) => {
         console.log(`Error ${err}`);
-        return false;
-      });
-    apiService
-      .getLibros()
-      .then((res) => {
-        const libros = res.data.libros;
-        for (const libro of libros) {
-          if (libro.Autor) {
-            console.log(libro.Autor);
-            const autor = this.autores
-              .map(e => e._id)
-              .indexOf(libro.Autor);
-            if (autor) {
-              libro.Autor = `${this.autores[autor].Nombre} ${this.autores[autor].Apellidos}`;
-            }
-          }
-          libro.Ver = `/verLibro/${libro._id}`;
-          libro.Oferta = `/nuevaOferta/${libro._id}`;
-        }
-        this.tabla.libros = libros;
-      })
-      .catch((err) => {
-        console.log(err);
       });
   },
 };

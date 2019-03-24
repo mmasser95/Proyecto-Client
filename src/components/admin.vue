@@ -52,7 +52,7 @@ export default {
       email: '',
       pass: '',
       rules: {
-        email: [v => !!v || 'El email es necesario', v => /.+@.+/.test(v) || 'Pon un email valido'],
+        email: [v => !!v || 'El email es necesario', v => /^.+@.+\.((\w{3})|(\w{2}))$/.test(v) || 'Pon un email valido'],
         pass: [
           v => !!v || 'La contraseña es necesaria',
           v => v.length >= 6 || 'La contraseña debe tener 6 caracteres',

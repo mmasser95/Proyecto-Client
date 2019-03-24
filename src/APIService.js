@@ -47,7 +47,7 @@ export class APIService {
   }
   getOfertasLibro(ids) {
     const url = `${api}/oferta/libro/${ids}`;
-    return axios.get(url).then(res => res);
+    return axios.get(url, getHeaders()).then(res => res);
   }
   getAutor(ids) {
     const url = `${api}/autor/${ids}`;

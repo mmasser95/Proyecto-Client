@@ -50,7 +50,7 @@
       </v-img>
       <v-list class="pt-0" dense>
         <v-divider></v-divider>
-        <div v-for="item in menuses" :key="item.title">
+        <div v-for="(item,i) in menuses" :key="i">
           <!-- Item sin submenu -->
           <v-list-tile :to="item.href" v-if="item.href">
             <v-list-tile-action>
@@ -61,19 +61,22 @@
               <v-list-tile-title>{{ item.title }}</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
+          <!-- END Item sin submenu -->
           <!-- Item con submenu -->
           <v-list-group :prepend-icon="item.icon" v-if="item.submenu">
             <v-list-tile slot="activator">
               <v-list-tile-title>{{ item.title }}</v-list-tile-title>
             </v-list-tile>
             <!-- Creación del submenu -->
-            <v-list-tile v-for="sub in item.submenu" :key="sub.title" :to="sub.href">
+            <v-list-tile v-for="(sub,k) in item.submenu" :key="k" :to="sub.href">
               <v-list-tile-title v-text="sub.title"></v-list-tile-title>
               <v-list-tile-action>
                 <v-icon v-text="sub.icon"></v-icon>
               </v-list-tile-action>
             </v-list-tile>
+            <!-- END Creación del submenu -->
           </v-list-group>
+          <!-- END Item con submenu -->
         </div>
       </v-list>
     </v-navigation-drawer>

@@ -2,71 +2,71 @@
   <div class="verLibro">
     <v-container fluid>
       <v-layout row wrap>
-                  <v-flex xs12>
-                    <h2 class="text-xs-center">{{ libro.Titulo }}</h2>
-                  </v-flex>
-                </v-layout>
-                <v-layout row wrap>
-                  <v-flex xs12 sm4></v-flex>
-                  <v-flex xs12 sm6>
-                    <v-list>
-                      <v-list-tile v-for="item in items" :key="item.id">
-                        <v-list-tile-action>
-                          <v-icon>{{ item.icon }}</v-icon>
-                        </v-list-tile-action>
-                        <v-list-tile-content>
-                          <v-list-tile-title>{{
-                            item.title
-                          }}</v-list-tile-title>
-                          <v-list-tile-sub-title>{{
-                            item.sub
-                          }}</v-list-tile-sub-title>
-                        </v-list-tile-content>
-                        <v-list-tile-action>
-                          <v-icon></v-icon>
-                        </v-list-tile-action>
-                      </v-list-tile>
-                    </v-list>
-                    <hr />
-                    <v-layout row wrap>
-                      <v-flex v-if="tabla.ofertas.length">
-                        <h1 class="text-xs-center my-3">Ofertas</h1>
-                        <v-data-table
-                          :headers="tabla.headers"
-                          :items="tabla.ofertas"
-                          class="elevation-1"
-                        >
-                          <template slot="items" slot-scope="props">
-                            <td>{{ props.item.importe.$numberDecimal }}</td>
-                            <td>{{ props.item.moneda }}</td>
-                          </template>
-                        </v-data-table>
-                      </v-flex>
-                    </v-layout>
-                  </v-flex>
-                  <v-flex xs12 sm2></v-flex>
-                </v-layout>
-              </v-container>
-            </v-card-title>
-            <v-card-actions v-if="tipoUser == 'admin'">
-              <v-spacer></v-spacer>
-              <v-btn flat color="teal" :to="pagEditar">Editar</v-btn>
-              <v-btn flat color="red" @click='eliminarLibro'>Eliminar</v-btn>
-            </v-card-actions>
+          <v-flex xs12>
+            <h2 class="text-xs-center">{{ libro.Titulo }}</h2>
+          </v-flex>
+        </v-layout>
+        <v-layout row wrap>
+          <v-flex xs12 sm4></v-flex>
+          <v-flex xs12 sm6>
+            <v-list>
+              <v-list-tile v-for="item in items" :key="item.id">
+                <v-list-tile-action>
+                  <v-icon>{{ item.icon }}</v-icon>
+                </v-list-tile-action>
+                <v-list-tile-content>
+                  <v-list-tile-title>{{
+                    item.title
+                  }}</v-list-tile-title>
+                  <v-list-tile-sub-title>{{
+                    item.sub
+                  }}</v-list-tile-sub-title>
+                </v-list-tile-content>
+                <v-list-tile-action>
+                  <v-icon></v-icon>
+                </v-list-tile-action>
+              </v-list-tile>
+            </v-list>
+            <hr />
+            <v-layout row wrap>
+              <v-flex v-if="tabla.ofertas.length">
+                <h1 class="text-xs-center my-3">Ofertas</h1>
+                <v-data-table
+                  :headers="tabla.headers"
+                  :items="tabla.ofertas"
+                  class="elevation-1"
+                >
+                  <template slot="items" slot-scope="props">
+                    <td>{{ props.item.importe.$numberDecimal }}</td>
+                    <td>{{ props.item.moneda }}</td>
+                  </template>
+                </v-data-table>
+              </v-flex>
+            </v-layout>
+          </v-flex>
+          <v-flex xs12 sm2></v-flex>
+        </v-layout>
+      </v-container>
+    
+    <div v-if="tipoUser == 'admin'">
+      <v-spacer></v-spacer>
+      <v-btn flat color="teal" :to="pagEditar">Editar</v-btn>
+      <v-btn flat color="red" @click='eliminarLibro'>Eliminar</v-btn>
+    </div>
           
     <v-dialog v-model="dialog" width="500">
       <v-card class="text-xs-center">
         <v-card-title>Guardado</v-card-title>
         <v-card-text>Guardado correctamente</v-card-text>
         <v-divider></v-divider>
-        <v-card-action>
+        <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn
             color="green"
             flat
             @click="dialog=false"
           ></v-btn>
-        </v-card-action>
+        </v-card-actions>
       </v-card>
     </v-dialog>
   </div>
