@@ -117,7 +117,7 @@ export default {
     },
   },
   created() {
-    if (!this.isLoggedIn || this.tipoUser.tipo != 'admin') {
+    if (!this.isLoggedIn || this.tipoUser != 'admin') {
       this.$router.push('/');
       return false;
     }

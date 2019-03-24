@@ -9,11 +9,15 @@ import { APIService } from '@/APIService';
 export default {
   name: 'modificarPerfil',
   computed: {
-    ...mapGetters(['isLoggedIn']),
+    ...mapGetters(['isLoggedIn', 'tipoUser', 'myId']),
   },
   data() {
     return {};
   },
+  created:function () {
+    
+  },
+  methods:{},
 };
 
 </script>

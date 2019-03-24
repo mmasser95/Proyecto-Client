@@ -1,6 +1,6 @@
 <template>
   <div class="buscarLibro">
-    <v-data-table :headers="tabla.headers" :items="tabla.libros" class="elevation-1">
+    <!--<v-data-table :headers="tabla.headers" :items="tabla.libros" class="elevation-1">
       <template slot="items" slot-scope="props">
         <td>{{ props.item.ISBN }}</td>
         <td>{{ props.item.Titulo }}</td>
@@ -18,7 +18,45 @@
           </v-btn>
         </td>
       </template>
-    </v-data-table>
+    </v-data-table>-->
+    <v-container fluid grid-list-md>
+      <v-data-iterator :items="tabla.libros" :rows-per-page-items="rowsPerPageItems" :pagination.sync="pagination" row wrap content-tag="v-layout">
+        <template v-slot:item="props">
+          <v-flex xs12 sm6 md4 lg3>
+            <v-card>
+              <v-card-title primary-title>
+                <div>
+                <div class="headline">{{props.item.Titulo}}</div>
+                <span class="grey--text">{{props.item.Autor}}</span>
+                </div>
+              </v-card-title>
+              <v-card-text>
+                <v-list>
+                  <v-list-tile>
+                    <v-list-tile-content>
+                      <v-list-tile-title>{{props.item.ISBN}}</v-list-tile-title>
+                      <v-list-tile-sub-title>ISBN</v-list-tile-sub-title>
+                    </v-list-tile-content>
+                  </v-list-tile>
+                  <v-list-tile>
+                    <v-list-tile-content>
+                      <v-list-tile-title>{{props.item.Editorial}}</v-list-tile-title>
+                      <v-list-tile-sub-title>Editorial</v-list-tile-sub-title>
+                    </v-list-tile-content>  
+                  </v-list-tile>
+                </v-list>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn flat color="teal" :to="props.item.Ver"><v-icon>remove_red_eye</v-icon></v-btn>
+                <v-btn flat color="teal" :to="props.item.Oferta"><v-icon>shopping_cart</v-icon></v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-flex>
+        </template>
+      </v-data-iterator>
+    </v-container>
+    
   </div>
 </template>
 
@@ -34,6 +72,10 @@ export default {
   },
   data: () => ({
     autores: [],
+    rowsPerPageItems: [4, 8, 12],
+    pagination: {
+      rowsPerPage: 4
+    },
     tabla: {
       libros: [],
       headers: [

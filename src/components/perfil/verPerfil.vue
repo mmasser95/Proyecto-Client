@@ -24,7 +24,7 @@
         </v-flex>
         <v-flex></v-flex>
       </v-layout>
-      <v-layout row wrap class="mt-5">
+      <v-layout row wrap class="mt-5" v-if="tipoUser != 'admin'">
         <v-flex></v-flex>
         <v-flex xs12 sm10>
           <h2 class="text-xs-center">Mis direcciones</h2>
@@ -51,7 +51,7 @@ const apiService = new APIService();
 export default {
   name: 'verPerfil',
   computed: {
-    ...mapGetters(['isLoggedIn', 'myId']),
+    ...mapGetters(['isLoggedIn', 'myId', 'tipoUser']),
   },
   data() {
     return {
@@ -64,20 +64,33 @@ export default {
       this.$router.push('/');
       return false;
     }
-    console.log(this.myId);
-    apiService
-      .getUser(this.myId)
-      .then((res) => {
-        const usr = res.data.user;
-        this.user = [
-          { title: usr.username, sub: 'Username', icn: 'account_circle' },
-          { title: usr.email, sub: 'E-mail', icn: 'alternate_email' },
-        ];
-        this.direcciones = usr.direccion;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (this.tipoUser=='admin'){
+      apiService
+        .getAdmin(this.myId)
+        .then((res) => {
+          const usr = res.data.admin;
+          this.user=[
+            { title: usr.username, sub:'Username', icn:'account_circle' },
+            { title: usr.email, sub: 'E-mail', icn: 'alternate_email' },
+          ]
+        }).catch((err) => {
+          console.log(err);
+        });
+    }else{
+      apiService
+        .getUser(this.myId)
+        .then((res) => {
+          const usr = res.data.user;
+          this.user = [
+            { title: usr.username, sub: 'Username', icn: 'account_circle' },
+            { title: usr.email, sub: 'E-mail', icn: 'alternate_email' },
+          ];
+          this.direcciones = usr.direccion;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      }
   },
 };
 </script>

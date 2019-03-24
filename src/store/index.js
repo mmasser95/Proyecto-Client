@@ -31,10 +31,8 @@ export const store = new Vuex.Store({
       state.token = params.token;
       state.tipo = params.tipo;
       state.idd = params.idd;
-      state.email = {
-        email: params.email,
-        username: params.username,
-      };
+      state.email = params.email;
+      state.username=params.username;
       localStorage.setItem('storeToken', params.token);
     },
     setTipo(state, { tipo }) {
@@ -49,7 +47,7 @@ export const store = new Vuex.Store({
       state.idd = idd.idd;
       localStorage.setItem('storeIdd', idd.idd);
     },
-    setInfo(state, { email, username }) {
+    setInfo(state, { email }) {
       state.email = email.email;
       state.username = email.username;
       localStorage.setItem('storeEmail', email.email);
@@ -60,7 +58,7 @@ export const store = new Vuex.Store({
     authenticate: ({ commit }, token) => commit('setToken', { token }),
     authenticate2: ({ commit }, idd) => commit('setId', { idd }),
     authenticate3: ({ commit }, tipo) => commit('setTipo', { tipo }),
-    setInfo: ({ commit }, email, username) => commit('setInfo', { email, username }),
+    setInfo: ({ commit }, email, username) => commit('setInfo', { email }),
     initin: ({ commit }, params) => commit('initin', { params }),
   },
 });

@@ -1,12 +1,7 @@
 <template>
   <div class="verLibro">
-    <v-container>
+    <v-container fluid>
       <v-layout row wrap>
-        <v-flex>
-          <v-card>
-            <v-card-title>
-              <v-container>
-                <v-layout row wrap>
                   <v-flex xs12>
                     <h2 class="text-xs-center">{{ libro.Titulo }}</h2>
                   </v-flex>
@@ -58,11 +53,7 @@
               <v-btn flat color="teal" :to="pagEditar">Editar</v-btn>
               <v-btn flat color="red" @click='eliminarLibro'>Eliminar</v-btn>
             </v-card-actions>
-          </v-card>
-        </v-flex>
-      </v-layout>
-      <v-layout row wrap> <v-flex></v-flex> </v-layout>
-    </v-container>
+          
     <v-dialog v-model="dialog" width="500">
       <v-card class="text-xs-center">
         <v-card-title>Guardado</v-card-title>
