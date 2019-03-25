@@ -50,7 +50,14 @@ export class APIService {
     return axios.get(url, getHeaders()).then(res => res);
   }
   getAutor(ids) {
-    const url = `${api}/autor/${ids}`;
+    if (store.getters.isLoggedIn) {
+      const url = `${api}/autor/${ids}`;
+      return axios.get(url, getHeaders()).then(res => res);
+    }
+    return false;
+  }
+  getLibrosAutor(ids){
+    const url = `${api}/libro/autor/${ids}`;
     return axios.get(url).then(res => res);
   }
   getAdmin(ids) {

@@ -5,6 +5,8 @@ import buscarLibro from '@/components/libro/buscarLibro';
 import editarLibro from '@/components/libro/editarLibro';
 import nuevolibro from '@/components/libro/nuevoLibro';
 import verLibro from '@/components/libro/verLibro';
+import buscarAutor from '@/components/autor/buscarAutor';
+import verAutor from '@/components/autor/verAutor';
 import Login from '@/components/login';
 import nuevaOferta from '@/components/oferta/nuevaOferta';
 import Registro from '@/components/registro';
@@ -38,6 +40,15 @@ export default new Router({
       component: nuevolibro,
     },
     {
+      path: '/buscarAutor',
+      component: buscarAutor,
+    },
+    {
+      path: '/verAutor/:autorId',
+      component: verAutor,
+      props: true,
+    },
+    {
       path: '/nuevoAutor',
       component: nuevoAutor,
     },
@@ -57,8 +68,8 @@ export default new Router({
       props: true,
     },
     {
-      path:'/verPerfil',
-      component:verPerfil,
+      path: '/verPerfil',
+      component: verPerfil,
     },
     {
       path: '',
