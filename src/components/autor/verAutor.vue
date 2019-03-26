@@ -74,9 +74,9 @@ export default {
       .getAutor(this.autorId)
       .then((res) => {
         for (const i in res.data.autor) {
-          if(i=='__v')continue;
+          if(i=='__v'||i=='_id')continue;
           if(i=='Fecha_nacimiento'){
-            this.autor.push({name:i, value:moment(res.data.autor[i]).format('DD/MM/YYYY')});
+            this.autor.push({name:'Fecha de nacimiento', value:moment(res.data.autor[i]).format('DD/MM/YYYY')});
             continue;
           }
           this.autor.push({name:i, value:res.data.autor[i]});

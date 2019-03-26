@@ -1,16 +1,18 @@
 import adminLogin from '@/components/admin';
+import buscarAutor from '@/components/autor/buscarAutor';
 import nuevoAutor from '@/components/autor/nuevoAutor';
+import verAutor from '@/components/autor/verAutor';
 import Home from '@/components/Home';
 import buscarLibro from '@/components/libro/buscarLibro';
 import editarLibro from '@/components/libro/editarLibro';
 import nuevolibro from '@/components/libro/nuevoLibro';
 import verLibro from '@/components/libro/verLibro';
-import buscarAutor from '@/components/autor/buscarAutor';
-import verAutor from '@/components/autor/verAutor';
 import Login from '@/components/login';
 import nuevaOferta from '@/components/oferta/nuevaOferta';
-import Registro from '@/components/registro';
 import verPerfil from '@/components/perfil/verPerfil';
+import nuevaPeticionAutor from '@/components/peticion/nuevaPeticionAutor';
+import nuevaPeticionLibro from '@/components/peticion/nuevaPeticionLibro';
+import Registro from '@/components/registro';
 import Vue from 'vue';
 import Router from 'vue-router';
 
@@ -70,6 +72,14 @@ export default new Router({
     {
       path: '/verPerfil',
       component: verPerfil,
+    },
+    {
+      path:'/nuevaPeticionAutor',
+      component:nuevaPeticionAutor,
+    },
+    {
+      path:'/nuevaPeticionLibro',
+      component:nuevaPeticionLibro,
     },
     {
       path: '',

@@ -22,8 +22,10 @@
                     item.sub
                   }}</v-list-tile-sub-title>
                 </v-list-tile-content>
-                <v-list-tile-action>
-                  <v-icon></v-icon>
+                <v-list-tile-action v-if="item.action">
+                  <v-btn flat color="teal" :to="item.action">
+                    <v-icon>exit_to_app</v-icon>
+                  </v-btn>
                 </v-list-tile-action>
               </v-list-tile>
             </v-list>
@@ -142,6 +144,7 @@ export default {
                 icon: 'face',
                 title: `${this.autor.Nombre} ${this.autor.Apellidos}`,
                 sub: 'Autor',
+                action:`/verAutor/${this.autor._id}`,
               });
             })
             .catch((err) => {

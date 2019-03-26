@@ -36,6 +36,7 @@
     </v-toolbar>
     <v-navigation-drawer app v-model="drawer" id="navi" absolute temporary>
       <v-img
+        id="imagenMenu"
         v-if="isLoggedIn"
         :aspect-ratio="16 / 9"
         src="https://cdn.vuetifyjs.com/images/parallax/material.jpg"
@@ -120,9 +121,14 @@ export default {
               icon: 'book',
               submenu: [
                 {
-                  title: 'Buscar Libro',
+                  title: 'Buscar libro',
                   icon: 'search',
                   href: '/buscarLibro',
+                },
+                {
+                  title: 'Nueva petición',
+                  icon: 'bookmark',
+                  href: '/nuevaPeticionLibro'
                 },
               ],
             },
@@ -131,9 +137,14 @@ export default {
               icon: 'face',
               submenu: [
                 {
-                  title: 'Buscar Autor',
+                  title: 'Buscar autor',
                   icon: 'search',
                   href: '/buscarAutor',
+                },
+                {
+                  title: 'Nueva petición',
+                  icon: 'bookmark',
+                  href: '/nuevaPeticionAutor'
                 },
               ],
             },
@@ -141,8 +152,11 @@ export default {
               title: 'Mi rincón',
               icon: 'account_circle',
               submenu: [
-                { title: 'Mis Ofertas', icon: 'euro_symbol', href: '/oferta' },
-                { title: 'Mis Pedidos', icon: 'inbox', href: '/pedido' },
+                { title: 'Mis ofertas', icon: 'euro_symbol', href: '/oferta' },
+                { title: 'Mis pedidos', icon: 'inbox', href: '/pedido' },
+                {
+                  title: 'Mis peticiones', icon: 'bookmarks', href: '/peticion',
+                },
                 {
                   title: 'Mi perfil',
                   icon: 'account_circle',
@@ -161,11 +175,11 @@ export default {
               icon: 'book',
               submenu: [
                 {
-                  title: 'BuscarLibro',
+                  title: 'Buscar libro',
                   icon: 'search',
                   href: '/buscarLibro',
                 },
-                { title: 'Subir Libro', icon: 'backup', href: '/nuevolibro' },
+                { title: 'Subir libro', icon: 'backup', href: '/nuevolibro' },
               ],
             },
             {
@@ -173,7 +187,7 @@ export default {
               icon: 'face',
               submenu: [
                 {
-                  title: 'Buscar Autor',
+                  title: 'Buscar autor',
                   icon: 'search',
                   href: '/buscarAutor',
                 },
@@ -186,7 +200,7 @@ export default {
       return [
         { title: 'Home', icon: 'dashboard', href: '/' },
         { title: 'Login', icon: 'account_circle', href: '/login' },
-        { title: 'Admin Login', icon: 'vpn_key', href: '/admin' },
+        { title: 'Admin login', icon: 'vpn_key', href: '/admin' },
         { title: 'Registro', icon: 'create', href: '/registro' },
       ];
     },

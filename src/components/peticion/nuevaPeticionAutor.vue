@@ -1,24 +1,24 @@
 <template>
-  <div class="nuevoAutor">
+  <div class="nuevaPeticionAutor">
     <v-container>
       <v-layout>
         <v-flex>
-          <v-form id="form1" @submit.prevent="subirAutor" v-model="form.valid">
+          <v-form id="form1" @submit.prevent="subirPeticionAutor" v-model="form.valid">
             <v-container>
               <v-layout row wrap>
                 <v-flex xs12 sm4>
                   <v-text-field
                     label="Nombre"
-                    v-model="form.Nombre"
-                    :rules="fform.rules.nombre"
+                    v-model="dform.Nombre"
+                    :rules="form.rules.nombre"
                     required
                   ></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm4>
                   <v-text-field
                     label="Apellidos"
-                    v-model="form.Apellidos"
-                    :rules="fform.rules.apellidos"
+                    v-model="dform.Apellidos"
+                    :rules="form.rules.apellidos"
                     required
                   ></v-text-field>
                 </v-flex>
@@ -36,7 +36,7 @@
                   >
                     <v-text-field
                       slot="activator"
-                      v-model="form.Fecha_nacimiento"
+                      v-model="dform.Fecha_nacimiento"
                       label="Fecha de nacimiento"
                       prepend-icon="event"
                       readonly
@@ -44,7 +44,7 @@
                     <v-date-picker
                       ref="picker"
                       color="teal"
-                      v-model="form.Fecha_nacimiento"
+                      v-model="dform.Fecha_nacimiento"
                       :max="new Date().toISOString().substr(0, 10)"
                       min="1500-01-01"
                       @change="save1"
@@ -68,62 +68,58 @@
 </template>
 
 <script>
-import { APIService } from '@/APIService';
-import { mapGetters } from 'vuex';
-
+import {mapGetters} from 'vuex';
+import {APIService} from '@/APIService';
 const apiService = new APIService();
 export default {
-  name: 'nuevoAutor',
-  computed: {
-    ...mapGetters(['isLoggedIn', 'tipoUser']),
+  name:'nuevaPeticionAutor',
+  computed:{
+    ...mapGetters(['isLoggedIn', 'myId']),
   },
-  data: () => ({
-    form: {
-      Nombre: '',
-      Apellidos: '',
-      Fecha_nacimiento: '',
-    },
-    menu1: false,
-    fform: {
-      valid: false,
-      rules: {
-        nombre: [v => !!v || 'El nombre es necesario'],
-        apellidos: [v => !!v || 'Los apellidos son necesario'],
-      },
-    },
-  }),
-  watch: {
+  watch:{
     menu1(val) {
       val && this.$nextTick(() => (this.$refs.picker.activePicker = 'YEAR'));
     },
   },
-  methods: {
-    subirAutor() {
+  data:()=>{
+    return{
+      menu1:false,
+      form:{
+        valid:false,
+        rules:{
+          nombre:[v => !!v || 'El nombre es necesario'],
+          apellidos:[v => !!v || 'Los apellidos son necesario']
+        }
+      },
+      dform:{
+        Nombre:'',
+        Apellidos:'',
+        Fecha_nacimiento:'',
+        User:null,
+      }
+    }
+  },
+  methods:{
+    subirPeticionAutor(){
       apiService
-        .postAutor(this.form)
+        .postPeticionAutor(this.dform)
         .then((res) => {
-          if (res.status == 200) {
-            window.alert('Guardado');
-            this.$router.push
-          } else {
-            window.alert('Error');
-          }
-        })
-        .catch((err) => {
-          console.log(err);
+          window.alert('Guardado');
+          this.$router.push('/');
+        }).catch((err) => {
+          window.alert('Error');
         });
     },
     save1() {
       this.$refs.menu1.save(this.form.Fecha_nacimiento);
     },
   },
-  created() {
-    if (!this.isLoggedIn || this.tipoUser != 'admin') {
+  created:function() {
+    if(!this.isLoggedIn){
       this.$router.push('/');
       return false;
     }
+    this.dform.User=this.myId;
   },
-};
+}
 </script>
-
-<style></style>

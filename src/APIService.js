@@ -19,7 +19,7 @@ export class APIService {
     const url = `${api}/user/verificar`;
     return axios.post(url, data).then(res => res);
   }
-  verificarAdminLogin(data){
+  verificarAdminLogin(data) {
     const url = `${api}/admin/verificar`;
     return axios.post(url, data).then(res => res);
   }
@@ -56,7 +56,7 @@ export class APIService {
     }
     return false;
   }
-  getLibrosAutor(ids){
+  getLibrosAutor(ids) {
     const url = `${api}/libro/autor/${ids}`;
     return axios.get(url).then(res => res);
   }
@@ -108,6 +108,18 @@ export class APIService {
     if (store.getters.isLoggedIn) {
       const url = `${api}/libro/${ids}`;
       return axios.delete(url, getHeaders()).then(res => res);
+    }
+  }
+  postPeticionAutor(datos) {
+    if (store.getters.isLoggedIn) {
+      const url = `${api}/peticion/autor`;
+      return axios.post(url, datos, getHeaders()).then(res => res);
+    }
+  }
+  postPeticionLibro(datos){
+    if (store.getters.isLoggedIn) {
+      const url = `${api}/peticion/libro`;
+      return axios.post(url, datos, getHeaders()).then(res => res);
     }
   }
 }
