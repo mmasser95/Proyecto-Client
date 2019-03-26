@@ -194,6 +194,11 @@ export default {
                 { title: 'Subir Autor', icon: 'backup', href: '/nuevoAutor' },
               ],
             },
+            {
+              title:'Peticiones',
+              icon:'bookmarks',
+              href:'/verPeticiones',
+            },
           ];
         }
       }

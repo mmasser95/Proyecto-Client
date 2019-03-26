@@ -12,6 +12,7 @@ import nuevaOferta from '@/components/oferta/nuevaOferta';
 import verPerfil from '@/components/perfil/verPerfil';
 import nuevaPeticionAutor from '@/components/peticion/nuevaPeticionAutor';
 import nuevaPeticionLibro from '@/components/peticion/nuevaPeticionLibro';
+import verPeticiones from '@/components/peticion/verPeticiones';
 import Registro from '@/components/registro';
 import Vue from 'vue';
 import Router from 'vue-router';
@@ -74,12 +75,16 @@ export default new Router({
       component: verPerfil,
     },
     {
-      path:'/nuevaPeticionAutor',
-      component:nuevaPeticionAutor,
+      path: '/nuevaPeticionAutor',
+      component: nuevaPeticionAutor,
     },
     {
-      path:'/nuevaPeticionLibro',
-      component:nuevaPeticionLibro,
+      path: '/nuevaPeticionLibro',
+      component: nuevaPeticionLibro,
+    },
+    {
+      path: '/verPeticiones',
+      component: verPeticiones,
     },
     {
       path: '',

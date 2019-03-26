@@ -110,10 +110,22 @@ export class APIService {
       return axios.delete(url, getHeaders()).then(res => res);
     }
   }
+  getPeticionesAutor(){
+    if (store.getters.isLoggedIn) {
+      const url = `${api}/peticion/autor`;
+      return axios.get(url, getHeaders()).then(res => res);
+    }
+  }
   postPeticionAutor(datos) {
     if (store.getters.isLoggedIn) {
       const url = `${api}/peticion/autor`;
       return axios.post(url, datos, getHeaders()).then(res => res);
+    }
+  }
+  getPeticionesLibro(){
+    if (store.getters.isLoggedIn) {
+      const url = `${api}/peticion/libro`;
+      return axios.get(url, getHeaders()).then(res => res);
     }
   }
   postPeticionLibro(datos){

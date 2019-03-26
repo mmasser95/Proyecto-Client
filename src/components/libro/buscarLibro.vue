@@ -108,7 +108,7 @@ export default {
           .getLibros()
           .then((res) => {
             const libros = res.data.libros;
-            for (const libro of libros) {
+            for (let libro of libros) {
               if (libro.Autor) {
                 const autor = this.autores
                   .map(e => e._id)
