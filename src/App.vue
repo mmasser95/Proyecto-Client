@@ -212,11 +212,12 @@ export default {
   },
   data: () => ({
     drawer: null,
+    paraActualizar:0,
   }),
   methods: {
     logout() {
       localStorage.clear();
-      this.$router.go({ path: '/', force: true });
+      this.$router.go({ path: '/'});
     },
   },
   beforeCreate() {
