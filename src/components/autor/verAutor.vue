@@ -70,6 +70,7 @@ export default {
       this.$router.push('/');
       return false;
     }
+    document.getElementById('loader').style='display:absolute;'
     apiService
       .getAutor(this.autorId)
       .then((res) => {
@@ -81,7 +82,9 @@ export default {
           }
           this.autor.push({name:i, value:res.data.autor[i]});
         }
+        document.getElementById('loader').style='display:none;'
       }).catch((err) => {
+        document.getElementById('loader').style='display:none;'
         console.log(err)
       });
     apiService
@@ -90,6 +93,7 @@ export default {
         this.librosAutor=res.data.libros;
       }).catch((err) => {
         console.log(err);
+        document.getElementById('loader').style='display:none;'
       });
   },
 }

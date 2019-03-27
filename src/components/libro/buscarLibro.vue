@@ -100,6 +100,7 @@ export default {
       this.$router.push('/');
       return false;
     }
+    document.getElementById('loader').style='display:absolute;'
     apiService
       .getAutores()
       .then((res) => {
@@ -121,12 +122,15 @@ export default {
               libro.Oferta = `/nuevaOferta/${libro._id}`;
             }
             this.tabla.libros = libros;
+            document.getElementById('loader').style='display:none;'
           })
           .catch((err) => {
+            document.getElementById('loader').style='display:none;'
             console.log(err);
           });
       })
       .catch((err) => {
+        document.getElementById('loader').style='display:none;'
         console.log(`Error ${err}`);
       });
   },

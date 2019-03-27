@@ -64,10 +64,7 @@ export default {
     loginAdmin() {
       if (this.form.valid) {
         let sbtn = this.statelogin;
-        if (sbtn === true) {
-          return false;
-        }
-        sbtn = true;
+        document.getElementById('loader').style='display:absolute;'
         const fr = this.form;
         const datos = {
           email: fr.email,
@@ -91,7 +88,7 @@ export default {
             apiService
               .getAdmin(this.myId)
               .then((res) => {
-                sbtn = false;
+                document.getElementById('loader').style='display:none;'
                 this.$store.dispatch({
                   type: 'setInfo',
                   email: res.data.admin.email,
@@ -100,7 +97,7 @@ export default {
                 this.$router.push('/');
               })
               .catch((err) => {
-                sbtn = false;
+                document.getElementById('loader').style='display:none;'
                 this.alert.dis = true;
                 this.alert.type = 'warning';
                 this.alert.color = 'yellow';
@@ -108,7 +105,7 @@ export default {
               });
           })
           .catch((err) => {
-            sbtn = false;
+            document.getElementById('loader').style='display:none;'
             this.alert.dis = true;
             this.alert.type = 'error';
             this.alert.color = 'blue';

@@ -214,15 +214,18 @@ export default {
     },
     editarLibro() {
       if (this.form.valid) {
+        document.getElementById('loader').style='display:absolute;'
         this.form.datos.Autor = this.form.datos.Autor.valu;
         apiService
           .putLibro(this.form.datos._id, this.form.datos)
           .then((res) => {
             if (res.status == 200) {
               this.$router.push(`/verLibro/${this.form.datos._id}`);
+              document.getElementById('loader').style='display:none;'
             }
           })
           .catch((err) => {
+            document.getElementById('loader').style='display:none;'
             this.errorText = 'Error al guardar el libro';
             this.dialog = true;
           });
@@ -237,6 +240,7 @@ export default {
       this.$router.push('/');
       return false;
     }
+    document.getElementById('loader').style='display:absolute;'
     apiService
       .getAutores()
       .then((res) => {
@@ -248,9 +252,11 @@ export default {
         }
       })
       .catch((err) => {
+        document.getElementById('loader').style='display:none;'
         window.alert('Ha habido un error');
         this.$router.push('/');
       });
+    document.getElementById('loader').style='display:absolute;'
     apiService
       .getLibro(this.idLibro)
       .then((res) => {
@@ -266,12 +272,15 @@ export default {
               text: `${resp.data.autor.Nombre} ${resp.data.autor.Apellidos}`,
               valu: resp.data.autor._id,
             };
+            document.getElementById('loader').style='display:none;'
           })
           .catch((err) => {
+            document.getElementById('loader').style='display:none;'
             this.$router.push('/');
           });
       })
       .catch((err) => {
+        document.getElementById('loader').style='display:none;'
         this.$router.push('/');
       });
   },

@@ -99,15 +99,18 @@ export default {
   },
   methods: {
     subirAutor() {
+      document.getElementById('loader').style='display:absolute;'
       apiService
         .postAutor(this.form)
         .then((res) => {
+          document.getElementById('loader').style='display:none;'
           if (res.status == 200) {
             window.alert('Guardado');
-            this.$router.push
+            this.$router.push('/buscarLibro');
           } else {
             window.alert('Error');
           }
+          document.getElementById('loader').style='display:none;'
         })
         .catch((err) => {
           console.log(err);

@@ -72,7 +72,7 @@ export default {
         if (sbtn === true) {
           return false;
         }
-        sbtn = true;
+        document.getElementById('loader').style='display:absolute;'
         const datos = {
           email: this.form.email,
           pass: this.form.pass,
@@ -100,10 +100,10 @@ export default {
                   username: resp.data.user.username,
                 });
                 this.$router.push('/');
-                sbtn = false;
+                document.getElementById('loader').style='display:none;'
               })
               .catch((err) => {
-                sbtn = false;
+                document.getElementById('loader').style='display:none;'
                 this.alert.statee = true;
                 this.alert.type = 'warning';
                 this.alert.color = 'yellow';
@@ -112,7 +112,7 @@ export default {
               });
           })
           .catch((err) => {
-            sbtn = false;
+            document.getElementById('loader').style='display:none;'
             this.alert.statee = true;
             this.alert.type = 'error';
             this.alert.color = 'red';

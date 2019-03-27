@@ -44,16 +44,19 @@
                   </template>
                 </v-data-table>
               </v-flex>
+              <v-flex xs12>
+                <v-spacer></v-spacer>
+                <v-btn flat color="teal" :to="pagEditar">Editar</v-btn>
+                <v-btn flat color="red" @click='eliminarLibro'>Eliminar</v-btn>
+              </v-flex>
             </v-layout>
           </v-flex>
           <v-flex xs12 sm2></v-flex>
         </v-layout>
       </v-container>
     
-    <div v-if="tipoUser == 'admin'">
-      <v-spacer></v-spacer>
-      <v-btn flat color="teal" :to="pagEditar">Editar</v-btn>
-      <v-btn flat color="red" @click='eliminarLibro'>Eliminar</v-btn>
+    <div class="w-xs-100 " v-if="tipoUser == 'admin'">
+      
     </div>
           
     <v-dialog v-model="dialog" width="500">
@@ -114,6 +117,7 @@ export default {
       this.$router.push('/');
       return false;
     }
+    document.getElementById('loader').style='display:absolute;'
     this.pagEditar = `/editarLibro/${this.libroID}`;
     apiService
       .getLibro(this.libroID)
@@ -146,8 +150,10 @@ export default {
                 sub: 'Autor',
                 action:`/verAutor/${this.autor._id}`,
               });
+              document.getElementById('loader').style='display:none;'
             })
             .catch((err) => {
+              document.getElementById('loader').style='display:none;'
               console.log(err);
             });
         }

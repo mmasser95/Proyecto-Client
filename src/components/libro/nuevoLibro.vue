@@ -226,16 +226,19 @@ export default {
         Paginas: libro.Paginas,
       };
       if (libro.valid) {
+        document.getElementById('loader').style='display:absolute;'
         apiService
           .postLibro(datos)
           .then((res) => {
             if (res.status === 200) {
+              document.getElementById('loader').style='display:none;'
               // TODO Mejorar aviso
               window.alert('Guardado');
               this.$router.push('/buscarLibro');
             }
           })
           .catch((err) => {
+            document.getElementById('loader').style='display:none;'
             console.log(err);
           });
       }
@@ -252,6 +255,7 @@ export default {
       this.$router.push('/');
       return false;
     }
+    document.getElementById('loader').style='display:absolute;'
     apiService
       .getAutores()
       .then((res) => {
@@ -261,8 +265,10 @@ export default {
             value: autor._id,
           });
         }
+        document.getElementById('loader').style='display:none;'
       })
       .catch((err) => {
+        document.getElementById('loader').style='display:none;'
         console.log(err);
       });
   },

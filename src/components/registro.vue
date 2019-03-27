@@ -97,11 +97,14 @@ export default {
           email: fr.email,
           pass: fr.pass,
         };
+        document.getElementById('loader').style='display:absolute;'
         APiService.signUpUser(datos)
           .then((res) => {
+            document.getElementById('loader').style='display:none;'
             this.dialog = true;
           })
           .catch((err) => {
+            document.getElementById('loader').style='display:none;'
             this.alert.dis = true;
             this.alert.message = err.response.message;
             this.alert.color = 'red';
@@ -113,6 +116,7 @@ export default {
     if (this.isLoggedIn.token) {
       this.$router.push('/');
     }
+    document.getElementById('loader').style='display:none;'
   },
 };
 

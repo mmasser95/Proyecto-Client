@@ -1,5 +1,8 @@
 <template>
   <v-app>
+    <div id="loader">
+      <div></div>
+    </div>
     <v-toolbar app dark color="teal">
       <v-toolbar-side-icon @click.stop="drawer = !drawer;"></v-toolbar-side-icon>
       <v-toolbar-title class="font-weight-black">WalaBook</v-toolbar-title>
@@ -273,6 +276,32 @@ export default {
 }
 #navi {
   position: fixed;
+}
+#loader{
+  position: fixed;
+  width: 100vw;
+  z-index: 3;
+  height: 100vh;
+  background-color: #ffffff
+}
+#loader > div{
+  position: inherit;
+  z-index: inherit;
+  left: 55%;
+  bottom: 45%;
+  margin: -75px 0 0 -75px;
+  border-bottom: 16px solid teal;
+  /*border-right: 16px solid teal;*/
+  border-top: 16px solid #333;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 1.5s linear infinite;
+}
+
+@keyframes spin {
+  0%{ transform: rotate(0deg); }
+  100%{ transform: rotate(360deg);}
 }
 </style>
 

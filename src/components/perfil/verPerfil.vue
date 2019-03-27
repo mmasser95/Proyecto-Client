@@ -64,6 +64,7 @@ export default {
       this.$router.push('/');
       return false;
     }
+    document.getElementById('loader').style='display:absolute;'
     if (this.tipoUser=='admin'){
       apiService
         .getAdmin(this.myId)
@@ -73,13 +74,16 @@ export default {
             { title: usr.username, sub:'Username', icn:'account_circle' },
             { title: usr.email, sub: 'E-mail', icn: 'alternate_email' },
           ]
+          document.getElementById('loader').style='display:none;'
         }).catch((err) => {
+          document.getElementById('loader').style='display:none;'
           console.log(err);
         });
     }else{
       apiService
         .getUser(this.myId)
         .then((res) => {
+          document.getElementById('loader').style='display:none;'
           const usr = res.data.user;
           this.user = [
             { title: usr.username, sub: 'Username', icn: 'account_circle' },
@@ -88,6 +92,7 @@ export default {
           this.direcciones = usr.direccion;
         })
         .catch((err) => {
+          document.getElementById('loader').style='display:none;'
           console.log(err);
         });
       }

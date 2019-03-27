@@ -48,12 +48,15 @@ export default {
       this.$router.push('/');
       return false;
     }
+    document.getElementById('loader').style='display:absolute;'
     apiService
       .getAutores()
       .then((res) => {
+        document.getElementById('loader').style='display:none;'
         this.autores = res.data.autores;
         this.autores.map(e=>{if (e.Fecha_nacimiento) e.Fecha_nacimiento=moment(e.Fecha_nacimiento).format('DD/MM/YYYY')});
       }).catch((err) => {
+        document.getElementById('loader').style='display:none;'
         console.log(err);
       });
   },
