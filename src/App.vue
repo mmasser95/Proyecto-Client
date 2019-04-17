@@ -264,8 +264,6 @@ export default {
           });
       }
     }
-
-    console.log(this.isLoggedIn);
   },
 };
 

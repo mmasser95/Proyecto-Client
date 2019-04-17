@@ -27,7 +27,7 @@
       <v-layout row wrap class="mt-5" v-if="tipoUser != 'admin'">
         <v-flex></v-flex>
         <v-flex xs12 sm10>
-          <h2 class="text-xs-center">Mis direcciones</h2>
+          <h2 class="text-xs-center">Mis direcciones <v-btn flat to="/nuevaDireccion"><v-icon >account_circle</v-icon></v-btn></h2>
           <v-list>
             <v-list-tile v-for="(dir,i) in direcciones" :key='i'>
               <v-list-tile-content>

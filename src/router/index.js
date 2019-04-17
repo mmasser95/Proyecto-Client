@@ -9,6 +9,7 @@ import nuevolibro from '@/components/libro/nuevoLibro';
 import verLibro from '@/components/libro/verLibro';
 import Login from '@/components/login';
 import nuevaOferta from '@/components/oferta/nuevaOferta';
+import nuevaDireccion from '@/components/perfil/direccion/nuevaDireccion';
 import verPerfil from '@/components/perfil/verPerfil';
 import nuevaPeticionAutor from '@/components/peticion/nuevaPeticionAutor';
 import nuevaPeticionLibro from '@/components/peticion/nuevaPeticionLibro';
@@ -85,6 +86,10 @@ export default new Router({
     {
       path: '/verPeticiones',
       component: verPeticiones,
+    },
+    {
+      path:'/nuevaDireccion',
+      component:nuevaDireccion
     },
     {
       path: '',

@@ -98,6 +98,12 @@ export class APIService {
       return axios.post(url, datos, getHeaders()).then(res => res);
     }
   }
+  postDireccion(datos){
+    if (store.getters.isLoggedIn) {
+      const url = `${api}/user/direccion`;
+      return axios.post(url, datos, getHeaders()).then(res => res);
+    }
+  }
   putLibro(ids, update) {
     if (store.getters.isLoggedIn) {
       const url = `${api}/libro/${ids}`;

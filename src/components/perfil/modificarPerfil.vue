@@ -1,5 +1,7 @@
 <template>
-  <div class="modificarPerfil"></div>
+  <div class="modificarPerfil">
+    
+  </div>
 </template>
 
 <script>
