@@ -53,7 +53,7 @@ export default {
       rules: {
         importe: [
           v => !isNaN(v) || 'El importe debe ser un numero',
-          v => /^(\d){1,9}(\.(\d){0,2})?$/g.test(v) || 'Introduce un importe correcto',
+          v => /^(\d){1,9}(\.(\d){1,2})?$/g.test(v) || 'Introduce un importe correcto',
         ],
       },
     },

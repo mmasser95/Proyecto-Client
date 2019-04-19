@@ -40,7 +40,6 @@
     <v-navigation-drawer app v-model="drawer" id="navi" absolute temporary>
       <v-img
         id="imagenMenu"
-        v-if="isLoggedIn"
         :aspect-ratio="16 / 9"
         src="https://cdn.vuetifyjs.com/images/parallax/material.jpg"
       >

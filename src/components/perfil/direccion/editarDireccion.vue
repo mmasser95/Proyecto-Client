@@ -1,14 +1,14 @@
 <template>
-  <div class="nuevaDireccion">
+  <div class="editarDireccion">
     <v-container>
       <v-layout row wrap>
-        <v-flex>
-          <h1 class="text-xs-center">Nueva dirección</h1>
+        <v-flex xs12>
+          <h1 class="text-xs-center">Editar dirección</h1>
         </v-flex>
       </v-layout>
       <v-layout>
         <v-flex>
-          <v-form @submit.prevent="guardarDireccion" id="form1" v-model="form.valid">
+          <v-form @submit.prevent="editarDireccion" id="form1" v-model="form.valid">
             <v-layout row wrap>
               <v-flex xs10 sm4>
                 <v-text-field
@@ -85,7 +85,6 @@
           </v-form>
         </v-flex>
       </v-layout>
-      
     </v-container>
   </div>
 </template>
@@ -96,51 +95,36 @@ import {APIService} from '@/APIService';
 
 const apiService = new APIService();
 export default {
-  name:'nuevaDireccion',
+  name:'editarDireccion',
   computed:{
-    ...mapGetters(['isLoggedIn', 'myId']),
+    ...mapGetters(['isLoggedIn'])
   },
   data:()=>{
     return{
       form:{
         valid:false,
         datos:{
-          calle: '',
-          numero: '',
-          piso: '',
-          puerta: '',
-          escalera: '',
+          calle:'',
+          numero:'',
+          escalera:'',
+          piso:'',
+          puerta:'',
           poblacion:'',
           CP:'',
           provincia:'',
           estado:'',
           id:'',
         },
-        rules:{
-
-        },
-      },
+        rules:{},
+      }
     }
   },
-  methods:{
-    guardarDireccion(){
-      let nwdir = this.form.datos;
-      apiService
-        .postDireccion(nwdir)
-        .then((res) => {
-          alert("Direccion guardada");
-          this.$router.push('/verPerfil');
-        }).catch((err) => {
-          console.log(err);
-        });
-    }
-  },
+  methods:{},
   created(){
-    if (!this.isLoggedIn) {
+    if(!this.isLoggedIn){
       this.$router.push('/');
       return false;
     }
-    this.form.datos.id=this.myId;
-  }
+  },
 }
 </script>

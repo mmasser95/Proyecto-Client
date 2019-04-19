@@ -10,7 +10,7 @@
           <v-flex xs12 sm4></v-flex>
           <v-flex xs12 sm6>
             <v-list>
-              <v-list-tile v-for="item in items" :key="item.id">
+              <v-list-tile v-for="(item,i) in items" :key="i">
                 <v-list-tile-action>
                   <v-icon>{{ item.icon }}</v-icon>
                 </v-list-tile-action>

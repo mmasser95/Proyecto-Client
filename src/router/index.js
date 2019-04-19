@@ -8,6 +8,7 @@ import editarLibro from '@/components/libro/editarLibro';
 import nuevolibro from '@/components/libro/nuevoLibro';
 import verLibro from '@/components/libro/verLibro';
 import Login from '@/components/login';
+import editarOferta from '@/components/oferta/editarOferta';
 import nuevaOferta from '@/components/oferta/nuevaOferta';
 import nuevaDireccion from '@/components/perfil/direccion/nuevaDireccion';
 import verPerfil from '@/components/perfil/verPerfil';
@@ -90,6 +91,11 @@ export default new Router({
     {
       path:'/nuevaDireccion',
       component:nuevaDireccion
+    },
+    {
+      path:'/editarDireccion/:ofertaId',
+      props:true,
+      component:editarOferta,
     },
     {
       path: '',

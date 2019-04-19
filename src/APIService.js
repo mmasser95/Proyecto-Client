@@ -47,7 +47,11 @@ export class APIService {
   }
   getOfertasLibro(ids) {
     const url = `${api}/oferta/libro/${ids}`;
-    return axios.get(url, getHeaders()).then(res => res);
+    return axios.get(url).then(res => res);
+  }
+  getOferta(ids){
+    const url = `${api}/oferta/${ids}`;
+    return axios.get(url).then(res => res);
   }
   getAutor(ids) {
     if (store.getters.isLoggedIn) {
@@ -70,6 +74,13 @@ export class APIService {
   getUser(ids) {
     if (store.getters.isLoggedIn) {
       const url = `${api}/user/${ids}`;
+      return axios.get(url, getHeaders()).then(res => res);
+    }
+    return false;
+  }
+  getOferta(ids){
+    if (store.getters.isLoggedIn) {
+      const url = `${api}/oferta/${ids}`;
       return axios.get(url, getHeaders()).then(res => res);
     }
     return false;
@@ -107,6 +118,12 @@ export class APIService {
   putLibro(ids, update) {
     if (store.getters.isLoggedIn) {
       const url = `${api}/libro/${ids}`;
+      return axios.put(url, update, getHeaders()).then(res => res);
+    }
+  }
+  putOferta(ids, update){
+    if (store.getters.isLoggedIn) {
+      const url = `${api}/oferta/${ids}`;
       return axios.put(url, update, getHeaders()).then(res => res);
     }
   }
