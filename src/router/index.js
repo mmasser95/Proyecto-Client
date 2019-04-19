@@ -10,6 +10,7 @@ import verLibro from '@/components/libro/verLibro';
 import Login from '@/components/login';
 import editarOferta from '@/components/oferta/editarOferta';
 import nuevaOferta from '@/components/oferta/nuevaOferta';
+import verOferta from '@/components/oferta/verOferta';
 import nuevaDireccion from '@/components/perfil/direccion/nuevaDireccion';
 import verPerfil from '@/components/perfil/verPerfil';
 import nuevaPeticionAutor from '@/components/peticion/nuevaPeticionAutor';
@@ -70,6 +71,11 @@ export default new Router({
     {
       path: '/nuevaOferta/:libroId',
       component: nuevaOferta,
+      props: true,
+    },
+    {
+      path:'/verOferta/:ofertaId',
+      component:verOferta,
       props: true,
     },
     {
