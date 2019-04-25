@@ -145,6 +145,13 @@
                 </v-flex>
               </v-layout>
               <v-layout row wrap>
+                <v-flex xs2></v-flex>
+                <v-flex xs8>
+                  <input type="file" name="image" id="image">
+                </v-flex>
+                <v-flex xs2></v-flex>
+              </v-layout>
+              <v-layout row wrap>
                 <v-flex></v-flex>
                 <v-flex xs12 sm4>
                   <v-btn block dark color="teal" type="submit" form="form">
@@ -230,12 +237,23 @@ export default {
         apiService
           .postLibro(datos)
           .then((res) => {
-            if (res.status === 200) {
-              document.getElementById('loader').style='display:none;'
+            let fl = document.getElementById('image').files[0];
+            if (fl) {
+              let dta = new FormData();
+              dta.append('image', fl);
+              apiService
+                .putLibroImagen(res.data.librosaved._id,dta)
+                .then((res2) => {
+                  console.log('Imagen guardada')
+                }).catch((err) => {
+                  window.alert('Error');
+                });
               // TODO Mejorar aviso
-              window.alert('Guardado');
-              this.$router.push('/buscarLibro');
+              
             }
+            document.getElementById('loader').style='display:none;'
+            window.alert('Guardado');
+            this.$router.push('/buscarLibro');
           })
           .catch((err) => {
             document.getElementById('loader').style='display:none;'
@@ -274,4 +292,8 @@ export default {
   },
 };
 </script>
-<style></style>
+<style>
+  #image{
+    width: 100%;
+  }
+</style>

@@ -25,8 +25,8 @@
                     <v-card-text></v-card-text>
                     <v-card-actions>
                       <v-spacer></v-spacer>
-                      <v-btn flat color="green" @click="aceptarPeticion(props.item._id)">Ok</v-btn>
-                      <v-btn flat color="red" @click="denegarPeticion(props.item._id)">No</v-btn>
+                      <v-btn flat color="green" @click="aceptarPeticion(props.item._id, 'libro')">Ok</v-btn>
+                      <v-btn flat color="red" @click="denegarPeticion(props.item._id,'libro')">Borrar</v-btn>
                     </v-card-actions>
                   </v-card>
                 </v-flex>
@@ -50,8 +50,8 @@
                     <v-card-text></v-card-text>
                     <v-card-actions>
                       <v-spacer></v-spacer>
-                      <v-btn flat color="green" @click="aceptarPeticion(props.item._id)">Ok</v-btn>
-                      <v-btn flat color="red" @click="denegarPeticion(props.item._id)">No</v-btn>
+                      <v-btn flat color="green" @click="aceptarPeticion(props.item._id,'autor')">Ok</v-btn>
+                      <v-btn flat color="red" @click="denegarPeticion(props.item._id)",'autor'>Borrar</v-btn>
                     </v-card-actions>
                   </v-card>
                 </v-flex>
@@ -81,10 +81,62 @@ export default {
     }
   },
   methods:{
-    aceptarPeticion(ids){
-      console.log(ids);
+    aceptarPeticion(ids, tipo){
+      if(tipo=="autor"){
+        apiService
+          .aceptarPeticionAutor(ids)
+          .then((res) => {
+            window.alert('Guardado');
+            apiService
+              .deletePeticionAutor(ids)
+              .then((res2) => {
+                this.$router.go(-1);    
+              }).catch((err) => {
+                window.alert('Error al borrar');
+              });
+            
+          }).catch((err) => {
+            window.alert(err);
+          });
+      }else if(tipo=="libro"){
+        apiService
+          .aceptarPeticionLibro(ids)
+          .then((res) => {
+            window.alert('Guardado');
+            apiService
+              .deletePeticionLibro(ids)
+              .then((res2) => {
+                this.$router.go(-1);
+              }).catch((err) => {
+                window.alert('Error al borrar');
+              });
+            
+          }).catch((err) => {
+            window.alert(err);
+          });
+      }
     },
-    denegarPeticion(ids){},
+    denegarPeticion(ids, tipo){
+      if (tipo=="libro"){
+        apiService
+          .deletePeticionLibro(ids)
+          .then((res) => {
+            window.alert('Borrado');
+            this.$router.go(-1);
+          }).catch((err) => {
+            window.alert('Error');
+          });
+      }else if(tipo=="autor"){
+        apiService
+          .deletePeticionAutor(ids)
+          .then((res) => {
+            window.alert('Borrado');
+            this.$router.go(-1);
+          }).catch((err) => {
+            window.alert('Error');
+          });
+      }
+    },
   },
   created:function () {
     if(!this.isLoggedIn){

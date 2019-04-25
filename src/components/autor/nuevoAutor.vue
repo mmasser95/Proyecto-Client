@@ -53,6 +53,13 @@
                 </v-flex>
               </v-layout>
               <v-layout row wrap>
+                <v-flex xs2></v-flex>
+                <v-flex xs8>
+                  <input type="file" name="image" id="image">
+                </v-flex>
+                <v-flex xs2></v-flex>
+              </v-layout>
+              <v-layout row wrap>
                 <v-flex xs12>
                   <v-btn block dark color="teal" type="submit" form="form1">
                     <v-icon>backup</v-icon><pre> </pre>Guardar
@@ -104,11 +111,18 @@ export default {
         .postAutor(this.form)
         .then((res) => {
           document.getElementById('loader').style='display:none;'
-          if (res.status == 200) {
-            window.alert('Guardado');
-            this.$router.push('/buscarLibro');
-          } else {
-            window.alert('Error');
+          let fl = document.getElementById('image').files[0];
+          if (fl) {
+            let dta = new FormData();
+            dta.append('image', fl)
+            apiService
+              .putAutorImagen(res.data.autorsaved._id,dta)
+              .then((res2) => {
+                window.alert('Guardado');
+                this.$router.push('/buscarLibro');    
+              }).catch((err) => {
+                window.alert('Error');
+              });
           }
           document.getElementById('loader').style='display:none;'
         })
@@ -129,4 +143,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+#image{
+  width: 100%;
+}
+</style>
