@@ -148,7 +148,8 @@
                 <v-flex></v-flex>
                 <v-flex xs12 sm4>
                   <v-btn block dark color="teal" type="submit" form="form">
-                    <v-icon>backup</v-icon><pre> </pre>Guardar
+                    <v-icon>backup</v-icon>
+                    <pre></pre>Guardar
                   </v-btn>
                 </v-flex>
                 <v-flex></v-flex>
@@ -162,14 +163,14 @@
 </template>
 
 <script>
-import { APIService } from '@/APIService';
-import { mapGetters } from 'vuex';
+import { APIService } from "@/APIService";
+import { mapGetters } from "vuex";
 
 const apiService = new APIService();
 export default {
-  name: 'nuevaPeticionLibro',
+  name: "nuevaPeticionLibro",
   computed: {
-    ...mapGetters(['isLoggedIn', 'myId']),
+    ...mapGetters(["isLoggedIn", "myId"])
   },
   data: () => ({
     autores: [],
@@ -177,39 +178,39 @@ export default {
     menu2: false,
     form: {
       valid: false,
-      ISBN: '',
-      Titulo: '',
-      Editorial: '',
-      Edicion: '',
-      Autor: '',
+      ISBN: "",
+      Titulo: "",
+      Editorial: "",
+      Edicion: "",
+      Autor: "",
       Fecha_Publicacion: null,
       Fecha_Edicion: null,
-      Genero: '',
-      Tapa: '',
-      Sinopsis: '',
-      Paginas: '',
-      User:null,
+      Genero: "",
+      Tapa: "",
+      Sinopsis: "",
+      Paginas: "",
+      User: null,
       rules: {
         ISBN: [
-          v => !!v || 'El ISBN es requerido',
-          v => !isNaN(v) || 'Introduce solo numeros',
-          v => v.length >= 10 || 'El ISBN debe tener como mínimo 10 caracteres',
-          v => v.length <= 13 || 'El ISBN debe tener como máximo 13 caracteres',
+          v => !!v || "El ISBN es requerido",
+          v => !isNaN(v) || "Introduce solo numeros",
+          v => v.length >= 10 || "El ISBN debe tener como mínimo 10 caracteres",
+          v => v.length <= 13 || "El ISBN debe tener como máximo 13 caracteres"
         ],
-        Titulo: [v => !!v || 'El titulo es requerido'],
-        Editorial: [v => !!v || 'La editorial es requerida'],
-        Edicion: [v => v > 0 || 'La edicion es requerida'],
-        Paginas: [v => v >= 0 || 'Si no lo sabes, pon 0'],
-      },
-    },
+        Titulo: [v => !!v || "El titulo es requerido"],
+        Editorial: [v => !!v || "La editorial es requerida"],
+        Edicion: [v => v > 0 || "La edicion es requerida"],
+        Paginas: [v => v >= 0 || "Si no lo sabes, pon 0"]
+      }
+    }
   }),
   watch: {
     menu1(val) {
-      val && this.$nextTick(() => (this.$refs.picker.activePicker = 'YEAR'));
+      val && this.$nextTick(() => (this.$refs.picker.activePicker = "YEAR"));
     },
     menu2(val) {
-      val && this.$nextTick(() => (this.$refs.picker.activePicker = 'YEAR'));
-    },
+      val && this.$nextTick(() => (this.$refs.picker.activePicker = "YEAR"));
+    }
   },
   methods: {
     subirLibro() {
@@ -226,19 +227,19 @@ export default {
         Tapa: libro.Tapa,
         Sinopsis: libro.Sinopsis,
         Paginas: libro.Paginas,
-        User: this.myId,
+        User: this.myId
       };
       if (libro.valid) {
         apiService
           .postPeticionLibro(datos)
-          .then((res) => {
+          .then(res => {
             if (res.status === 200) {
               // TODO Mejorar aviso
-              window.alert('Guardado');
-              this.$router.push('/');
+              window.alert("Guardado");
+              this.$router.push("/");
             }
           })
-          .catch((err) => {
+          .catch(err => {
             console.log(err);
           });
       }
@@ -248,26 +249,26 @@ export default {
     },
     save2() {
       this.$refs.menu2.save(this.form.Fecha_Edicion);
-    },
+    }
   },
   created() {
     if (!this.isLoggedIn) {
-      this.$router.push('/');
+      this.$router.push("/");
       return false;
     }
     apiService
       .getAutores()
-      .then((res) => {
+      .then(res => {
         for (const autor of res.data.autores) {
           this.autores.push({
             text: `${autor.Nombre} ${autor.Apellidos}`,
-            value: autor._id,
+            value: autor._id
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err);
       });
-  },
-}
+  }
+};
 </script>

@@ -29,37 +29,37 @@
       <h1>Primeros pasos</h1>
       <h2 class="subheading mb-4">¿Por dónde empezar?</h2>
       <v-btn dark color="teal" to="/buscarLibro">
-        <v-icon dark>search</v-icon><pre> </pre>Buscar Libro
+        <v-icon dark>search</v-icon>
+        <pre></pre>Buscar Libro
       </v-btn>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions } from "vuex";
 
 export default {
-  name: 'Home',
+  name: "Home",
   computed: {
-    ...mapGetters(['isLoggedIn']),
+    ...mapGetters(["isLoggedIn"])
   },
   data() {
     return {
       carouselItems: [
-        { src: 'https://jooinn.com/images/book-of-guidance.jpg' },
+        { src: "https://jooinn.com/images/book-of-guidance.jpg" },
         {
           src:
-            'https://torange.biz/photofx/34/10/mirror-macro-blurring-top-bottom-book-old-clipart-34342.jpg',
+            "https://torange.biz/photofx/34/10/mirror-macro-blurring-top-bottom-book-old-clipart-34342.jpg"
         },
-        { src: 'https://torange.biz/photo/34/HD/book-wisdom-34903.jpg' },
-      ],
+        { src: "https://torange.biz/photo/34/HD/book-wisdom-34903.jpg" }
+      ]
     };
   },
-  mounted:function () { 
-    document.getElementById('loader').style='display:none;'
+  mounted: function() {
+    document.getElementById("loader").style = "display:none;";
   }
 };
-
 </script>
 
 <style></style>

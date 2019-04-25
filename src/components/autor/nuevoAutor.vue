@@ -62,7 +62,8 @@
               <v-layout row wrap>
                 <v-flex xs12>
                   <v-btn block dark color="teal" type="submit" form="form1">
-                    <v-icon>backup</v-icon><pre> </pre>Guardar
+                    <v-icon>backup</v-icon>
+                    <pre></pre>Guardar
                   </v-btn>
                 </v-flex>
               </v-layout>
@@ -75,76 +76,77 @@
 </template>
 
 <script>
-import { APIService } from '@/APIService';
-import { mapGetters } from 'vuex';
+import { APIService } from "@/APIService";
+import { mapGetters } from "vuex";
 
 const apiService = new APIService();
 export default {
-  name: 'nuevoAutor',
+  name: "nuevoAutor",
   computed: {
-    ...mapGetters(['isLoggedIn', 'tipoUser']),
+    ...mapGetters(["isLoggedIn", "tipoUser"])
   },
   data: () => ({
     form: {
-      Nombre: '',
-      Apellidos: '',
-      Fecha_nacimiento: '',
+      Nombre: "",
+      Apellidos: "",
+      Fecha_nacimiento: ""
     },
     menu1: false,
     fform: {
       valid: false,
       rules: {
-        nombre: [v => !!v || 'El nombre es necesario'],
-        apellidos: [v => !!v || 'Los apellidos son necesario'],
-      },
-    },
+        nombre: [v => !!v || "El nombre es necesario"],
+        apellidos: [v => !!v || "Los apellidos son necesario"]
+      }
+    }
   }),
   watch: {
     menu1(val) {
-      val && this.$nextTick(() => (this.$refs.picker.activePicker = 'YEAR'));
-    },
+      val && this.$nextTick(() => (this.$refs.picker.activePicker = "YEAR"));
+    }
   },
   methods: {
     subirAutor() {
-      document.getElementById('loader').style='display:absolute;'
+      document.getElementById("loader").style = "display:absolute;";
       apiService
         .postAutor(this.form)
-        .then((res) => {
-          document.getElementById('loader').style='display:none;'
-          let fl = document.getElementById('image').files[0];
+        .then(res => {
+          document.getElementById("loader").style = "display:none;";
+          let fl = document.getElementById("image").files[0];
           if (fl) {
             let dta = new FormData();
-            dta.append('image', fl)
+            dta.append("image", fl);
             apiService
-              .putAutorImagen(res.data.autorsaved._id,dta)
-              .then((res2) => {
-                window.alert('Guardado');
-                this.$router.push('/buscarLibro');    
-              }).catch((err) => {
-                window.alert('Error');
+              .putAutorImagen(res.data.autorsaved._id, dta)
+              .then(res2 => {
+                window.alert("Guardado");
+                this.$router.push("/buscarLibro");
+              })
+              .catch(err => {
+                window.alert("Error");
               });
           }
-          document.getElementById('loader').style='display:none;'
+          document.getElementById("loader").style = "display:none;";
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
     save1() {
       this.$refs.menu1.save(this.form.Fecha_nacimiento);
-    },
-  },
-  created() {
-    if (!this.isLoggedIn || this.tipoUser != 'admin') {
-      this.$router.push('/');
-      return false;
     }
   },
+  created() {
+    if (!this.isLoggedIn || this.tipoUser != "admin") {
+      this.$router.push("/");
+      return false;
+    }
+  }
 };
 </script>
 
 <style>
-#image{
+#image {
   width: 100%;
 }
 </style>

@@ -29,82 +29,84 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import {APIService} from '@/APIService';
+import { mapGetters } from "vuex";
+import { APIService } from "@/APIService";
 
 const apiService = new APIService();
 export default {
-  name: 'verOferta',
+  name: "verOferta",
   computed: {
-    ...mapGetters(['isLoggedIn','myId',]),
+    ...mapGetters(["isLoggedIn", "myId"])
   },
-  props:['ofertaId'],
+  props: ["ofertaId"],
   data: () => ({
-    oferta:{},
-    libro:{},
-    autor:{},
-    user:{},
-    items:[],
+    oferta: {},
+    libro: {},
+    autor: {},
+    user: {},
+    items: []
   }),
-  mounted(){
+  mounted() {
     const items = this.items;
     items.push(
       {
-        icon:'book',
-        title:this.libro.Titulo,
-        sub:'Libro',
-        action:`/verLibro/${this.libro._id}`,
+        icon: "book",
+        title: this.libro.Titulo,
+        sub: "Libro",
+        action: `/verLibro/${this.libro._id}`
       },
       {
-        icon:'face',
-        title:`${this.autor.Nombre} ${this.autor.Apellidos}`,
-        sub:'Autor',
-        action:`/verAutor/${this.autor._id}`,
+        icon: "face",
+        title: `${this.autor.Nombre} ${this.autor.Apellidos}`,
+        sub: "Autor",
+        action: `/verAutor/${this.autor._id}`
       },
       {
-        icon:'account_circle',
-        title:this.user.username,
-        sub:'Usuario',
-      },
-    )
+        icon: "account_circle",
+        title: this.user.username,
+        sub: "Usuario"
+      }
+    );
   },
   created() {
     if (!this.isLoggedIn) {
-      this.$router.push('/');
+      this.$router.push("/");
       return false;
     }
     apiService
       .getUser(this.myId)
-      .then((res) => {
-        this.user=res.data.user
-      }).catch((err) => {
-        
-      });
+      .then(res => {
+        this.user = res.data.user;
+      })
+      .catch(err => {});
     apiService
       .getOferta(this.ofertaId)
-      .then((res1) => {
-        this.oferta=res1.data.oferta;
+      .then(res1 => {
+        this.oferta = res1.data.oferta;
         apiService
           .getLibro(this.oferta.id_libro)
-          .then((res2) => {
-            this.libro=res2.data.libro;
+          .then(res2 => {
+            this.libro = res2.data.libro;
             apiService
               .getAutor(this.libro.autor)
-              .then((res3) => {
-                this.autor=res3.data.autor;
-              }).catch((err3) => {
+              .then(res3 => {
+                this.autor = res3.data.autor;
+              })
+              .catch(err3 => {
                 window.alert(`Error al cargar el libro ${err2}`);
                 this.$router.go(-1);
               });
-          }).catch((err2) => {
+          })
+          .catch(err2 => {
             window.alert(`Error al cargar el libro ${err2}`);
             this.$router.go(-1);
           });
-      }).catch((err1) => {
+      })
+      .catch(err1 => {
         window.alert(`Error al cargar la oferta ${err1}`);
         this.$router.go(-1);
       });
-  },
+  }
 };
 </script>
 

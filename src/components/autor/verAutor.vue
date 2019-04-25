@@ -30,10 +30,14 @@
             :items="librosAutor"
             rows-per-page-items="5"
             class="elevation-1"
-            >
+          >
             <template slot="items" slot-scope="props">
               <td>{{props.item.Titulo}}</td>
-              <td><v-btn flat color="teal" :to="'/verLibro/'+props.item._id" dark><v-icon>remove_red_eye</v-icon></v-btn></td>
+              <td>
+                <v-btn flat color="teal" :to="'/verLibro/'+props.item._id" dark>
+                  <v-icon>remove_red_eye</v-icon>
+                </v-btn>
+              </td>
             </template>
           </v-data-table>
         </v-flex>
@@ -43,58 +47,66 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex';
-import {APIService} from '@/APIService';
-import moment from 'moment';
+import { mapGetters } from "vuex";
+import { APIService } from "@/APIService";
+import moment from "moment";
 const apiService = new APIService();
 export default {
-  name:'VerAutor',
-  props:['autorId'],
-  computed:{
-    ...mapGetters(['isLoggedIn']),
+  name: "VerAutor",
+  props: ["autorId"],
+  computed: {
+    ...mapGetters(["isLoggedIn"])
   },
-  data:()=>{
-    return{
-      autor:[],
-      librosAutor:[],
-      headers:[{text:'Título', value:'Titulo'}, {text:'Ver', value:'_id'}],
+  data: () => {
+    return {
+      autor: [],
+      librosAutor: [],
+      headers: [
+        { text: "Título", value: "Titulo" },
+        { text: "Ver", value: "_id" }
+      ]
+    };
+  },
+  methods: {
+    getAutorProp(nombre) {
+      return this.autor[this.autor.map(e => e.name).indexOf(nombre)].value;
     }
   },
-  methods:{
-    getAutorProp(nombre){
-      return this.autor[this.autor.map((e)=>e.name).indexOf(nombre)].value;
-    },
-  },
-  created:function() {
-    if(!this.isLoggedIn){
-      this.$router.push('/');
+  created: function() {
+    if (!this.isLoggedIn) {
+      this.$router.push("/");
       return false;
     }
-    document.getElementById('loader').style='display:absolute;'
+    document.getElementById("loader").style = "display:absolute;";
     apiService
       .getAutor(this.autorId)
-      .then((res) => {
+      .then(res => {
         for (const i in res.data.autor) {
-          if(i=='__v'||i=='_id')continue;
-          if(i=='Fecha_nacimiento'){
-            this.autor.push({name:'Fecha de nacimiento', value:moment(res.data.autor[i]).format('DD/MM/YYYY')});
+          if (i == "__v" || i == "_id") continue;
+          if (i == "Fecha_nacimiento") {
+            this.autor.push({
+              name: "Fecha de nacimiento",
+              value: moment(res.data.autor[i]).format("DD/MM/YYYY")
+            });
             continue;
           }
-          this.autor.push({name:i, value:res.data.autor[i]});
+          this.autor.push({ name: i, value: res.data.autor[i] });
         }
-        document.getElementById('loader').style='display:none;'
-      }).catch((err) => {
-        document.getElementById('loader').style='display:none;'
-        console.log(err)
+        document.getElementById("loader").style = "display:none;";
+      })
+      .catch(err => {
+        document.getElementById("loader").style = "display:none;";
+        console.log(err);
       });
     apiService
       .getLibrosAutor(this.autorId)
-      .then((res) => {
-        this.librosAutor=res.data.libros;
-      }).catch((err) => {
+      .then(res => {
+        this.librosAutor = res.data.libros;
+      })
+      .catch(err => {
         console.log(err);
-        document.getElementById('loader').style='display:none;'
+        document.getElementById("loader").style = "display:none;";
       });
-  },
-}
+  }
+};
 </script>

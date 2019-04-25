@@ -74,8 +74,8 @@ export default new Router({
       props: true,
     },
     {
-      path:'/verOferta/:ofertaId',
-      component:verOferta,
+      path: '/verOferta/:ofertaId',
+      component: verOferta,
       props: true,
     },
     {
@@ -95,13 +95,13 @@ export default new Router({
       component: verPeticiones,
     },
     {
-      path:'/nuevaDireccion',
-      component:nuevaDireccion
+      path: '/nuevaDireccion',
+      component: nuevaDireccion,
     },
     {
-      path:'/editarDireccion/:ofertaId',
-      props:true,
-      component:editarOferta,
+      path: '/editarDireccion/:ofertaId',
+      props: true,
+      component: editarOferta,
     },
     {
       path: '',

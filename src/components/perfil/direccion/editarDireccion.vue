@@ -11,74 +11,44 @@
           <v-form @submit.prevent="editarDireccion" id="form1" v-model="form.valid">
             <v-layout row wrap>
               <v-flex xs10 sm4>
-                <v-text-field
-                  v-model="form.datos.calle"
-                  label="Calle"
-                >
-                </v-text-field>
+                <v-text-field v-model="form.datos.calle" label="Calle"></v-text-field>
               </v-flex>
               <v-flex xs2 sm2>
-                <v-text-field
-                  type="number"
-                  v-model="form.datos.numero"
-                  label="Número"
-                ></v-text-field>
+                <v-text-field type="number" v-model="form.datos.numero" label="Número"></v-text-field>
               </v-flex>
               <v-flex xs4 sm2>
-                <v-text-field
-                  v-model="form.datos.escalera"
-                  label="Esc."
-                ></v-text-field>
+                <v-text-field v-model="form.datos.escalera" label="Esc."></v-text-field>
               </v-flex>
               <v-flex xs4 sm2>
-                <v-text-field
-                  type="number"
-                  v-model="form.datos.piso"
-                  label="Piso"
-                ></v-text-field>
+                <v-text-field type="number" v-model="form.datos.piso" label="Piso"></v-text-field>
               </v-flex>
               <v-flex xs4 sm2>
-                <v-text-field
-                  type="number"
-                  v-model="form.datos.puerta"
-                  label="Puerta"
-                ></v-text-field>
+                <v-text-field type="number" v-model="form.datos.puerta" label="Puerta"></v-text-field>
               </v-flex>
             </v-layout>
             <v-layout row wrap>
               <v-flex xs8 sm6>
-                <v-text-field
-                  v-model="form.datos.poblacion"
-                  label="Poblacion"
-                ></v-text-field>
+                <v-text-field v-model="form.datos.poblacion" label="Poblacion"></v-text-field>
               </v-flex>
               <v-flex xs4 sm6>
-                <v-text-field
-                  type="number"
-                  v-model="form.datos.CP"
-                  label="Código Postal"
-                ></v-text-field>
+                <v-text-field type="number" v-model="form.datos.CP" label="Código Postal"></v-text-field>
               </v-flex>
             </v-layout>
             <v-layout row wrap>
-              <v-flex xs6 >
-                <v-text-field
-                  v-model="form.datos.provincia"
-                  label="Província"
-                ></v-text-field>
+              <v-flex xs6>
+                <v-text-field v-model="form.datos.provincia" label="Província"></v-text-field>
               </v-flex>
-              <v-flex xs6 >
-                <v-text-field
-                  v-model="form.datos.estado"
-                  label="Estado"
-                ></v-text-field>
+              <v-flex xs6>
+                <v-text-field v-model="form.datos.estado" label="Estado"></v-text-field>
               </v-flex>
-              
             </v-layout>
             <v-layout row wrap>
               <v-flex xs12 sm3></v-flex>
               <v-flex xs12 sm6>
-                <v-btn color="teal" type="submit" dark block><v-icon>backup</v-icon><pre>  </pre>Guardar</v-btn>
+                <v-btn color="teal" type="submit" dark block>
+                  <v-icon>backup</v-icon>
+                  <pre></pre>Guardar
+                </v-btn>
               </v-flex>
               <v-flex xs12 sm3></v-flex>
             </v-layout>
@@ -90,41 +60,41 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex';
-import {APIService} from '@/APIService';
+import { mapGetters } from "vuex";
+import { APIService } from "@/APIService";
 
 const apiService = new APIService();
 export default {
-  name:'editarDireccion',
-  computed:{
-    ...mapGetters(['isLoggedIn'])
+  name: "editarDireccion",
+  computed: {
+    ...mapGetters(["isLoggedIn"])
   },
-  data:()=>{
-    return{
-      form:{
-        valid:false,
-        datos:{
-          calle:'',
-          numero:'',
-          escalera:'',
-          piso:'',
-          puerta:'',
-          poblacion:'',
-          CP:'',
-          provincia:'',
-          estado:'',
-          id:'',
+  data: () => {
+    return {
+      form: {
+        valid: false,
+        datos: {
+          calle: "",
+          numero: "",
+          escalera: "",
+          piso: "",
+          puerta: "",
+          poblacion: "",
+          CP: "",
+          provincia: "",
+          estado: "",
+          id: ""
         },
-        rules:{},
+        rules: {}
       }
-    }
+    };
   },
-  methods:{},
-  created(){
-    if(!this.isLoggedIn){
-      this.$router.push('/');
+  methods: {},
+  created() {
+    if (!this.isLoggedIn) {
+      this.$router.push("/");
       return false;
     }
-  },
-}
+  }
+};
 </script>

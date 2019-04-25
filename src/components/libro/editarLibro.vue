@@ -134,7 +134,8 @@
                 <v-flex></v-flex>
                 <v-flex xs12 sm4>
                   <v-btn block dark color="teal" type="submit" form="form">
-                    <v-icon>backup</v-icon><pre> </pre>Guardar
+                    <v-icon>backup</v-icon>
+                    <pre></pre>Guardar
                   </v-btn>
                 </v-flex>
                 <v-flex></v-flex>
@@ -159,16 +160,16 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import moment from 'moment';
-import { APIService } from '@/APIService';
+import { mapGetters } from "vuex";
+import moment from "moment";
+import { APIService } from "@/APIService";
 
 const apiService = new APIService();
 export default {
-  name: 'editarLibro',
-  props: ['idLibro'],
+  name: "editarLibro",
+  props: ["idLibro"],
   data: () => ({
-    errorText: '',
+    errorText: "",
     dialog: false,
     libro: {},
     autores: [],
@@ -177,33 +178,33 @@ export default {
     form: {
       valid: false,
       datos: {
-        ISBN: '',
-        Titulo: '',
-        Editorial: '',
-        Edicion: '',
-        Autor: '',
+        ISBN: "",
+        Titulo: "",
+        Editorial: "",
+        Edicion: "",
+        Autor: "",
         Fecha_Publicacion: null,
         Fecha_Edicion: null,
-        Genero: '',
-        Tapa: '',
-        Sinopsis: '',
-        Paginas: '',
+        Genero: "",
+        Tapa: "",
+        Sinopsis: "",
+        Paginas: ""
       },
       rules: {
-        Titulo: [v => !!v || 'El titulo es requerido'],
-        Editorial: [v => !!v || 'La editorial es requerida'],
-        Edicion: [v => v > 0 || 'La edicion es requerida'],
-        Paginas: [v => v >= 0 || 'Si no lo sabes, pon 0'],
-      },
-    },
+        Titulo: [v => !!v || "El titulo es requerido"],
+        Editorial: [v => !!v || "La editorial es requerida"],
+        Edicion: [v => v > 0 || "La edicion es requerida"],
+        Paginas: [v => v >= 0 || "Si no lo sabes, pon 0"]
+      }
+    }
   }),
   watch: {
     menu1(val) {
-      val && this.$nextTick(() => (this.$refs.picker.activePicker = 'YEAR'));
+      val && this.$nextTick(() => (this.$refs.picker.activePicker = "YEAR"));
     },
     menu2(val) {
-      val && this.$nextTick(() => (this.$refs.picker.activePicker = 'YEAR'));
-    },
+      val && this.$nextTick(() => (this.$refs.picker.activePicker = "YEAR"));
+    }
   },
   methods: {
     save1() {
@@ -214,76 +215,77 @@ export default {
     },
     editarLibro() {
       if (this.form.valid) {
-        document.getElementById('loader').style='display:absolute;'
+        document.getElementById("loader").style = "display:absolute;";
         this.form.datos.Autor = this.form.datos.Autor.valu;
         apiService
           .putLibro(this.form.datos._id, this.form.datos)
-          .then((res) => {
+          .then(res => {
             if (res.status == 200) {
               this.$router.push(`/verLibro/${this.form.datos._id}`);
-              document.getElementById('loader').style='display:none;'
+              document.getElementById("loader").style = "display:none;";
             }
           })
-          .catch((err) => {
-            document.getElementById('loader').style='display:none;'
-            this.errorText = 'Error al guardar el libro';
+          .catch(err => {
+            document.getElementById("loader").style = "display:none;";
+            this.errorText = "Error al guardar el libro";
             this.dialog = true;
           });
       }
-    },
+    }
   },
   computed: {
-    ...mapGetters(['isLoggedIn', 'tipoUser']),
+    ...mapGetters(["isLoggedIn", "tipoUser"])
   },
   created() {
-    if (!this.isLoggedIn || this.tipoUser != 'admin') {
-      this.$router.push('/');
+    if (!this.isLoggedIn || this.tipoUser != "admin") {
+      this.$router.push("/");
       return false;
     }
-    document.getElementById('loader').style='display:absolute;'
+    document.getElementById("loader").style = "display:absolute;";
     apiService
       .getAutores()
-      .then((res) => {
+      .then(res => {
         for (const autor of res.data.autores) {
           this.autores.push({
             text: `${autor.Nombre} ${autor.Apellidos}`,
-            valu: autor._id,
+            valu: autor._id
           });
         }
       })
-      .catch((err) => {
-        document.getElementById('loader').style='display:none;'
-        window.alert('Ha habido un error');
-        this.$router.push('/');
+      .catch(err => {
+        document.getElementById("loader").style = "display:none;";
+        window.alert("Ha habido un error");
+        this.$router.push("/");
       });
-    document.getElementById('loader').style='display:absolute;'
+    document.getElementById("loader").style = "display:absolute;";
     apiService
       .getLibro(this.idLibro)
-      .then((res) => {
+      .then(res => {
         this.form.datos = res.data.libro;
-        this.form.datos.Fecha_Publicacion = moment(this.form.datos.Fecha_Publicacion).format(
-          'YYYY-MM-DD',
-        );
-        this.form.datos.Fecha_Edicion = moment(this.form.datos.Fecha_Edicion).format('YYYY-MM-DD');
+        this.form.datos.Fecha_Publicacion = moment(
+          this.form.datos.Fecha_Publicacion
+        ).format("YYYY-MM-DD");
+        this.form.datos.Fecha_Edicion = moment(
+          this.form.datos.Fecha_Edicion
+        ).format("YYYY-MM-DD");
         apiService
           .getAutor(this.form.datos.Autor)
-          .then((resp) => {
+          .then(resp => {
             this.form.datos.Autor = {
               text: `${resp.data.autor.Nombre} ${resp.data.autor.Apellidos}`,
-              valu: resp.data.autor._id,
+              valu: resp.data.autor._id
             };
-            document.getElementById('loader').style='display:none;'
+            document.getElementById("loader").style = "display:none;";
           })
-          .catch((err) => {
-            document.getElementById('loader').style='display:none;'
-            this.$router.push('/');
+          .catch(err => {
+            document.getElementById("loader").style = "display:none;";
+            this.$router.push("/");
           });
       })
-      .catch((err) => {
-        document.getElementById('loader').style='display:none;'
-        this.$router.push('/');
+      .catch(err => {
+        document.getElementById("loader").style = "display:none;";
+        this.$router.push("/");
       });
-  },
+  }
 };
-
 </script>

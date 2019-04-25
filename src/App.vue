@@ -18,7 +18,7 @@
           <v-icon>account_circle</v-icon>
           Hola {{ myInfo.username }}
         </v-btn>
-        <v-btn flat v-if="isLoggedIn" @click='logout'>
+        <v-btn flat v-if="isLoggedIn" @click="logout">
           <v-icon>exit_to_app</v-icon>Logout
         </v-btn>
       </v-toolbar-items>
@@ -32,7 +32,7 @@
         <v-btn flat v-if="isLoggedIn" to="/verPerfil">
           <v-icon>account_circle</v-icon>
         </v-btn>
-        <v-btn flat v-if="isLoggedIn" @click='logout'>
+        <v-btn flat v-if="isLoggedIn" @click="logout">
           <v-icon>exit_to_app</v-icon>
         </v-btn>
       </v-toolbar-items>
@@ -105,167 +105,169 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import { APIService } from '@/APIService';
+import { mapGetters } from "vuex";
+import { APIService } from "@/APIService";
 
 const apiService = new APIService();
 export default {
-  name: 'App',
+  name: "App",
   computed: {
-    ...mapGetters(['isLoggedIn', 'myInfo', 'tipoUser']),
+    ...mapGetters(["isLoggedIn", "myInfo", "tipoUser"]),
     menuses() {
       if (this.isLoggedIn) {
-        if (this.tipoUser === 'user') {
+        if (this.tipoUser === "user") {
           return [
-            { title: 'Home', icon: 'dashboard', href: '/' },
+            { title: "Home", icon: "dashboard", href: "/" },
             {
-              title: 'Libros',
-              icon: 'book',
+              title: "Libros",
+              icon: "book",
               submenu: [
                 {
-                  title: 'Buscar libro',
-                  icon: 'search',
-                  href: '/buscarLibro',
+                  title: "Buscar libro",
+                  icon: "search",
+                  href: "/buscarLibro"
                 },
                 {
-                  title: 'Nueva petición',
-                  icon: 'bookmark',
-                  href: '/nuevaPeticionLibro'
-                },
-              ],
+                  title: "Nueva petición",
+                  icon: "bookmark",
+                  href: "/nuevaPeticionLibro"
+                }
+              ]
             },
             {
-              title: 'Autores',
-              icon: 'face',
+              title: "Autores",
+              icon: "face",
               submenu: [
                 {
-                  title: 'Buscar autor',
-                  icon: 'search',
-                  href: '/buscarAutor',
+                  title: "Buscar autor",
+                  icon: "search",
+                  href: "/buscarAutor"
                 },
                 {
-                  title: 'Nueva petición',
-                  icon: 'bookmark',
-                  href: '/nuevaPeticionAutor'
-                },
-              ],
+                  title: "Nueva petición",
+                  icon: "bookmark",
+                  href: "/nuevaPeticionAutor"
+                }
+              ]
             },
             {
-              title: 'Mi rincón',
-              icon: 'account_circle',
+              title: "Mi rincón",
+              icon: "account_circle",
               submenu: [
-                { title: 'Mis ofertas', icon: 'euro_symbol', href: '/oferta' },
-                { title: 'Mis pedidos', icon: 'inbox', href: '/pedido' },
+                { title: "Mis ofertas", icon: "euro_symbol", href: "/oferta" },
+                { title: "Mis pedidos", icon: "inbox", href: "/pedido" },
                 {
-                  title: 'Mis peticiones', icon: 'bookmarks', href: '/peticion',
+                  title: "Mis peticiones",
+                  icon: "bookmarks",
+                  href: "/peticion"
                 },
                 {
-                  title: 'Mi perfil',
-                  icon: 'account_circle',
-                  href: '/verPerfil',
-                },
-              ],
+                  title: "Mi perfil",
+                  icon: "account_circle",
+                  href: "/verPerfil"
+                }
+              ]
             },
 
-            { title: 'About', icon: 'question_answer', href: '/about' },
+            { title: "About", icon: "question_answer", href: "/about" }
           ];
-        } else if (this.tipoUser === 'admin') {
+        } else if (this.tipoUser === "admin") {
           return [
-            { title: 'Home', icon: 'dashboard', href: '/' },
+            { title: "Home", icon: "dashboard", href: "/" },
             {
-              title: 'Libros',
-              icon: 'book',
+              title: "Libros",
+              icon: "book",
               submenu: [
                 {
-                  title: 'Buscar libro',
-                  icon: 'search',
-                  href: '/buscarLibro',
+                  title: "Buscar libro",
+                  icon: "search",
+                  href: "/buscarLibro"
                 },
-                { title: 'Subir libro', icon: 'backup', href: '/nuevolibro' },
-              ],
+                { title: "Subir libro", icon: "backup", href: "/nuevolibro" }
+              ]
             },
             {
-              title: 'Autores',
-              icon: 'face',
+              title: "Autores",
+              icon: "face",
               submenu: [
                 {
-                  title: 'Buscar autor',
-                  icon: 'search',
-                  href: '/buscarAutor',
+                  title: "Buscar autor",
+                  icon: "search",
+                  href: "/buscarAutor"
                 },
-                { title: 'Subir Autor', icon: 'backup', href: '/nuevoAutor' },
-              ],
+                { title: "Subir Autor", icon: "backup", href: "/nuevoAutor" }
+              ]
             },
             {
-              title:'Peticiones',
-              icon:'bookmarks',
-              href:'/verPeticiones',
-            },
+              title: "Peticiones",
+              icon: "bookmarks",
+              href: "/verPeticiones"
+            }
           ];
         }
       }
       return [
-        { title: 'Home', icon: 'dashboard', href: '/' },
-        { title: 'Login', icon: 'account_circle', href: '/login' },
-        { title: 'Admin login', icon: 'vpn_key', href: '/admin' },
-        { title: 'Registro', icon: 'create', href: '/registro' },
+        { title: "Home", icon: "dashboard", href: "/" },
+        { title: "Login", icon: "account_circle", href: "/login" },
+        { title: "Admin login", icon: "vpn_key", href: "/admin" },
+        { title: "Registro", icon: "create", href: "/registro" }
       ];
-    },
+    }
   },
   data: () => ({
     drawer: null,
-    paraActualizar:0,
+    paraActualizar: 0
   }),
   methods: {
     logout() {
       localStorage.clear();
-      this.$router.go({ path: '/'});
-    },
+      this.$router.go({ path: "/" });
+    }
   },
   beforeCreate() {
-    const t = localStorage.getItem('storeToken');
+    const t = localStorage.getItem("storeToken");
     if (t) {
-      const tip = localStorage.getItem('storeTipo');
-      if (tip == 'admin') {
-        console.log('admin');
+      const tip = localStorage.getItem("storeTipo");
+      if (tip == "admin") {
+        console.log("admin");
         apiService
           .verificarAdminLogin({ token: t })
-          .then((result) => {
+          .then(result => {
             this.$store.dispatch({
-              type: 'initin',
+              type: "initin",
               token: result.data.token,
-              idd: localStorage.getItem('storeIdd'),
+              idd: localStorage.getItem("storeIdd"),
               tipo: result.data.tipo,
-              email: localStorage.getItem('storeEmail'),
-              username: localStorage.getItem('storeUsername'),
+              email: localStorage.getItem("storeEmail"),
+              username: localStorage.getItem("storeUsername"),
+              chart: JSON.parse(localStorage.getItem("storeChart"))
             });
           })
-          .catch((err) => {
+          .catch(err => {
             localStorage.clear();
-            this.$router.go({ path: '/', force: true });
+            this.$router.go({ path: "/", force: true });
           });
       } else {
         apiService
           .verificarLogin({ token: t })
-          .then((result) => {
+          .then(result => {
             this.$store.dispatch({
-              type: 'initin',
+              type: "initin",
               token: result.data.token,
-              idd: localStorage.getItem('storeIdd'),
+              idd: localStorage.getItem("storeIdd"),
               tipo: result.data.tipo,
-              email: localStorage.getItem('storeEmail'),
-              username: localStorage.getItem('storeUsername'),
+              email: localStorage.getItem("storeEmail"),
+              username: localStorage.getItem("storeUsername")
             });
           })
-          .catch((err) => {
+          .catch(err => {
             localStorage.clear();
-            this.$router.go({ path: '/', force: true });
+            this.$router.go({ path: "/", force: true });
           });
       }
     }
-  },
+  }
 };
-
 </script>
 <style>
 .application {
@@ -274,14 +276,14 @@ export default {
 #navi {
   position: fixed;
 }
-#loader{
+#loader {
   position: fixed;
   width: 100vw;
   z-index: 3;
   height: 100vh;
-  background-color: #ffffff
+  background-color: #ffffff;
 }
-#loader > div{
+#loader > div {
   position: inherit;
   z-index: inherit;
   left: 55%;
@@ -297,8 +299,12 @@ export default {
 }
 
 @keyframes spin {
-  0%{ transform: rotate(0deg); }
-  100%{ transform: rotate(360deg);}
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>
 

@@ -20,7 +20,18 @@
               required
               @click:append="form.passShow = !form.passShow;"
             ></v-text-field>
-            <v-btn id="submitbtn" class="font-weight-black" type="submit" form="form1" dark block color="teal"><v-icon>vpn_key</v-icon><pre> </pre>Login</v-btn>
+            <v-btn
+              id="submitbtn"
+              class="font-weight-black"
+              type="submit"
+              form="form1"
+              dark
+              block
+              color="teal"
+            >
+              <v-icon>vpn_key</v-icon>
+              <pre></pre>Login
+            </v-btn>
           </v-form>
         </v-flex>
         <v-flex xs-12 sm-3></v-flex>
@@ -30,39 +41,40 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import { APIService } from '../APIService';
+import { mapGetters } from "vuex";
+import { APIService } from "../APIService";
 
 const APiService = new APIService();
 
 export default {
-  name: 'login',
+  name: "login",
   computed: {
-    ...mapGetters(['isLoggedIn', 'myId']),
+    ...mapGetters(["isLoggedIn", "myId"])
   },
   data() {
     return {
       statelogin: false,
       alert: {
         statee: false,
-        message: '',
-        type: 'error',
-        color: 'red',
+        message: "",
+        type: "error",
+        color: "red"
       },
       form: {
         valid: false,
-        email: '',
-        pass: '',
+        email: "",
+        pass: "",
         passShow: false,
         emailRules: [
-          v => !!v || 'Email necesario',
-          v => /^.+@.+\.((\w{3})|(\w{2}))$/.test(v) || 'Introduce un email valido',
+          v => !!v || "Email necesario",
+          v =>
+            /^.+@.+\.((\w{3})|(\w{2}))$/.test(v) || "Introduce un email valido"
         ],
         passRules: [
-          v => !!v || 'Contraseña necesaria',
-          v => v.length >= 6 || '6 caracteres minimo',
-        ],
-      },
+          v => !!v || "Contraseña necesaria",
+          v => v.length >= 6 || "6 caracteres minimo"
+        ]
+      }
     };
   },
   methods: {
@@ -72,58 +84,59 @@ export default {
         if (sbtn === true) {
           return false;
         }
-        document.getElementById('loader').style='display:absolute;'
+        document.getElementById("loader").style = "display:absolute;";
         const datos = {
           email: this.form.email,
-          pass: this.form.pass,
+          pass: this.form.pass
         };
         APiService.signinUser(datos)
-          .then((res) => {
+          .then(res => {
             this.$store.dispatch({
-              type: 'authenticate',
-              token: res.data.token,
+              type: "authenticate",
+              token: res.data.token
             });
             this.$store.dispatch({
-              type: 'authenticate2',
-              idd: res.data.idUser,
+              type: "authenticate2",
+              idd: res.data.idUser
             });
             this.$store.dispatch({
-              type: 'authenticate3',
-              tipo: 'user',
+              type: "authenticate3",
+              tipo: "user"
             });
             this.alert.statee = false;
             APiService.getUser(this.myId)
-              .then((resp) => {
+              .then(resp => {
                 this.$store.dispatch({
-                  type: 'setInfo',
+                  type: "setInfo",
                   email: resp.data.user.email,
-                  username: resp.data.user.username,
+                  username: resp.data.user.username
                 });
-                this.$router.push('/');
-                document.getElementById('loader').style='display:none;'
+                this.$router.push("/");
+                document.getElementById("loader").style = "display:none;";
               })
-              .catch((err) => {
-                document.getElementById('loader').style='display:none;'
+              .catch(err => {
+                document.getElementById("loader").style = "display:none;";
                 this.alert.statee = true;
-                this.alert.type = 'warning';
-                this.alert.color = 'yellow';
+                this.alert.type = "warning";
+                this.alert.color = "yellow";
                 this.alert.message = `Error ${err}`;
                 throw err;
               });
           })
-          .catch((err) => {
-            document.getElementById('loader').style='display:none;'
+          .catch(err => {
+            document.getElementById("loader").style = "display:none;";
             this.alert.statee = true;
-            this.alert.type = 'error';
-            this.alert.color = 'red';
-            this.alert.message = `Error en la autenticacion ${err.response.data.message}`;
+            this.alert.type = "error";
+            this.alert.color = "red";
+            this.alert.message = `Error en la autenticacion ${
+              err.response.data.message
+            }`;
           });
       }
       return false;
-    },
-  },
+    }
+  }
 };
-
 </script>
 
 <style scoped>

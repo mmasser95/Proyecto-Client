@@ -14,9 +14,7 @@
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn flat color="teal" :to="`/verAutor/${props.item._id}`">
-                  <v-icon>
-                    remove_red_eye
-                  </v-icon>
+                  <v-icon>remove_red_eye</v-icon>
                 </v-btn>
               </v-card-actions>
             </v-card>
@@ -28,37 +26,43 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex';
-import {APIService} from '@/APIService';
-import moment from 'moment';
+import { mapGetters } from "vuex";
+import { APIService } from "@/APIService";
+import moment from "moment";
 const apiService = new APIService();
 export default {
-  name:'BuscarAutor',
-  computed:{
-    ...mapGetters(['isLoggedIn', ])
+  name: "BuscarAutor",
+  computed: {
+    ...mapGetters(["isLoggedIn"])
   },
-  data:()=>{
-    return{
-      autores:[]
-    }
+  data: () => {
+    return {
+      autores: []
+    };
   },
-  methods:{},
-  created:function(){
-    if(!this.isLoggedIn){
-      this.$router.push('/');
+  methods: {},
+  created: function() {
+    if (!this.isLoggedIn) {
+      this.$router.push("/");
       return false;
     }
-    document.getElementById('loader').style='display:absolute;'
+    document.getElementById("loader").style = "display:absolute;";
     apiService
       .getAutores()
-      .then((res) => {
-        document.getElementById('loader').style='display:none;'
+      .then(res => {
+        document.getElementById("loader").style = "display:none;";
         this.autores = res.data.autores;
-        this.autores.map(e=>{if (e.Fecha_nacimiento) e.Fecha_nacimiento=moment(e.Fecha_nacimiento).format('DD/MM/YYYY')});
-      }).catch((err) => {
-        document.getElementById('loader').style='display:none;'
+        this.autores.map(e => {
+          if (e.Fecha_nacimiento)
+            e.Fecha_nacimiento = moment(e.Fecha_nacimiento).format(
+              "DD/MM/YYYY"
+            );
+        });
+      })
+      .catch(err => {
+        document.getElementById("loader").style = "display:none;";
         console.log(err);
       });
-  },
-}
+  }
+};
 </script>

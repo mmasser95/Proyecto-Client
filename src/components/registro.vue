@@ -34,7 +34,8 @@
               @click:append="form.passShow = !form.passShow;"
             ></v-text-field>
             <v-btn block dark class="font-weight-black" color="teal" type="submit">
-              <v-icon>create</v-icon><pre> </pre>Registrate
+              <v-icon>create</v-icon>
+              <pre></pre>Registrate
             </v-btn>
           </v-form>
         </v-flex>
@@ -55,36 +56,45 @@
 </template>
 
 <script>
-import { APIService } from '../APIService';
-import { mapGetters } from 'vuex';
+import { APIService } from "../APIService";
+import { mapGetters } from "vuex";
 
 const APiService = new APIService();
 export default {
-  name: 'registro',
+  name: "registro",
   computed: {
-    ...mapGetters(['isLoggedIn']),
+    ...mapGetters(["isLoggedIn"])
   },
   data() {
     return {
       dialog: false,
-      alert: { dis: false, message: '', color: 'red' },
+      alert: { dis: false, message: "", color: "red" },
       form: {
         valid: false,
         passShow: false,
-        nombre: '',
-        email: '',
-        pass: '',
-        repass: '',
+        nombre: "",
+        email: "",
+        pass: "",
+        repass: "",
         rules: {
           nombre: [
-            v => !!v || 'Nombre obligatorio',
-            v => v.length >= 4 || '4 caracteres como mínimo',
-            v => v.length <= 20 || 'El nombre no puede tener más de 20 caracteres',
+            v => !!v || "Nombre obligatorio",
+            v => v.length >= 4 || "4 caracteres como mínimo",
+            v =>
+              v.length <= 20 || "El nombre no puede tener más de 20 caracteres"
           ],
-          email: [v => !!v || 'Email Obligatorio', v => /^.+@.+\.((\w{3})|(\w{2}))$/.test(v) || 'Introduce un email valido',],
-          pass: [v => !!v || 'Contraseña Obligatoria', v => v.length >= 8 || 'Mínimo 8 caracteres'],
-        },
-      },
+          email: [
+            v => !!v || "Email Obligatorio",
+            v =>
+              /^.+@.+\.((\w{3})|(\w{2}))$/.test(v) ||
+              "Introduce un email valido"
+          ],
+          pass: [
+            v => !!v || "Contraseña Obligatoria",
+            v => v.length >= 8 || "Mínimo 8 caracteres"
+          ]
+        }
+      }
     };
   },
   methods: {
@@ -95,31 +105,30 @@ export default {
           username: fr.nombre,
           apellidos: fr.apellidos,
           email: fr.email,
-          pass: fr.pass,
+          pass: fr.pass
         };
-        document.getElementById('loader').style='display:absolute;'
+        document.getElementById("loader").style = "display:absolute;";
         APiService.signUpUser(datos)
-          .then((res) => {
-            document.getElementById('loader').style='display:none;'
+          .then(res => {
+            document.getElementById("loader").style = "display:none;";
             this.dialog = true;
           })
-          .catch((err) => {
-            document.getElementById('loader').style='display:none;'
+          .catch(err => {
+            document.getElementById("loader").style = "display:none;";
             this.alert.dis = true;
             this.alert.message = err.response.message;
-            this.alert.color = 'red';
+            this.alert.color = "red";
           });
       }
-    },
+    }
   },
   created() {
     if (this.isLoggedIn.token) {
-      this.$router.push('/');
+      this.$router.push("/");
     }
-    document.getElementById('loader').style='display:none;'
-  },
+    document.getElementById("loader").style = "display:none;";
+  }
 };
-
 </script>
 
 <style></style>

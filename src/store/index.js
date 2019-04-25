@@ -10,6 +10,7 @@ export const store = new Vuex.Store({
     email: '',
     username: '',
     tipo: '',
+    chart: [],
   },
   getters: {
     tipoUser(state) {
@@ -24,15 +25,18 @@ export const store = new Vuex.Store({
     myInfo(state) {
       return { idd: state.idd, email: state.email, username: state.username };
     },
+    myChart(state) {
+      return state.chart;
+    },
   },
   mutations: {
     initin(state, { params }) {
-      console.log(params);
       state.token = params.token;
       state.tipo = params.tipo;
       state.idd = params.idd;
       state.email = params.email;
-      state.username=params.username;
+      state.username = params.username;
+      state.chart = params.chart;
       localStorage.setItem('storeToken', params.token);
     },
     setTipo(state, { tipo }) {
@@ -53,6 +57,10 @@ export const store = new Vuex.Store({
       localStorage.setItem('storeEmail', email.email);
       localStorage.setItem('storeUsername', email.username);
     },
+    setChart(state, { params }) {
+      state.chart = params.chart;
+      localStorage.setItem('storeChart', JSON.stringify(params.chart));
+    },
   },
   actions: {
     authenticate: ({ commit }, token) => commit('setToken', { token }),
@@ -60,5 +68,6 @@ export const store = new Vuex.Store({
     authenticate3: ({ commit }, tipo) => commit('setTipo', { tipo }),
     setInfo: ({ commit }, email, username) => commit('setInfo', { email }),
     initin: ({ commit }, params) => commit('initin', { params }),
+    setChart: ({ commit }, params) => commit('setChart', { params }),
   },
 });

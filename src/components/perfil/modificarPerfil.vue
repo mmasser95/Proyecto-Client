@@ -1,27 +1,22 @@
 <template>
-  <div class="modificarPerfil">
-    
-  </div>
+  <div class="modificarPerfil"></div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import { APIService } from '@/APIService';
+import { mapGetters } from "vuex";
+import { APIService } from "@/APIService";
 
 export default {
-  name: 'modificarPerfil',
+  name: "modificarPerfil",
   computed: {
-    ...mapGetters(['isLoggedIn', 'tipoUser', 'myId']),
+    ...mapGetters(["isLoggedIn", "tipoUser", "myId"])
   },
   data() {
     return {};
   },
-  created:function () {
-    
-  },
-  methods:{},
+  created: function() {},
+  methods: {}
 };
-
 </script>
 
 <style>
