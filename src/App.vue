@@ -240,7 +240,6 @@ export default {
               tipo: result.data.tipo,
               email: localStorage.getItem("storeEmail"),
               username: localStorage.getItem("storeUsername"),
-              chart: JSON.parse(localStorage.getItem("storeChart"))
             });
           })
           .catch(err => {
@@ -257,7 +256,8 @@ export default {
               idd: localStorage.getItem("storeIdd"),
               tipo: result.data.tipo,
               email: localStorage.getItem("storeEmail"),
-              username: localStorage.getItem("storeUsername")
+              username: localStorage.getItem("storeUsername"),
+              chart: JSON.parse(localStorage.getItem("storeChart")),
             });
           })
           .catch(err => {

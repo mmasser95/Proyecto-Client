@@ -25,7 +25,13 @@
                       {{props.item.userId}}
                     </v-list-tile-sub-title>
                   </v-list-tile-content>
-                  <v-list-tile-action></v-list-tile-action>
+                  <v-list-tile-action>{{props.item.importe}}</v-list-tile-action>
+                  <v-list-tile-action>
+                    <v-btn dark color="red" flat>
+                      <v-icon>delete_forever</v-icon>
+                      <v-icon>indeterminate_check_box</v-icon>
+                    </v-btn>
+                  </v-list-tile-action>
                 </v-list-tile>
               </template>
             </v-data-iterator>
@@ -53,7 +59,8 @@ export default {
   methods: {},
   created() {
     if(!this.isLoggedIn){
-      
+      this.$router.push('/');
+      return false;
     }
   }
 };

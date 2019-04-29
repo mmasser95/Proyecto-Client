@@ -41,6 +41,9 @@
                 <template slot="items" slot-scope="props">
                   <td>{{ props.item.importe.$numberDecimal }}</td>
                   <td>{{ props.item.moneda }}</td>
+                  <td><v-btn dark color="teal" flat @click="addChart(props.item._id)">
+                    <v-icon>shopping_cart</v-icon>
+                  </v-btn></td>
                 </template>
               </v-data-table>
             </v-flex>
@@ -79,7 +82,7 @@ const apiService = new APIService();
 export default {
   name: "verLibro",
   computed: {
-    ...mapGetters(["isLoggedIn", "tipoUser"])
+    ...mapGetters(["isLoggedIn", "tipoUser", "myChart"])
   },
   props: ["libroID"],
   data: () => ({
@@ -88,7 +91,8 @@ export default {
       ofertas: [],
       headers: [
         { text: "Importe", value: "importe" },
-        { text: "Moneda", value: "moneda" }
+        { text: "Moneda", value: "moneda" },
+        {text: "Comprar", value:"_id"}
       ]
     },
     libro: {},
@@ -107,6 +111,22 @@ export default {
         .catch(err => {
           window.alert(`Ha habido un error ${err}`);
         });
+    },
+    addChart(ofertaId){
+      let mycarro=this.myChart;
+      
+      let myOferta=this.tabla.ofertas[this.tabla.ofertas.map((e)=>e._id).indexOf(ofertaId)];
+      let add2chart={
+        oferta:myOferta,
+        libro:this.libro,
+        autor:this.autor,
+      }
+      console.log('mycarro :', mycarro);
+      mycarro.push(add2chart);
+      this.$store.dispatch({
+        type:'setChart',
+        chart:mycarro,
+      });
     }
   },
   created() {

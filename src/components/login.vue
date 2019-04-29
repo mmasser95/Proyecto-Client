@@ -103,6 +103,10 @@ export default {
               type: "authenticate3",
               tipo: "user"
             });
+            this.$store.dispatch({
+              type:'setChart',
+                chart:[]
+            })
             this.alert.statee = false;
             APiService.getUser(this.myId)
               .then(resp => {

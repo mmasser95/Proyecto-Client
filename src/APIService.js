@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { store } from './store/';
 
-const api = 'https://proyecto-final-api.herokuapp.com/api';
-// const api = 'http://walabook.com/api';
+//const api = 'https://proyecto-final-api.herokuapp.com/api';
+const api = 'http://www.walabook.com/api';
 function getHeaders() {
   return {
     headers: { authorization: `Bearer ${store.getters.isLoggedIn}` },
@@ -47,8 +47,10 @@ export class APIService {
     return axios.get(url).then(res => res);
   }
   getOfertasLibro(ids) {
-    const url = `${api}/oferta/libro/${ids}`;
-    return axios.get(url).then(res => res);
+    if (store.getters.isLoggedIn) {
+      const url = `${api}/oferta/libro/${ids}`;
+      return axios.get(url,getHeaders()).then(res => res);
+    }
   }
   getOferta(ids) {
     const url = `${api}/oferta/${ids}`;
