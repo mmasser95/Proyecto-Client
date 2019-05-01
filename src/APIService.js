@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { store } from './store/';
 
-//const api = 'https://proyecto-final-api.herokuapp.com/api';
-const api = 'http://www.walabook.com/api';
+const api = 'https://proyecto-final-api.herokuapp.com/api';
+//const api = 'http://www.walabook.com/api';
 function getHeaders() {
   return {
     headers: { authorization: `Bearer ${store.getters.isLoggedIn}` },
@@ -172,10 +172,22 @@ export class APIService {
       return axios.put({ url, config: getHeaders() }).then(res => res);
     }
   }
+  denegarPeticionAutor(ids) {
+    if (store.getters.isLoggedIn) {
+      const url = `${api}/peticion/autor/d/${ids}`;
+      return axios.put({ url, config: getHeaders() }).then(res => res);
+    }
+  }
   deletePeticionAutor(ids){
     if (store.getters.isLoggedIn) {
       const url = `${api}/peticion/autor/${ids}`;
       return axios.delete({ url, config: getHeaders() }).then(res => res);
+    }
+  }
+  putPeticionAutor(ids, datos){
+    if (store.getters.isLoggedIn) {
+      const url = `${api}/peticion/autor/${ids}`;
+      return axios.post(url, datos, getHeaders()).then(res => res);
     }
   }
   getPeticionesLibro() {
@@ -196,10 +208,22 @@ export class APIService {
       return axios.put({ url, config: getHeaders() }).then(res => res);
     }
   }
+  denegarPeticionLibro(ids){
+    if (store.getters.isLoggedIn) {
+      const url = `${api}/peticion/libro/d/${ids}`;
+      return axios.put({ url, config: getHeaders() }).then(res => res);
+    }
+  }
   deletePeticionLibro(ids){
     if (store.getters.isLoggedIn) {
       const url = `${api}/peticion/libro/${ids}`;
       return axios.delete({ url, config: getHeaders() }).then(res => res);
+    }
+  }
+  putPeticionLibro(ids,datos){
+    if (store.getters.isLoggedIn) {
+      const url = `${api}/peticion/libro/${ids}`;
+      return axios.put( url, datos, getHeaders() ).then(res => res);
     }
   }
 }

@@ -154,6 +154,7 @@ export default {
               title: "Mi rincón",
               icon: "account_circle",
               submenu: [
+                { title: "Ver mi carrito", icon: "shopping_cart", href:'/verChart'},
                 { title: "Mis ofertas", icon: "euro_symbol", href: "/oferta" },
                 { title: "Mis pedidos", icon: "inbox", href: "/pedido" },
                 {

@@ -2,6 +2,7 @@ import adminLogin from '@/components/admin';
 import buscarAutor from '@/components/autor/buscarAutor';
 import nuevoAutor from '@/components/autor/nuevoAutor';
 import verAutor from '@/components/autor/verAutor';
+import verChart from '@/components/chart/verChart';
 import Home from '@/components/Home';
 import buscarLibro from '@/components/libro/buscarLibro';
 import editarLibro from '@/components/libro/editarLibro';
@@ -102,6 +103,10 @@ export default new Router({
       path: '/editarDireccion/:ofertaId',
       props: true,
       component: editarOferta,
+    },
+    {
+      path:'/verChart',
+      component:verChart,
     },
     {
       path: '',

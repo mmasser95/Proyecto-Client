@@ -85,14 +85,7 @@ export default {
           .aceptarPeticionAutor(ids)
           .then(res => {
             window.alert("Guardado");
-            apiService
-              .deletePeticionAutor(ids)
-              .then(res2 => {
-                this.$router.go(-1);
-              })
-              .catch(err => {
-                window.alert("Error al borrar");
-              });
+            this.obtenerPeticiones();
           })
           .catch(err => {
             window.alert(err);
@@ -102,14 +95,7 @@ export default {
           .aceptarPeticionLibro(ids)
           .then(res => {
             window.alert("Guardado");
-            apiService
-              .deletePeticionLibro(ids)
-              .then(res2 => {
-                this.$router.go(-1);
-              })
-              .catch(err => {
-                window.alert("Error al borrar");
-              });
+            this.obtenerPeticiones();
           })
           .catch(err => {
             window.alert(err);
@@ -119,25 +105,69 @@ export default {
     denegarPeticion(ids, tipo) {
       if (tipo == "libro") {
         apiService
-          .deletePeticionLibro(ids)
+          .denegarPeticionLibro(ids)
           .then(res => {
-            window.alert("Borrado");
-            this.$router.go(-1);
+            window.alert("Denegada");
+            this.obtenerPeticiones();
           })
           .catch(err => {
             window.alert("Error");
           });
       } else if (tipo == "autor") {
         apiService
-          .deletePeticionAutor(ids)
+          .denegarPeticionAutor(ids)
           .then(res => {
-            window.alert("Borrado");
-            this.$router.go(-1);
+            window.alert("Denegada");
+            this.obtenerPeticiones();
           })
           .catch(err => {
             window.alert("Error");
           });
       }
+    },
+    obtenerPeticiones() {
+      apiService
+        .getPeticionesAutor()
+        .then(res => {
+          let autores = res.data.peticiones;
+          autores.map(e => {
+            e.Fecha_nacimiento = moment(e.Fecha_nacimiento).format(
+              "DD/MM/YYYY"
+            );
+          });
+          this.peticionesAutor = autores;
+        })
+        .catch(err => {
+          console.log(err);
+        });
+      apiService
+        .getPeticionesLibro()
+        .then(res => {
+          this.peticionesLibro = res.data.peticiones;
+          apiService
+            .getAutores()
+            .then(res => {
+              const libros = this.peticionesLibro;
+              let autores = res.data.autores;
+              for (let libro of libros) {
+                if (libro.Autor) {
+                  const autor = autores.map(e => e._id).indexOf(libro.Autor);
+                  if (autor) {
+                    libro.Autor = `${autores[autor].Nombre} ${
+                      autores[autor].Apellidos
+                    }`;
+                  }
+                }
+              }
+              this.peticionesLibro = libros;
+            })
+            .catch(err => {
+              console.log(err);
+            });
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   },
   created: function() {
@@ -145,46 +175,7 @@ export default {
       this.$router.push("/");
       return false;
     }
-    apiService
-      .getPeticionesAutor()
-      .then(res => {
-        let autores = res.data.peticiones;
-        autores.map(e => {
-          e.Fecha_nacimiento = moment(e.Fecha_nacimiento).format("DD/MM/YYYY");
-        });
-        this.peticionesAutor = autores;
-      })
-      .catch(err => {
-        console.log(err);
-      });
-    apiService
-      .getPeticionesLibro()
-      .then(res => {
-        this.peticionesLibro = res.data.peticiones;
-        apiService
-          .getAutores()
-          .then(res => {
-            const libros = this.peticionesLibro;
-            let autores = res.data.autores;
-            for (let libro of libros) {
-              if (libro.Autor) {
-                const autor = autores.map(e => e._id).indexOf(libro.Autor);
-                if (autor) {
-                  libro.Autor = `${autores[autor].Nombre} ${
-                    autores[autor].Apellidos
-                  }`;
-                }
-              }
-            }
-            this.peticionesLibro = libros;
-          })
-          .catch(err => {
-            console.log(err);
-          });
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    this.obtenerPeticiones();
   }
 };
 </script>
