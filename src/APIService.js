@@ -1,8 +1,9 @@
 import axios from 'axios';
 import { store } from './store/';
 
-const api = 'https://proyecto-final-api.herokuapp.com/api';
+//const api = 'https://proyecto-final-api.herokuapp.com/api';
 //const api = 'http://www.walabook.com/api';
+const api = 'http://localhost:3000/api';
 function getHeaders() {
   return {
     headers: { authorization: `Bearer ${store.getters.isLoggedIn}` },
@@ -49,7 +50,7 @@ export class APIService {
   getOfertasLibro(ids) {
     if (store.getters.isLoggedIn) {
       const url = `${api}/oferta/libro/${ids}`;
-      return axios.get(url,getHeaders()).then(res => res);
+      return axios.get(url, getHeaders()).then(res => res);
     }
   }
   getOferta(ids) {
@@ -81,6 +82,13 @@ export class APIService {
     }
     return false;
   }
+  getMyUser() {
+    if (store.getters.isLoggedIn) {
+      const url = `${api}/my/user`;
+      return axios.get(url, getHeaders()).then(res => res);
+    }
+    return false;
+  }
   getOferta(ids) {
     if (store.getters.isLoggedIn) {
       const url = `${api}/oferta/${ids}`;
@@ -90,39 +98,45 @@ export class APIService {
   }
   getDirecciones() {
     if (store.getters.isLoggedIn) {
-      const url = `${api}/user/${store.getters.myId.idd}/direccion`;
+      const url = `${api}/my/user/direccion`;
       return axios.get(url, getHeaders()).then(res => res);
     }
+    return false;
   }
   postLibro(datos) {
     if (store.getters.isLoggedIn) {
       const url = `${api}/libro`;
       return axios.post(url, datos, getHeaders()).then(res => res);
     }
+    return false;
   }
   postAutor(datos) {
     if (store.getters.isLoggedIn) {
       const url = `${api}/autor`;
       return axios.post(url, datos, getHeaders()).then(res => res);
     }
+    return false;
   }
   postOferta(datos) {
     if (store.getters.isLoggedIn) {
       const url = `${api}/oferta`;
       return axios.post(url, datos, getHeaders()).then(res => res);
     }
+    return false;
   }
   postDireccion(datos) {
     if (store.getters.isLoggedIn) {
       const url = `${api}/user/direccion`;
       return axios.post(url, datos, getHeaders()).then(res => res);
     }
+    return false;
   }
   putLibro(ids, update) {
     if (store.getters.isLoggedIn) {
       const url = `${api}/libro/${ids}`;
       return axios.put(url, update, getHeaders()).then(res => res);
     }
+    return false;
   }
   putOferta(ids, update) {
     if (store.getters.isLoggedIn) {
@@ -160,6 +174,12 @@ export class APIService {
       return axios.get(url, getHeaders()).then(res => res);
     }
   }
+  getMyPeticionesAutor(){
+    if (store.getters.isLoggedIn) {
+      const url = `${api}/my/peticion/autor`;
+      return axios.get(url, getHeaders()).then(res => res);
+    }
+  }
   postPeticionAutor(datos) {
     if (store.getters.isLoggedIn) {
       const url = `${api}/peticion/autor`;
@@ -169,22 +189,22 @@ export class APIService {
   aceptarPeticionAutor(ids) {
     if (store.getters.isLoggedIn) {
       const url = `${api}/peticion/autor/a/${ids}`;
-      return axios.put({ url, config: getHeaders() }).then(res => res);
+      return axios.get(url ,getHeaders() ).then(res => res);
     }
   }
   denegarPeticionAutor(ids) {
     if (store.getters.isLoggedIn) {
       const url = `${api}/peticion/autor/d/${ids}`;
-      return axios.put({ url, config: getHeaders() }).then(res => res);
+      return axios.get(url, getHeaders() ).then(res => res);
     }
   }
-  deletePeticionAutor(ids){
+  deletePeticionAutor(ids) {
     if (store.getters.isLoggedIn) {
       const url = `${api}/peticion/autor/${ids}`;
       return axios.delete({ url, config: getHeaders() }).then(res => res);
     }
   }
-  putPeticionAutor(ids, datos){
+  putPeticionAutor(ids, datos) {
     if (store.getters.isLoggedIn) {
       const url = `${api}/peticion/autor/${ids}`;
       return axios.post(url, datos, getHeaders()).then(res => res);
@@ -193,6 +213,12 @@ export class APIService {
   getPeticionesLibro() {
     if (store.getters.isLoggedIn) {
       const url = `${api}/peticion/libro`;
+      return axios.get(url, getHeaders()).then(res => res);
+    }
+  }
+  getMyPeticionesLibro(){
+    if (store.getters.isLoggedIn) {
+      const url = `${api}/my/peticion/libro`;
       return axios.get(url, getHeaders()).then(res => res);
     }
   }
@@ -205,25 +231,31 @@ export class APIService {
   aceptarPeticionLibro(ids) {
     if (store.getters.isLoggedIn) {
       const url = `${api}/peticion/libro/a/${ids}`;
-      return axios.put({ url, config: getHeaders() }).then(res => res);
+      return axios.get(url, getHeaders()).then(res => res);
     }
   }
-  denegarPeticionLibro(ids){
+  denegarPeticionLibro(ids) {
     if (store.getters.isLoggedIn) {
       const url = `${api}/peticion/libro/d/${ids}`;
-      return axios.put({ url, config: getHeaders() }).then(res => res);
+      return axios.get( url, getHeaders() ).then(res => res);
     }
   }
-  deletePeticionLibro(ids){
+  deletePeticionLibro(ids) {
     if (store.getters.isLoggedIn) {
       const url = `${api}/peticion/libro/${ids}`;
-      return axios.delete({ url, config: getHeaders() }).then(res => res);
+      return axios.delete( url, getHeaders() ).then(res => res);
     }
   }
-  putPeticionLibro(ids,datos){
+  putPeticionLibro(ids, datos) {
     if (store.getters.isLoggedIn) {
       const url = `${api}/peticion/libro/${ids}`;
-      return axios.put( url, datos, getHeaders() ).then(res => res);
+      return axios.put(url, datos, getHeaders()).then(res => res);
+    }
+  }
+  postPedido(datos) {
+    if (store.getters.isLoggedIn) {
+      const url = `${api}/pedido`;
+      return axios.post(url, datos, getHeaders()).then(res => res);
     }
   }
 }

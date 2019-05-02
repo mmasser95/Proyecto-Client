@@ -87,7 +87,7 @@ export default {
         });
     } else {
       apiService
-        .getUser(this.myId)
+        .getMyUser()
         .then(res => {
           document.getElementById("loader").style = "display:none;";
           const usr = res.data.user;

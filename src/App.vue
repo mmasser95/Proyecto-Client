@@ -41,7 +41,7 @@
       <v-img
         id="imagenMenu"
         :aspect-ratio="16 / 9"
-        src="https://cdn.vuetifyjs.com/images/parallax/material.jpg"
+        src="https://lh3.googleusercontent.com/13tPG3fyy6c5i1Ncka8Qi0aGPDOItrhaES0YQSs52-D8bQbiC0nGtZ1ISZYo7Ngg3MiB=w1000-h560"
       >
         <v-layout pa-2 column fill-height class="lightbox white--text">
           <v-spacer></v-spacer>
@@ -160,7 +160,7 @@ export default {
                 {
                   title: "Mis peticiones",
                   icon: "bookmarks",
-                  href: "/peticion"
+                  href: "/misPeticiones"
                 },
                 {
                   title: "Mi perfil",

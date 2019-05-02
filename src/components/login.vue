@@ -108,7 +108,7 @@ export default {
                 chart:[]
             })
             this.alert.statee = false;
-            APiService.getUser(this.myId)
+            APiService.getMyUser()
               .then(resp => {
                 this.$store.dispatch({
                   type: "setInfo",

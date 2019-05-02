@@ -80,7 +80,9 @@ export default {
   },
   methods: {
     aceptarPeticion(ids, tipo) {
+      console.log('ids :', ids);
       if (tipo == "autor") {
+        
         apiService
           .aceptarPeticionAutor(ids)
           .then(res => {

@@ -96,7 +96,8 @@ export default {
         Nombre: "",
         Apellidos: "",
         Fecha_nacimiento: "",
-        User: null
+        Estado:0,
+        User: null,
       }
     };
   },

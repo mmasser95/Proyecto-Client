@@ -227,6 +227,7 @@ export default {
         Tapa: libro.Tapa,
         Sinopsis: libro.Sinopsis,
         Paginas: libro.Paginas,
+        Estado:0,
         User: this.myId
       };
       if (libro.valid) {

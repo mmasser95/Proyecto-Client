@@ -21,6 +21,8 @@ import Registro from '@/components/registro';
 import Vue from 'vue';
 import Router from 'vue-router';
 
+import misPeticiones from '@/components/peticion/misPeticiones';
+
 Vue.use(Router);
 
 export default new Router({
@@ -107,6 +109,10 @@ export default new Router({
     {
       path:'/verChart',
       component:verChart,
+    },
+    {
+      path:'/misPeticiones',
+      component:misPeticiones,
     },
     {
       path: '',
