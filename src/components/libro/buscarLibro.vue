@@ -105,6 +105,9 @@ export default {
       ]
     }
   }),
+  methods:{
+    
+  },
   mounted() {
     if (!this.isLoggedIn) {
       this.$router.push("/");

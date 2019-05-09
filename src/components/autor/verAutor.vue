@@ -42,6 +42,13 @@
           </v-data-table>
         </v-flex>
       </v-layout>
+      <v-layout row wrap v-if="tipoUser == 'admin'">
+        <v-flex xs12>
+              <v-spacer></v-spacer>
+              <v-btn flat color="teal" :to="pagEditar">Editar</v-btn>
+              <v-btn flat color="red" @click="eliminarLibro">Eliminar</v-btn>
+            </v-flex>
+      </v-layout>
     </v-container>
   </div>
 </template>
@@ -55,7 +62,7 @@ export default {
   name: "VerAutor",
   props: ["autorId"],
   computed: {
-    ...mapGetters(["isLoggedIn"])
+    ...mapGetters(["isLoggedIn", 'tipoUser'])
   },
   data: () => {
     return {

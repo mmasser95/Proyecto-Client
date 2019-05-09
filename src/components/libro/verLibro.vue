@@ -47,7 +47,7 @@
                 </template>
               </v-data-table>
             </v-flex>
-            <v-flex xs12>
+            <v-flex xs12 v-if="tipoUser == 'admin'">
               <v-spacer></v-spacer>
               <v-btn flat color="teal" :to="pagEditar">Editar</v-btn>
               <v-btn flat color="red" @click="eliminarLibro">Eliminar</v-btn>
@@ -57,8 +57,6 @@
         <v-flex xs12 sm2></v-flex>
       </v-layout>
     </v-container>
-
-    <div class="w-xs-100" v-if="tipoUser == 'admin'"></div>
 
     <v-dialog v-model="dialog" width="500">
       <v-card class="text-xs-center">

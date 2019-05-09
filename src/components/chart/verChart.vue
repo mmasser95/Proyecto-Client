@@ -44,17 +44,10 @@
         </v-flex>
         <v-flex xs12 sm3></v-flex>
       </v-layout>
-      <v-layout class="my-3">
-        <v-flex xs12 sm3></v-flex>
-        <v-flex xs12 sm6>
-          
-        </v-flex>
-        <v-flex xs12 sm3></v-flex>
-      </v-layout>
       <v-layout row wrap class="my-3">
         <v-flex xs12 sm3></v-flex>
         <v-flex xs12 sm6>
-          <div id="pagar"></div>
+          <PayPal :amount="totaleu" currency="EUR" :client="paypal" env="sandbox"></PayPal>
         </v-flex>
         <v-flex xs12 sm3></v-flex>
       </v-layout>
@@ -64,6 +57,7 @@
 <script>
 import { mapGetters } from "vuex";
 import { APIService } from "@/APIService";
+import PayPal from "vue-paypal-checkout";
 
 const apiService = new APIService();
 export default {
@@ -71,10 +65,20 @@ export default {
   computed: {
     ...mapGetters(["isLoggedIn", "myChart"])
   },
+  components: {
+    PayPal
+  },
   data: () => ({
+    credentials: "",
     totalOf: 0,
-    totaleu: 0,
-    direccion:'',
+    totaleu: "0",
+    direccion: "",
+    paypal: {
+      sandbox:
+        "Afm1dcSiwJjxfO8FupsLEl0l-M7WItd6P726cMXCRFnQE3lyvodK9wybWfkyDcR_IfmDoJb8d-sVenpu",
+      production:
+        "AcbZfUy41KPiHHLk1xDgMjJtwuQLH5KBzVp9vagyYwKqAQ6Er-hvvyPRrob7mM3iqnFxWEiA-YRf_DXS"
+    }
   }),
   methods: {
     borrarItemChart(k) {
@@ -86,18 +90,29 @@ export default {
       });
     },
     comprar() {
-      let items = this.myChart.map(e => ({ofertaId: e.oferta._id, precio: e.oferta.importe.$numberDecimal}));
-      let datos={
+      let items = this.myChart.map(e => ({
+        ofertaId: e.oferta._id,
+        precio: e.oferta.importe.$numberDecimal
+      }));
+      this.totaleu = this.myChart
+        .map(e => {
+          return e.oferta.importe.$numberDecimal;
+        })
+        .reduce((a, b) => {
+          a + b;
+        }, 0);
+      let datos = {
         items,
         direccion,
-        total:this.totaleu,
-      }
+        total: this.totaleu
+      };
       apiService
         .postPedido(datos)
-        .then((res) => {
-          console.log('Compra realizada');
-        }).catch((err) => {
-          console.log('Error en la compra');
+        .then(res => {
+          console.log("Compra realizada");
+        })
+        .catch(err => {
+          console.log("Error en la compra");
         });
     }
   },
@@ -106,7 +121,16 @@ export default {
       this.$router.push("/");
       return false;
     }
-    
+  },
+  mounted() {
+    this.totaleu = this.myChart
+      .map(function(e) {
+        return parseFloat(e.oferta.importe.$numberDecimal);
+      })
+      .reduce(function(a, b) {
+        return a + b;
+      }, 0);
+    this.totaleu=this.totaleu.toString();
   }
 };
 </script>
