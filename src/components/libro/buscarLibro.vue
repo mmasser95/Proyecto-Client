@@ -65,7 +65,7 @@
                   <v-icon>remove_red_eye</v-icon>
                 </v-btn>
                 <v-btn flat color="teal" :to="props.item.Oferta">
-                  <v-icon>shopping_cart</v-icon>
+                  <v-icon>store</v-icon>
                 </v-btn>
               </v-card-actions>
             </v-card>

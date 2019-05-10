@@ -9,7 +9,12 @@
       <v-layout row wrap class="mt-5">
         <v-flex></v-flex>
         <v-flex xs12 sm10>
-          <h2 class="text-xs-center">Mi Perfil</h2>
+          <h2 class="text-xs-center">
+            Mi Perfil
+            <v-btn flat to="/editarPerfil">
+              <v-icon>edit</v-icon>
+            </v-btn>
+          </h2>
           <v-list>
             <v-list-tile v-for="(item,i) in user" :key="i">
               <v-list-tile-action>
@@ -39,6 +44,11 @@
                 <v-list-tile-title>Calle: {{dir.calle}}, {{dir.numero}}</v-list-tile-title>
                 <v-list-tile-sub-title>Direccion {{dir._id}}</v-list-tile-sub-title>
               </v-list-tile-content>
+              <v-list-tile-action>
+                <v-btn flat dark color="teal" :to="`/editarDireccion/${dir._id}`">
+                  <v-icon>edit</v-icon>
+                </v-btn>
+              </v-list-tile-action>
             </v-list-tile>
           </v-list>
         </v-flex>

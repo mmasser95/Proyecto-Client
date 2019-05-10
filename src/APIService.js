@@ -174,6 +174,12 @@ export class APIService {
       return axios.delete(url, getHeaders()).then(res => res);
     }
   }
+  deleteAutor(ids){
+    if (store.getters.isLoggedIn) {
+      const url = `${api}/autor/${ids}`;
+      return axios.delete(url, getHeaders()).then(res => res);
+    }
+  }
   getPeticionesAutor() {
     if (store.getters.isLoggedIn) {
       const url = `${api}/peticion/autor`;

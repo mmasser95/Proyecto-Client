@@ -5,20 +5,35 @@
         <v-flex>
           <v-form @submit.prevent="guardarOferta" ref="formulario" v-model="form.valid">
             <v-layout row wrap>
-              <v-flex xs12 sm8>
+              <v-flex xs12>
                 <v-text-field
                   v-model="form.datos.importe"
                   :rules="form.rules.importe"
                   label="Importe"
                 ></v-text-field>
               </v-flex>
-              <v-flex xs12 sm4>
+              <!--<v-flex xs12 sm4>
                 <v-select :items="form.selct" label="Moneda" v-model="form.datos.moneda"></v-select>
-              </v-flex>
+              </v-flex>-->
             </v-layout>
             <v-layout row wrap>
               <v-flex xs12>
-                <v-btn dark color="teal" type="submit">Publicar Oferta</v-btn>
+                <v-text-field
+                v-model="form.datos.defectos"
+                label="Pequeña descripción del estado del libro"
+              ></v-text-field>
+              </v-flex>
+            </v-layout>
+            <v-layout row wrap>
+              <v-flex xs2></v-flex>
+              <v-flex xs8>
+                <input type="file" name="image" id="image">
+              </v-flex>
+              <v-flex xs2></v-flex>
+            </v-layout>
+            <v-layout row wrap>
+              <v-flex xs12>
+                <v-btn dark color="teal" block class="my-3" type="submit">Publicar Oferta</v-btn>
               </v-flex>
             </v-layout>
           </v-form>
@@ -45,8 +60,9 @@ export default {
       selct: [{ text: "EUR", value: "EUR" }, { text: "USD", value: "USD" }],
       datos: {
         importe: "",
-        moneda: "",
+        moneda: "EUR",
         estado: 1,
+        defectos:'',
         id_libro: "",
         id_user: ""
       },
@@ -66,6 +82,21 @@ export default {
         apiService
           .postOferta(this.form.datos)
           .then(res => {
+            let fl= document.getElementById('image').files[0]
+            if(fl){
+              let dta=FormData();
+              dta.append('image', fl);
+              apiService
+                .putOfertaImagen(res.data.saved._id, fl)
+                .then((res2) => {
+                  console.log(res);
+                  window.alert("Oferta publicada");
+                  this.$router.push("/buscarlibro");
+                }).catch((err) => {
+                  window.alert('Error');
+                  this.$refs.formulario.reset();
+                });
+            }
             console.log(res);
             window.alert("Oferta publicada");
             this.$router.push("/buscarlibro");
