@@ -44,10 +44,10 @@
       </v-layout>
       <v-layout row wrap v-if="tipoUser == 'admin'">
         <v-flex xs12>
-              <v-spacer></v-spacer>
-              <v-btn flat color="teal" :to="`/editarAutor/${autor._id}`">Editar</v-btn>
-              <v-btn flat color="red" @click="eliminarLibro(autor._id)">Eliminar</v-btn>
-            </v-flex>
+          <v-spacer></v-spacer>
+          <v-btn flat color="teal" :to="`/editarAutor/${autor._id}`">Editar</v-btn>
+          <v-btn flat color="red" @click="eliminarLibro(autor._id)">Eliminar</v-btn>
+        </v-flex>
       </v-layout>
     </v-container>
   </div>
@@ -62,7 +62,7 @@ export default {
   name: "VerAutor",
   props: ["autorId"],
   computed: {
-    ...mapGetters(["isLoggedIn", 'tipoUser'])
+    ...mapGetters(["isLoggedIn", "tipoUser"])
   },
   data: () => {
     return {
@@ -78,22 +78,21 @@ export default {
     getAutorProp(nombre) {
       return this.autor[this.autor.map(e => e.name).indexOf(nombre)].value;
     },
-    eliminarAutor(ids){
+    eliminarAutor(ids) {
       apiService
-        .deleteAutor(ids)
-        .then((res) => {
-          librosAutor.map((e)=>{
-            apiService
-              .deleteLibro(e._id)
-              .then((res) => {
-                return true;
-              }).catch((err) => {
-                console.log('err :', err);
-              });
-          });
-          window.alert('Borrado correctamente');
-        }).catch((err) => {
-          console.log('err :', err);
+        .deleteLibroAutor(ids)
+        .then(res => {
+          apiService
+            .deleteAutor(ids)
+            .then(res2 => {
+              window.alert("Borrado correctamente");
+            })
+            .catch(err => {
+              console.log("err :", err);
+            });
+        })
+        .catch(err => {
+          console.log("err :", err);
         });
     }
   },

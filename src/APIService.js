@@ -1,12 +1,12 @@
-import axios from 'axios';
-import { store } from './store/';
+import axios from "axios";
+import { store } from "./store/";
 
 // const api = 'https://proyecto-final-api.herokuapp.com/api';
 // const api = 'http://www.walabook.com/api';
-const api = 'http://localhost:3000/api';
+const api = "http://localhost:3000/api";
 function getHeaders() {
   return {
-    headers: { authorization: `Bearer ${store.getters.isLoggedIn}` },
+    headers: { authorization: `Bearer ${store.getters.isLoggedIn}` }
   };
 }
 export class APIService {
@@ -56,6 +56,12 @@ export class APIService {
   getOferta(ids) {
     const url = `${api}/oferta/${ids}`;
     return axios.get(url).then(res => res);
+  }
+  getMyOfertas(){
+    if (store.getters.isLoggedIn) {
+      const url = `${api}/my/oferta`;
+      return axios.get(url, getHeaders()).then(res => res);
+    }
   }
   getAutor(ids) {
     if (store.getters.isLoggedIn) {
@@ -138,7 +144,7 @@ export class APIService {
     }
     return false;
   }
-  putAutor(ids,update){
+  putAutor(ids, update) {
     if (store.getters.isLoggedIn) {
       const url = `${api}/autor/${ids}`;
       return axios.put(url, update, getHeaders()).then(res => res);
@@ -174,7 +180,13 @@ export class APIService {
       return axios.delete(url, getHeaders()).then(res => res);
     }
   }
-  deleteAutor(ids){
+  deleteLibroAutor(ids) {
+    if (store.getters.isLoggedIn) {
+      const url = `${api}/libro/autor/${ids}`;
+      return axios.delete(url, getHeaders()).then(res => res);
+    }
+  }
+  deleteAutor(ids) {
     if (store.getters.isLoggedIn) {
       const url = `${api}/autor/${ids}`;
       return axios.delete(url, getHeaders()).then(res => res);
@@ -282,13 +294,13 @@ export class APIService {
       return axios.put(url, datos, getHeaders()).then(res => res);
     }
   }
-  putLibroMyBiblioteca(ids){
+  putLibroMyBiblioteca(ids) {
     if (store.getters.isLoggedIn) {
       const url = `${api}/biblioteca/libro/${ids}`;
       return axios.get(url, getHeaders()).then(res => res);
     }
   }
-  deleteLibroMyBiblioteca(ids){
+  deleteLibroMyBiblioteca(ids) {
     if (store.getters.isLoggedIn) {
       const url = `${api}/biblioteca/libro/${ids}`;
       return axios.get(url, getHeaders()).then(res => res);
