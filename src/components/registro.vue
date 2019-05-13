@@ -15,6 +15,7 @@
           <v-form v-model="form.valid" @submit.prevent="doSignUp">
             <v-text-field v-model="form.nombre" label="Nombre" :rules="form.rules.nombre" required></v-text-field>
             <v-text-field v-model="form.email" label="E-mail" :rules="form.rules.email" required></v-text-field>
+            <v-text-field v-model="form.telf" label="Teléfono" :rules="form.rules.telf"></v-text-field>
             <v-text-field
               v-model="form.pass"
               :append-icon="form.passShow ? 'visibility_off' : 'visibility'"
@@ -74,6 +75,7 @@ export default {
         passShow: false,
         nombre: "",
         email: "",
+        telf:'',
         pass: "",
         repass: "",
         rules: {
@@ -92,7 +94,11 @@ export default {
           pass: [
             v => !!v || "Contraseña Obligatoria",
             v => v.length >= 8 || "Mínimo 8 caracteres"
-          ]
+          ],
+          telf:[
+            v=>!!v||'Teléfono obligatorio'
+            v=>/((\+)(\d){2})?(\d){9}/.test(v)||"Introduce un teléfono válido"
+          ],
         }
       }
     };
@@ -105,7 +111,8 @@ export default {
           username: fr.nombre,
           apellidos: fr.apellidos,
           email: fr.email,
-          pass: fr.pass
+          pass: fr.pass,
+          telf: fr.telf
         };
         document.getElementById("loader").style = "display:absolute;";
         APiService.signUpUser(datos)

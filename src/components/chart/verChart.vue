@@ -10,7 +10,7 @@
         <v-flex xs12 sm3></v-flex>
         <v-flex xs12 sm6>
           <v-list two-line>
-            <v-data-iterator :items="myChart">
+            <v-data-iterator :items="myChart" :item-key="i">
               <template v-slot:item="props">
                 <v-list-tile>
                   <v-list-tile-avatar>
@@ -32,7 +32,7 @@
                     class="mx-1"
                   >{{props.item.oferta.importe.$numberDecimal}} {{props.item.oferta.moneda}}</v-list-tile-action>
                   <v-list-tile-action>
-                    <v-btn dark color="red" flat @click="borrarItemChart(props.item)">
+                    <v-btn dark color="red" flat @click="borrarItemChart(i)">
                       <v-icon>delete_forever</v-icon>
                       <v-icon>indeterminate_check_box</v-icon>
                     </v-btn>
@@ -83,7 +83,7 @@ export default {
   methods: {
     borrarItemChart(k) {
       let chart = this.myChart;
-      let d = chart.pop(k);
+      chart[k].remove();
       this.$store.dispatch({
         type: "setChart",
         chart
