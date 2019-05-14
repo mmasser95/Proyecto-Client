@@ -2,6 +2,8 @@ import adminLogin from '@/components/admin';
 import buscarAutor from '@/components/autor/buscarAutor';
 import nuevoAutor from '@/components/autor/nuevoAutor';
 import verAutor from '@/components/autor/verAutor';
+import editarAutor from '@/components/autor/editarAutor';
+//import miBiblioteca from '@/components/biblioteca/miBiblioteca';
 import verChart from '@/components/chart/verChart';
 import Home from '@/components/Home';
 import buscarLibro from '@/components/libro/buscarLibro';
@@ -12,11 +14,16 @@ import Login from '@/components/login';
 import editarOferta from '@/components/oferta/editarOferta';
 import nuevaOferta from '@/components/oferta/nuevaOferta';
 import verOferta from '@/components/oferta/verOferta';
+import misOfertas from '@/components/oferta/misOfertas';
 import nuevaDireccion from '@/components/perfil/direccion/nuevaDireccion';
+import editarDireccion from '@/components/perfil/direccion/editarDireccion';
 import verPerfil from '@/components/perfil/verPerfil';
+import modificarPerfil from '@/components/perfil/modificarPerfil';
+import verPedido from '@/components/pedido/verPedido';
 import nuevaPeticionAutor from '@/components/peticion/nuevaPeticionAutor';
 import nuevaPeticionLibro from '@/components/peticion/nuevaPeticionLibro';
 import verPeticiones from '@/components/peticion/verPeticiones';
+
 import Registro from '@/components/registro';
 import Vue from 'vue';
 import Router from 'vue-router';
@@ -80,6 +87,9 @@ export default new Router({
       path: '/verOferta/:ofertaId',
       component: verOferta,
       props: true,
+    },{
+      path:'/misOfertas',
+      component:misOfertas
     },
     {
       path: '/verPerfil',
@@ -102,18 +112,36 @@ export default new Router({
       component: nuevaDireccion,
     },
     {
-      path: '/editarDireccion/:ofertaId',
+      path:'/editarDireccion/:direccionId',
+      component:editarDireccion,
+      props:true,
+    },
+    {
+      path: '/editarOferta/:ofertaId',
       props: true,
       component: editarOferta,
     },
     {
-      path:'/verChart',
-      component:verChart,
+      path: '/verChart',
+      component: verChart,
     },
     {
-      path:'/misPeticiones',
-      component:misPeticiones,
+      path: '/misPeticiones',
+      component: misPeticiones,
     },
+    {
+      path:'/editarAutor/:autorId',
+      component:editarAutor,
+      props:true,
+    },
+    {
+      path:'/modificarPerfil',
+      component:modificarPerfil
+    },
+    /*{
+      path:'/miBiblioteca',
+      component:miBiblioteca,
+    },*/
     {
       path: '',
       component: Home,

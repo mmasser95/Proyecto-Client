@@ -11,34 +11,22 @@
           <v-form v-model="form.valid" @submit.prevent="modificarPerfil">
             <v-layout row wrap>
               <v-flex xs12>
-                <v-text-field
-                  v-model=""
-                  label=""
-                ></v-text-field>
+                <v-text-field v-model="form.datos.nombre" label="Nombre"></v-text-field>
               </v-flex>
             </v-layout>
             <v-layout row wrap>
               <v-flex xs12>
-                <v-text-field
-                  v-model=""
-                  label=""
-                ></v-text-field>
+                <v-text-field v-model="form.datos.apellidos" label="Apellidos"></v-text-field>
               </v-flex>
             </v-layout>
             <v-layout row wrap>
               <v-flex xs12>
-                <v-text-field
-                  v-model=""
-                  label=""
-                ></v-text-field>
+                <v-text-field v-model="form.datos.telf" label="Teléfono"></v-text-field>
               </v-flex>
             </v-layout>
             <v-layout row wrap>
               <v-flex xs12>
-                <v-text-field
-                  v-model=""
-                  label=""
-                ></v-text-field>
+                <v-text-field v-model="form.datos.fecha_nacimiento" label="Fecha de nacimiento"></v-text-field>
               </v-flex>
             </v-layout>
             <v-layout row wrap>
@@ -59,6 +47,7 @@
 import { mapGetters } from "vuex";
 import { APIService } from "@/APIService";
 
+const apiService = new APIService();
 export default {
   name: "modificarPerfil",
   computed: {
@@ -66,15 +55,44 @@ export default {
   },
   data() {
     return {
-      form:{
-        valid:false
+      form: {
+        valid: false,
+        datos: {
+          telf: "",
+          nombre: "",
+          apellidos: "",
+          fecha_nacimiento: ""
+        }
       }
     };
   },
-  created: function() {},
+  created: function() {
+    if (!this.isLoggedIn) {
+      this.$router.push("/");
+      return false;
+    }
+    this.getMyUser();
+  },
   methods: {
-    modificarPerfil(){
-      
+    getPerfil() {
+      apiService
+        .getMyUser()
+        .then(res => {
+          this.form.datos = res.data.user;
+        })
+        .catch(err => {
+          window.alert(err);
+        });
+    },
+    modificarPerfil() {
+      apiService
+        .putMyUser()
+        .then(res => {
+          this.$router.push("/");
+        })
+        .catch(err => {
+          window.alert(err);
+        });
     }
   }
 };

@@ -15,7 +15,7 @@
               <td></td>
               <td></td>
             </template>
-          </v-data-iterator>
+          </v-data-table>
         </v-flex>
       </v-layout>
       <v-layout row wrap>
@@ -30,34 +30,36 @@
 <script>
 import { mapGetters } from "vuex";
 import { APIService } from "@/APIService";
-const apiService=new APIService();
+const apiService = new APIService();
 export default {
-  name:'verPedido',
-  computed:{
-    ...mapGetters(['isLoggedIn'])
+  name: "verPedido",
+  computed: {
+    ...mapGetters(["isLoggedIn"])
   },
-  props:['pedidoId'],
-  data:()=>{
-    pedido:{},
-    headers:{}
+  props: ["pedidoId"],
+  data() {
+    return {
+      pedido: {}
+    };
   },
-  methods:{
-    getPedido(){
+  methods: {
+    getPedido() {
       apiService
         .getPedido(this.pedidoId)
-        .then((res) => {
-          this.pedido=res.data.pedido;
-        }).catch((err) => {
+        .then(res => {
+          this.pedido = res.data.pedido;
+        })
+        .catch(err => {
           window.alert(err);
         });
     }
   },
-  created(){
-    if(!this.isLoggedIn){
-      this.$router.push('/')
+  created() {
+    if (!this.isLoggedIn) {
+      this.$router.push("/");
       return false;
     }
     this.getPedido();
-  },
-}
+  }
+};
 </script>

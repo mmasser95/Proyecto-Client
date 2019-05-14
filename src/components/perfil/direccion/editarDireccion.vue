@@ -69,6 +69,7 @@ export default {
   computed: {
     ...mapGetters(["isLoggedIn"])
   },
+  props: ["direccionId"],
   data: () => {
     return {
       form: {
@@ -82,19 +83,40 @@ export default {
           poblacion: "",
           CP: "",
           provincia: "",
-          estado: "",
-          id: ""
+          estado: ""
         },
         rules: {}
       }
     };
   },
-  methods: {},
+  methods: {
+    getDireccion() {
+      apiService
+        .getDireccion(this.direccionId)
+        .then(res => {
+          this.form.datos = res.data.direccion;
+        })
+        .catch(err => {
+          window.alert(err);
+        });
+    },
+    editarDireccion() {
+      apiService
+        .modificarUserDireccion(this.direccionId, this.form.datos)
+        .then(res => {
+          window.alert("Guardado");
+        })
+        .catch(err => {
+          window.alert(err);
+        });
+    }
+  },
   created() {
     if (!this.isLoggedIn) {
       this.$router.push("/");
       return false;
     }
+    this.getDireccion();
   }
 };
 </script>

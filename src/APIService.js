@@ -1,12 +1,12 @@
-import axios from "axios";
-import { store } from "./store/";
+import axios from 'axios';
+import { store } from './store/';
 
 // const api = 'https://proyecto-final-api.herokuapp.com/api';
 // const api = 'http://www.walabook.com/api';
-const api = "http://localhost:3000/api";
+const api = 'http://localhost:3000/api';
 function getHeaders() {
   return {
-    headers: { authorization: `Bearer ${store.getters.isLoggedIn}` }
+    headers: { authorization: `Bearer ${store.getters.isLoggedIn}` },
   };
 }
 export class APIService {
@@ -57,7 +57,7 @@ export class APIService {
     const url = `${api}/oferta/${ids}`;
     return axios.get(url).then(res => res);
   }
-  getMyOfertas(){
+  getMyOfertas() {
     if (store.getters.isLoggedIn) {
       const url = `${api}/my/oferta`;
       return axios.get(url, getHeaders()).then(res => res);
@@ -108,6 +108,12 @@ export class APIService {
       return axios.get(url, getHeaders()).then(res => res);
     }
     return false;
+  }
+  getDireccion(ids) {
+    if (store.getters.isLoggedIn) {
+      const url = `${api}/my/user/direccion/${ids}`;
+      return axios.get(url, getHeaders()).then(res => res);
+    }
   }
   postLibro(datos) {
     if (store.getters.isLoggedIn) {
@@ -171,6 +177,12 @@ export class APIService {
   putLibroImagen(ids, update) {
     if (store.getters.isLoggedIn) {
       const url = `${api}/libro/imagen/${ids}`;
+      return axios.put(url, update, getHeaders()).then(res => res);
+    }
+  }
+  modificarUserDireccion(ids, update) {
+    if (store.getters.isLoggedIn) {
+      const url = `${api}/my/user/direccion/${ids}`;
       return axios.put(url, update, getHeaders()).then(res => res);
     }
   }

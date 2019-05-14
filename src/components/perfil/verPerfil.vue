@@ -11,7 +11,7 @@
         <v-flex xs12 sm10>
           <h2 class="text-xs-center">
             Mi Perfil
-            <v-btn flat to="/editarPerfil">
+            <v-btn flat to="/modificarPerfil">
               <v-icon>edit</v-icon>
             </v-btn>
           </h2>

@@ -13,7 +13,7 @@
             }}
           </v-alert>
           <v-form v-model="form.valid" @submit.prevent="doSignUp">
-            <v-text-field v-model="form.nombre" label="Nombre" :rules="form.rules.nombre" required></v-text-field>
+            <v-text-field v-model="form.nombre" label="Username" :rules="form.rules.nombre" required></v-text-field>
             <v-text-field v-model="form.email" label="E-mail" :rules="form.rules.email" required></v-text-field>
             <v-text-field v-model="form.telf" label="Teléfono" :rules="form.rules.telf"></v-text-field>
             <v-text-field
@@ -96,8 +96,8 @@ export default {
             v => v.length >= 8 || "Mínimo 8 caracteres"
           ],
           telf:[
-            v=>!!v||'Teléfono obligatorio'
-            v=>/((\+)(\d){2})?(\d){9}/.test(v)||"Introduce un teléfono válido"
+            v=>!!v||'Teléfono obligatorio',
+            v=>/^((\+)(\d){1,2})?(\d){9}$/.test(v)||"Introduce un teléfono válido"
           ],
         }
       }

@@ -47,7 +47,7 @@
       <v-layout row wrap class="my-3">
         <v-flex xs12 sm3></v-flex>
         <v-flex xs12 sm6>
-          <PayPal :amount="totaleu" currency="EUR" :client="paypal" env="sandbox"></PayPal>
+          <PayPal v-if="myChart" :amount="totaleu" currency="EUR" :client="paypal" env="sandbox"></PayPal>
         </v-flex>
         <v-flex xs12 sm3></v-flex>
       </v-layout>

@@ -41,7 +41,7 @@ export default {
     autor: []
   }),
   methods: {
-    async getMyBiblioteca() {
+    async getMiBiblioteca() {
       let auxbiblio=[];
       apiService
         .getMyBiblioteca()
@@ -55,12 +55,12 @@ export default {
                 .getLibros()
                 .then((res3) => {
                   this.libro=res3.data.libros.map((e)=>{
-                    let autor=this.autor[this.autor.map((f)=>({f._id})).indexOf(e.Autor)];
+                    let autor=this.autor[this.autor.map((f)=>{ return f._id}).indexOf(e.Autor)];
                     e.Autor=`${autor.Nombre} ${autor.Apellidos}`
                     return e;
                   });
                   auxbiblio.map((e)=>{
-                    this.biblioteca.push(this.libro[this.libro.map((f)=>({f._id})).indexOf(e.libroId)])
+                    this.biblioteca.push(this.libro[this.libro.map((f)=>{ return f._id}).indexOf(e.libroId)])
                   })
                 }).catch((err) => {
                   window.alert(err)
@@ -72,11 +72,11 @@ export default {
           window.alert(err)
         });
     },
-    async deleteLibro(ids){
+    deleteLibro(ids){
       apiService
         .deleteLibroMyBiblioteca(ids)
         .then((res) => {
-          this.getMyBiblioteca();
+          this.getMiBiblioteca();
         }).catch((err) => {
           window.alert(err)
         });
@@ -87,7 +87,7 @@ export default {
       this.$router.push("/");
       return false;
     }
-    this.getMyBiblioteca();
+    this.getMiBiblioteca();
   }
 };
 </script>
