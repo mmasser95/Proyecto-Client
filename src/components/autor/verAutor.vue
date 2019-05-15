@@ -45,8 +45,8 @@
       <v-layout row wrap v-if="tipoUser == 'admin'">
         <v-flex xs12>
           <v-spacer></v-spacer>
-          <v-btn flat color="teal" :to="`/editarAutor/${autor._id}`">Editar</v-btn>
-          <v-btn flat color="red" @click="eliminarLibro(autor._id)">Eliminar</v-btn>
+          <v-btn flat color="teal" :to="`/editarAutor/${autorId}`">Editar</v-btn>
+          <v-btn flat color="red" @click="eliminarLibro(autorId)">Eliminar</v-btn>
         </v-flex>
       </v-layout>
     </v-container>
