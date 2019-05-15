@@ -18,8 +18,11 @@
           <v-icon>account_circle</v-icon>
           Hola {{ myInfo.username }}
         </v-btn>
-        <v-btn flat v-if="isLoggedIn" @click="logout">
-          <v-icon>exit_to_app</v-icon>Logout
+        <v-btn flat v-if="isLoggedIn && tipoUser=='user'" to="/verChart">
+          <v-icon>shopping_cart</v-icon>Carrito
+        </v-btn>
+        <v-btn flat v-if="isLoggedIn && tipoUser=='admin'" to="/verPeticiones">
+          <v-icon>bookmarks</v-icon>Peticiones
         </v-btn>
       </v-toolbar-items>
       <v-toolbar-items class="hidden-md-and-up">
@@ -32,8 +35,11 @@
         <v-btn flat v-if="isLoggedIn" to="/verPerfil">
           <v-icon>account_circle</v-icon>
         </v-btn>
-        <v-btn flat v-if="isLoggedIn" @click="logout">
-          <v-icon>exit_to_app</v-icon>
+        <v-btn flat v-if="isLoggedIn && tipoUser=='user'" to="/verChart">
+          <v-icon>shopping_cart</v-icon>
+        </v-btn>
+        <v-btn flat v-if="isLoggedIn && tipoUser=='admin'" to="/verPeticiones">
+          <v-icon>bookmarks</v-icon>
         </v-btn>
       </v-toolbar-items>
     </v-toolbar>
@@ -65,6 +71,14 @@
             </v-list-tile-content>
           </v-list-tile>
           <!-- END Item sin submenu -->
+          <!-- Item con click-->
+          <v-list-tile v-on:click="logout()" v-if="item.click">
+            <v-list-tile-action>
+              <v-icon>{{item.icon}}</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>{{item.title}}</v-list-tile-content>
+          </v-list-tile>
+          <!-- END Item con click-->
           <!-- Item con submenu -->
           <v-list-group :prepend-icon="item.icon" v-if="item.submenu">
             <v-list-tile slot="activator">
@@ -154,7 +168,11 @@ export default {
               title: "Mi rincón",
               icon: "account_circle",
               submenu: [
-                { title: "Ver mi carrito", icon: "shopping_cart", href:'/verChart'},
+                {
+                  title: "Ver mi carrito",
+                  icon: "shopping_cart",
+                  href: "/verChart"
+                },
                 { title: "Mis ofertas", icon: "euro_symbol", href: "/oferta" },
                 { title: "Mis pedidos", icon: "inbox", href: "/pedido" },
                 {
@@ -169,8 +187,8 @@ export default {
                 }
               ]
             },
-
-            { title: "About", icon: "question_answer", href: "/about" }
+            { title: "About", icon: "question_answer", href: "/about" },
+            { title: "Log Out", icon: "exit_to_app", click: "logout()" }
           ];
         } else if (this.tipoUser === "admin") {
           return [
@@ -203,7 +221,8 @@ export default {
               title: "Peticiones",
               icon: "bookmarks",
               href: "/verPeticiones"
-            }
+            },
+            { title: "Log Out", icon: "exit_to_app", click: "logout" }
           ];
         }
       }
@@ -240,7 +259,7 @@ export default {
               idd: localStorage.getItem("storeIdd"),
               tipo: result.data.tipo,
               email: localStorage.getItem("storeEmail"),
-              username: localStorage.getItem("storeUsername"),
+              username: localStorage.getItem("storeUsername")
             });
           })
           .catch(err => {
@@ -258,7 +277,7 @@ export default {
               tipo: result.data.tipo,
               email: localStorage.getItem("storeEmail"),
               username: localStorage.getItem("storeUsername"),
-              chart: JSON.parse(localStorage.getItem("storeChart")),
+              chart: JSON.parse(localStorage.getItem("storeChart"))
             });
           })
           .catch(err => {

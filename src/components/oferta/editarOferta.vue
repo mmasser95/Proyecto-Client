@@ -52,7 +52,8 @@ export default {
           moneda: "",
           estado: "",
           id_libro: "",
-          id_user: ""
+          id_user: "",
+          Imagen:''
         },
         rules: {
           importe: [

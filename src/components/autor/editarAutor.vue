@@ -42,7 +42,7 @@
                   <v-date-picker
                     ref="picker"
                     color="teal"
-                    v-model="form.Fecha_nacimiento"
+                    v-model="form.datos.Fecha_nacimiento"
                     :max="new Date().toISOString().substr(0, 10)"
                     min="1500-01-01"
                     @change="save1"
@@ -50,16 +50,23 @@
                 </v-menu>
               </v-flex>
             </v-layout>
-            <!--<v-layout row wrap>
+            <v-layout row wrap>
               <v-flex xs12>
-                <v-text-field></v-text-field>
+                <v-text-field
+                  v-model="form.datos.Bio"
+                  label="Biografía"
+                ></v-text-field>
               </v-flex>
             </v-layout>
             <v-layout row wrap>
-              <v-flex xs12>
-                <v-text-field></v-text-field>
+              <v-flex xs12 sm3></v-flex>
+              <v-flex xs12 sm6>
+                <v-btn color="teal" dark block>
+                  <v-icon>backup</v-icon><pre> </pre> Guardar
+                </v-btn>
               </v-flex>
-            </v-layout>-->
+              <v-flex xs12 sm3></v-flex>
+            </v-layout>
           </v-form>
         </v-flex>
       </v-layout>
@@ -84,7 +91,9 @@ export default {
       datos: {
         Nombre: "",
         Apellidos: "",
-        Fecha_nacimiento: ""
+        Fecha_nacimiento: "",
+        Bio:'',
+        Imagen:'',
       },
       rules: {}
     }

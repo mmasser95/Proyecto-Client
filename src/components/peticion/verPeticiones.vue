@@ -80,9 +80,8 @@ export default {
   },
   methods: {
     aceptarPeticion(ids, tipo) {
-      console.log('ids :', ids);
+      console.log("ids :", ids);
       if (tipo == "autor") {
-        
         apiService
           .aceptarPeticionAutor(ids)
           .then(res => {
@@ -128,6 +127,8 @@ export default {
       }
     },
     obtenerPeticiones() {
+      this.peticionesAutor = [];
+      this.peticionesLibro = [];
       apiService
         .getPeticionesAutor()
         .then(res => {

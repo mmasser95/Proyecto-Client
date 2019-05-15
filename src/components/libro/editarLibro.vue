@@ -188,7 +188,8 @@ export default {
         Genero: "",
         Tapa: "",
         Sinopsis: "",
-        Paginas: ""
+        Paginas: "",
+        Imagen:''
       },
       rules: {
         Titulo: [v => !!v || "El titulo es requerido"],
