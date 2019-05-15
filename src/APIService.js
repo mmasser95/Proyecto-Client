@@ -306,6 +306,12 @@ export class APIService {
       return axios.put(url, datos, getHeaders()).then(res => res);
     }
   }
+  putMyUser(datos){
+    if (store.getters.isLoggedIn) {
+      const url = `${api}/my/user`;
+      return axios.put(url, datos, getHeaders()).then(res => res);
+    }
+  }
   putLibroMyBiblioteca(ids) {
     if (store.getters.isLoggedIn) {
       const url = `${api}/biblioteca/libro/${ids}`;

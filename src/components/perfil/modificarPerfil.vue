@@ -31,8 +31,8 @@
             </v-layout>
             <v-layout row wrap>
               <v-flex xs12>
-                <v-btn block dark color="teal">
-                  <v-icon></v-icon>
+                <v-btn block dark color="teal" type="submit">
+                  <v-icon>edit</v-icon> Editar
                 </v-btn>
               </v-flex>
             </v-layout>
@@ -71,7 +71,7 @@ export default {
       this.$router.push("/");
       return false;
     }
-    this.getMyUser();
+    this.getPerfil();
   },
   methods: {
     getPerfil() {
@@ -86,9 +86,10 @@ export default {
     },
     modificarPerfil() {
       apiService
-        .putMyUser()
+        .putMyUser(this.form.datos)
         .then(res => {
-          this.$router.push("/");
+          window.alert('Guardado')
+          this.$router.push("/verPerfil");
         })
         .catch(err => {
           window.alert(err);
