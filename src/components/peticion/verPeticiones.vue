@@ -14,10 +14,17 @@
             <template v-slot:item="props">
               <v-flex xs12 sm6 md4 lg3>
                 <v-card>
+                  <v-img
+                    :src="`https://www.walabook.tk/img/${props.item.Imagen}`"
+                    v-if="props.item.Imagen"
+                    :aspect-ratio="3/4"
+                  ></v-img>
                   <v-card-title primary-title>
                     <div>
                       <div class="headline">{{props.item.Titulo}}</div>
-                      <span class="grey--text">{{props.item.Autor}}</span>
+                      <div class="grey--text">{{props.item.Autor}} ({{props.item.Editorial}})</div>
+                      <div class="grey--text">ISBN: {{props.item.ISBN}}</div>
+                      <div class="grey--text">Subido por: {{props.item.User}}</div>
                     </div>
                   </v-card-title>
                   <v-card-text></v-card-text>
@@ -39,10 +46,16 @@
             <template v-slot:item="props">
               <v-flex xs12 sm6 md4 lg3>
                 <v-card>
+                  <v-img
+                    :src="`https://www.walabook.tk/img/${props.item.Imagen}`"
+                    v-if="props.item.Imagen"
+                    aspect-ratio="1.5"
+                  ></v-img>
                   <v-card-title primary-title>
                     <div>
                       <div class="headline">{{props.item.Nombre}} {{props.item.Apellidos}}</div>
-                      <span class="grey--text">{{props.item.Fecha_nacimiento}}</span>
+                      <div class="grey--text">{{props.item.Fecha_nacimiento}}</div>
+                      <div class="grey--text">Subido por: {{props.item.User}}</div>
                     </div>
                   </v-card-title>
                   <v-card-text></v-card-text>
@@ -130,47 +143,60 @@ export default {
       this.peticionesAutor = [];
       this.peticionesLibro = [];
       apiService
-        .getPeticionesAutor()
+        .getUsers()
         .then(res => {
-          let autores = res.data.peticiones;
-          autores.map(e => {
-            e.Fecha_nacimiento = moment(e.Fecha_nacimiento).format(
-              "DD/MM/YYYY"
-            );
-          });
-          this.peticionesAutor = autores;
-        })
-        .catch(err => {
-          console.log(err);
-        });
-      apiService
-        .getPeticionesLibro()
-        .then(res => {
-          this.peticionesLibro = res.data.peticiones;
+          let users = res.data.users;
           apiService
-            .getAutores()
-            .then(res => {
-              const libros = this.peticionesLibro;
-              let autores = res.data.autores;
-              for (let libro of libros) {
-                if (libro.Autor) {
-                  const autor = autores.map(e => e._id).indexOf(libro.Autor);
-                  if (autor) {
-                    libro.Autor = `${autores[autor].Nombre} ${
-                      autores[autor].Apellidos
-                    }`;
-                  }
-                }
-              }
-              this.peticionesLibro = libros;
+            .getPeticionesAutor()
+            .then(res2 => {
+              let autores = res2.data.peticiones;
+              autores.map(e => {
+                let uii = users.map((f)=>{return f._id}).indexOf(e.User);
+                e.Fecha_nacimiento = moment(e.Fecha_nacimiento).format(
+                  "DD/MM/YYYY"
+                );
+                e.User = users[uii].username;
+                return e;
+              });
+              this.peticionesAutor = autores;
+            })
+            .catch(err => {
+              console.log(err);
+            });
+          apiService
+            .getPeticionesLibro()
+            .then(res2 => {
+              this.peticionesLibro = res2.data.peticiones;
+              apiService
+                .getAutores()
+                .then(res3 => {
+                  const libros = this.peticionesLibro;
+                  let autores = res3.data.autores;
+                  this.peticionesLibro = libros.map(e => {
+                    let ai = autores
+                      .map(f => {
+                        return f._id;
+                      })
+                      .indexOf(e.Autor);
+                    let ui = users
+                      .map(g => {
+                        return g._id;
+                      })
+                      .indexOf(e.User);
+                    e.Autor = `${autores[ai].Nombre} ${autores[ai].Apellidos}`;
+                    e.User = users[ui].username;
+                    return e;
+                  });
+                })
+                .catch(err => {
+                  console.log(err);
+                });
             })
             .catch(err => {
               console.log(err);
             });
         })
-        .catch(err => {
-          console.log(err);
-        });
+        .catch(err => {console.log('err :', err);});
     }
   },
   created: function() {
@@ -178,7 +204,9 @@ export default {
       this.$router.push("/");
       return false;
     }
+    document.getElementById("loader").style = "display:absolute;";
     this.obtenerPeticiones();
+    document.getElementById("loader").style = "display:none;";
   }
 };
 </script>

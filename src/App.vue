@@ -173,8 +173,8 @@ export default {
                   icon: "shopping_cart",
                   href: "/verChart"
                 },
-                { title: "Mis ofertas", icon: "euro_symbol", href: "/oferta" },
-                { title: "Mis pedidos", icon: "inbox", href: "/pedido" },
+                { title: "Mis ofertas", icon: "euro_symbol", href: "/misOfertas" },
+                { title: "Mis pedidos", icon: "inbox", href: "/misPedidos" },
                 {
                   title: "Mis peticiones",
                   icon: "bookmarks",

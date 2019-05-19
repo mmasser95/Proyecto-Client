@@ -10,11 +10,11 @@
         <v-flex xs12 sm3></v-flex>
         <v-flex xs12 sm6>
           <v-list two-line>
-            <v-data-iterator :items="myChart" :item-key="i">
+            <v-data-iterator :items="myChart">
               <template v-slot:item="props">
                 <v-list-tile>
                   <v-list-tile-avatar>
-                    <img :src="props.item.oferta.Imagen" :to="`/verOferta/${props.item.ofertaId}`">
+                    <img :src="`https://www.walabook.tk/img/${props.item.oferta.Imagen}`" :to="`/verOferta/${props.item.ofertaId}`">
                   </v-list-tile-avatar>
                   <v-list-tile-content>
                     <v-list-tile-title>
@@ -32,7 +32,7 @@
                     class="mx-1"
                   >{{props.item.oferta.importe.$numberDecimal}} {{props.item.oferta.moneda}}</v-list-tile-action>
                   <v-list-tile-action>
-                    <v-btn dark color="red" flat @click="borrarItemChart(i)">
+                    <v-btn dark color="red" flat @click="borrarItemChart(props.item.oferta._id)">
                       <v-icon>delete_forever</v-icon>
                       <v-icon>indeterminate_check_box</v-icon>
                     </v-btn>
@@ -47,7 +47,14 @@
       <v-layout row wrap class="my-3">
         <v-flex xs12 sm3></v-flex>
         <v-flex xs12 sm6>
-          <PayPal v-if="myChart" :amount="totaleu" currency="EUR" :client="paypal" env="sandbox"></PayPal>
+          <PayPal
+            v-if="myChart"
+            :amount="totaleu"
+            currency="EUR"
+            :button-style="myStyle"
+            :client="paypal"
+            env="sandbox"
+          ></PayPal>
         </v-flex>
         <v-flex xs12 sm3></v-flex>
       </v-layout>
@@ -73,6 +80,12 @@ export default {
     totalOf: 0,
     totaleu: "0",
     direccion: "",
+    myStyle: {
+      label: "checkout",
+      size: "responsive",
+      shape: "pill",
+      color: "gold"
+    },
     paypal: {
       sandbox:
         "Afm1dcSiwJjxfO8FupsLEl0l-M7WItd6P726cMXCRFnQE3lyvodK9wybWfkyDcR_IfmDoJb8d-sVenpu",
@@ -83,7 +96,13 @@ export default {
   methods: {
     borrarItemChart(k) {
       let chart = this.myChart;
-      chart[k].remove();
+      chart.splice(
+        chart
+          .map(e => {
+            return e.oferta._id;
+          })
+          .indexOf(k)
+      );
       this.$store.dispatch({
         type: "setChart",
         chart
@@ -130,7 +149,7 @@ export default {
       .reduce(function(a, b) {
         return a + b;
       }, 0);
-    this.totaleu=this.totaleu.toString();
+    this.totaleu = this.totaleu.toString();
   }
 };
 </script>

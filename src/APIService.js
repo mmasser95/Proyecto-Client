@@ -2,8 +2,8 @@ import axios from 'axios';
 import { store } from './store/';
 
 // const api = 'https://proyecto-final-api.herokuapp.com/api';
-// const api = 'http://www.walabook.com/api';
-const api = 'http://localhost:3000/api';
+ const api = 'https://www.walabook.tk/api';
+// const api = 'http://localhost:3000/api';
 function getHeaders() {
   return {
     headers: { authorization: `Bearer ${store.getters.isLoggedIn}` },
@@ -87,6 +87,13 @@ export class APIService {
       return axios.get(url, getHeaders()).then(res => res);
     }
     return false;
+  }
+  getUsers(){
+      if (store.getters.isLoggedIn) {
+        const url = `${api}/user`;
+        return axios.get(url, getHeaders()).then(res => res);
+      }
+      return false;
   }
   getMyUser() {
     if (store.getters.isLoggedIn) {
@@ -222,6 +229,12 @@ export class APIService {
       return axios.post(url, datos, getHeaders()).then(res => res);
     }
   }
+  putPeticionAutorImagen(ids,datos){
+    if (store.getters.isLoggedIn) {
+      const url = `${api}/peticion/autor/imagen/${ids}`;
+      return axios.put(url, datos, getHeaders()).then(res => res);
+    }
+  }
   aceptarPeticionAutor(ids) {
     if (store.getters.isLoggedIn) {
       const url = `${api}/peticion/autor/a/${ids}`;
@@ -264,6 +277,12 @@ export class APIService {
       return axios.post(url, datos, getHeaders()).then(res => res);
     }
   }
+  putPeticionLibroImagen(ids,datos){
+    if (store.getters.isLoggedIn) {
+      const url = `${api}/peticion/libro/imagen/${ids}`;
+      return axios.put(url, datos, getHeaders()).then(res => res);
+    }
+  }
   aceptarPeticionLibro(ids) {
     if (store.getters.isLoggedIn) {
       const url = `${api}/peticion/libro/a/${ids}`;
@@ -292,6 +311,12 @@ export class APIService {
     if (store.getters.isLoggedIn) {
       const url = `${api}/pedido`;
       return axios.post(url, datos, getHeaders()).then(res => res);
+    }
+  }
+  getMyPedidos(){
+    if (store.getters.isLoggedIn) {
+      const url = `${api}/my/pedido`;
+      return axios.get(url, getHeaders()).then(res => res);
     }
   }
   getMyBiblioteca() {

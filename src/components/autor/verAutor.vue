@@ -3,11 +3,13 @@
     <v-container fluid>
       <v-layout row wrap>
         <v-flex xs12>
-          <h2 class="text-xs-center mb-3">{{getAutorProp('Nombre')}} {{getAutorProp('Apellidos')}}</h2>
+          <h1 class="text-xs-center mb-3">{{getAutorProp('Nombre')}} {{getAutorProp('Apellidos')}}</h1>
         </v-flex>
       </v-layout>
       <v-layout row wrap>
-        <v-flex xs12>
+        <v-flex xs12 sm3></v-flex>
+        <v-flex xs12 sm6>
+          <v-img :src="`https://www.walabook.tk/img/${imagen}`" :aspect-ratio="4/3"></v-img>
           <v-list>
             <v-list-tile v-for="(item,k) in autor" :key="k">
               <v-list-tile-action></v-list-tile-action>
@@ -18,12 +20,18 @@
             </v-list-tile>
           </v-list>
         </v-flex>
+        <v-flex xs12 sm3></v-flex>
       </v-layout>
-      <div class="my-4">
-        <hr>
-      </div>
+      <v-layout>
+        <v-flex xs12 sm3></v-flex>
+        <v-flex xs12 sm6>
+          <hr/>
+        </v-flex>
+        <v-flex xs12 sm3></v-flex>
+      </v-layout>
       <v-layout row wrap v-if="librosAutor.length">
-        <v-flex xs12>
+        <v-flex xs12 sm3></v-flex>
+        <v-flex xs12 sm6>
           <h2 class="text-xs-center mb-3">Libros</h2>
           <v-data-table
             :headers="headers"
@@ -41,13 +49,16 @@
             </template>
           </v-data-table>
         </v-flex>
+        <v-flex xs12 sm3></v-flex>
       </v-layout>
       <v-layout row wrap v-if="tipoUser == 'admin'">
-        <v-flex xs12>
+        <v-flex xs12 sm3></v-flex>
+        <v-flex xs12 sm6>
           <v-spacer></v-spacer>
           <v-btn flat color="teal" :to="`/editarAutor/${autorId}`">Editar</v-btn>
           <v-btn flat color="red" @click="eliminarLibro(autorId)">Eliminar</v-btn>
         </v-flex>
+        <v-flex xs12 sm3></v-flex>
       </v-layout>
     </v-container>
   </div>
@@ -67,6 +78,7 @@ export default {
   data: () => {
     return {
       autor: [],
+      imagen: "",
       librosAutor: [],
       headers: [
         { text: "Título", value: "Titulo" },
@@ -107,6 +119,10 @@ export default {
       .then(res => {
         for (const i in res.data.autor) {
           if (i == "__v" || i == "_id") continue;
+          if (i == "Imagen") {
+            this.imagen = res.data.autor[i];
+            continue;
+          }
           if (i == "Fecha_nacimiento") {
             this.autor.push({
               name: "Fecha de nacimiento",

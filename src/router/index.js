@@ -23,7 +23,7 @@ import verPedido from '@/components/pedido/verPedido';
 import nuevaPeticionAutor from '@/components/peticion/nuevaPeticionAutor';
 import nuevaPeticionLibro from '@/components/peticion/nuevaPeticionLibro';
 import verPeticiones from '@/components/peticion/verPeticiones';
-
+import misPedidos from '@/components/pedido/misPedidos';
 import Registro from '@/components/registro';
 import Vue from 'vue';
 import Router from 'vue-router';
@@ -142,6 +142,10 @@ export default new Router({
       path:'/miBiblioteca',
       component:miBiblioteca,
     },*/
+    {
+      path:'/misPedidos',
+      component:misPedidos
+    },
     {
       path: '',
       component: Home,

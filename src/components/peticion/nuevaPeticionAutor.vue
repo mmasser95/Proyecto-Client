@@ -54,6 +54,11 @@
               </v-layout>
               <v-layout row wrap>
                 <v-flex xs12>
+                  <input type="file" name="image" id="image"/>
+                </v-flex>
+              </v-layout>
+              <v-layout row wrap>
+                <v-flex xs12>
                   <v-btn block dark color="teal" type="submit" form="form1">
                     <v-icon>backup</v-icon>
                     <pre></pre>Guardar
@@ -97,7 +102,7 @@ export default {
         Apellidos: "",
         Fecha_nacimiento: "",
         Estado:0,
-        User: null,
+        User: this.myId,
       }
     };
   },
@@ -106,8 +111,18 @@ export default {
       apiService
         .postPeticionAutor(this.dform)
         .then(res => {
-          window.alert("Guardado");
-          this.$router.push("/");
+          let fl=document.getElementById('image').files[0]
+          let dta = new FormData();
+          dta.append('image',fl);
+          apiService
+            .putPeticionAutorImagen(res.data.saved._id,dta)
+            .then((res1) => {
+              window.alert("Guardado");
+              this.$router.push("/");
+            }).catch((err) => {
+              window.alert('Error')
+            });
+          
         })
         .catch(err => {
           window.alert("Error");

@@ -3,12 +3,19 @@
     <v-container fluid>
       <v-layout row wrap>
         <v-flex xs12>
-          <h2 class="text-xs-center">{{ libro.Titulo }}</h2>
+          <h1 class="text-xs-center">{{ libro.Titulo }}<v-btn flat :to="`/nuevaOferta/${libroID}`"> <v-icon>store</v-icon></v-btn></h1>
         </v-flex>
       </v-layout>
       <v-layout row wrap>
-        <v-flex xs12 sm4></v-flex>
-        <v-flex xs12 sm6>
+        <v-flex xs12 sm2></v-flex>
+        <v-flex xs12 sm8>
+          <v-layout row wrap>
+            <v-flex xs12 sm3></v-flex>
+            <v-flex xs12 sm6>
+              <v-img :aspect-ratio="3/4" max-height="400px" :src="`https://www.walabook.tk/img/${libro.Imagen}`" alt="" srcset=""></v-img>
+            </v-flex>
+            <v-flex xs12 sm3></v-flex>
+          </v-layout>
           <v-list>
             <v-list-tile v-for="(item,i) in items" :key="i">
               <v-list-tile-action>
@@ -36,11 +43,12 @@
           <hr>
           <v-layout row wrap>
             <v-flex v-if="tabla.ofertas.length">
-              <h1 class="text-xs-center my-3">Ofertas</h1>
+              <h2 class="text-xs-center my-3">Ofertas</h2>
               <v-data-table :headers="tabla.headers" :items="tabla.ofertas" class="elevation-1">
                 <template slot="items" slot-scope="props">
                   <td>{{ props.item.importe.$numberDecimal }}</td>
                   <td>{{ props.item.moneda }}</td>
+                  <td><v-btn dark color="teal" flat :to="`/verOferta/${props.item._id}`"><v-icon>remove_red_eye</v-icon></v-btn></td>
                   <td><v-btn dark color="teal" flat @click="addChart(props.item._id)">
                     <v-icon>shopping_cart</v-icon>
                   </v-btn></td>
@@ -90,7 +98,8 @@ export default {
       headers: [
         { text: "Importe", value: "importe" },
         { text: "Moneda", value: "moneda" },
-        {text: "Comprar", value:"_id"}
+        {text:'Ver Oferta', value:'_id'},
+        {text: "Añadir al carrito", value:"_id"}
       ]
     },
     libro: {},

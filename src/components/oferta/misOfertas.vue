@@ -12,8 +12,11 @@
             <template v-slot:items="props">
               <td>{{props.item.titulo}}</td>
               <td>{{props.item.editorial}}</td>
-              <td>{{props.item.importe}}</td>
+              <td>{{props.item.importe.$numberDecimal}}</td>
               <td>{{props.item.estado}}</td>
+              <td><v-btn flat color="teal" :to="`/verOferta/${props.item._id}`">
+                <v-icon>exit_to_app</v-icon>
+              </v-btn></td>
             </template>
           </v-data-table>
         </v-flex>
@@ -37,7 +40,7 @@ export default {
   },
   data: () => ({
     ofertas: [],
-    headers: [{ text: "", value: "" }],
+    headers: [],
     libros: []
   }),
   methods: {
@@ -53,6 +56,8 @@ export default {
               .indexOf(e.id_libro);
             e.titulo = this.libros[l].Titulo;
             e.editorial = this.libros[l].Editorial;
+            if(e.estado==1)e.estado='En oferta';
+            if(e.estado==0)e.estado='Pedido';
             return e;
           });
         })

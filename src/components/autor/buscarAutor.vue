@@ -5,6 +5,7 @@
         <template v-slot:item="props">
           <v-flex xs12 sm6 md4 lg3>
             <v-card>
+              <v-img :src="`https://www.walabook.tk/img/${props.item.Imagen}`" v-if="props.item.Imagen" :aspect-ratio="4/3"></v-img>
               <v-card-title primary-title>
                 <div>
                   <div class="headline">{{props.item.Nombre}} {{props.item.Apellidos}}</div>

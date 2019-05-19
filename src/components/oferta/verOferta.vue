@@ -7,10 +7,14 @@
         </v-flex>
       </v-layout>
       <v-layout>
-        <v-flex xs12>
+        <v-flex xs12 sm3></v-flex>
+        <v-flex xs12 sm6>
+          <v-img :src="`https://www.walabook.tk/img/${oferta.Imagen}`" :aspect-ratio="4/3"></v-img>
           <v-list>
             <v-list-tile v-for="(item, i) in items" :key="i">
-              <v-list-tile-action>{{item.icon}}</v-list-tile-action>
+              <v-list-tile-action>
+                <v-icon>{{item.icon}}</v-icon>
+              </v-list-tile-action>
               <v-list-tile-content>
                 <v-list-tile-title>{{item.title}}</v-list-tile-title>
                 <v-list-tile-sub-title>{{item.sub}}</v-list-tile-sub-title>
@@ -23,6 +27,7 @@
             </v-list-tile>
           </v-list>
         </v-flex>
+        <v-flex xs12 sm3></v-flex>
       </v-layout>
     </v-container>
   </div>
@@ -46,35 +51,14 @@ export default {
     user: {},
     items: []
   }),
-  mounted() {
-    const items = this.items;
-    items.push(
-      {
-        icon: "book",
-        title: this.libro.Titulo,
-        sub: "Libro",
-        action: `/verLibro/${this.libro._id}`
-      },
-      {
-        icon: "face",
-        title: `${this.autor.Nombre} ${this.autor.Apellidos}`,
-        sub: "Autor",
-        action: `/verAutor/${this.autor._id}`
-      },
-      {
-        icon: "account_circle",
-        title: this.user.username,
-        sub: "Usuario"
-      }
-    );
-  },
+  mounted() {},
   created() {
     if (!this.isLoggedIn) {
       this.$router.push("/");
       return false;
     }
     apiService
-      .getUser(this.myId)
+      .getMyUser()
       .then(res => {
         this.user = res.data.user;
       })
@@ -88,9 +72,37 @@ export default {
           .then(res2 => {
             this.libro = res2.data.libro;
             apiService
-              .getAutor(this.libro.autor)
+              .getAutor(this.libro.Autor)
               .then(res3 => {
                 this.autor = res3.data.autor;
+                const items = this.items;
+                items.push(
+                  {
+                    icon: "book",
+                    title: this.libro.Titulo,
+                    sub: "Libro",
+                    action: `/verLibro/${this.libro._id}`
+                  },
+                  {
+                    icon: "face",
+                    title: `${this.autor.Nombre} ${this.autor.Apellidos}`,
+                    sub: "Autor",
+                    action: `/verAutor/${this.autor._id}`
+                  },
+                  {
+                    icon: "account_circle",
+                    title: this.user.username,
+                    sub: "Usuario"
+                  },{
+                    icon:'edit',
+                    title:this.oferta.defectos,
+                    sub:'Defectos'
+                  },{
+                    icon:'shopping_cart',
+                    title:this.oferta.importe.$numberDecimal+" €",
+                    sub:'Importe'
+                  }
+                );
               })
               .catch(err3 => {
                 window.alert(`Error al cargar el libro ${err2}`);

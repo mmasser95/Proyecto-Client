@@ -84,10 +84,13 @@ export default {
           .then(res => {
             let fl= document.getElementById('image').files[0]
             if(fl){
-              let dta=FormData();
+              let dta= new FormData();
               dta.append('image', fl);
+              for (const i of dta.entries()) {
+                console.log('i :', i);
+              }
               apiService
-                .putOfertaImagen(res.data.saved._id, fl)
+                .putOfertaImagen(res.data.saved._id, dta)
                 .then((res2) => {
                   console.log(res);
                   window.alert("Oferta publicada");
@@ -96,10 +99,12 @@ export default {
                   window.alert('Error');
                   this.$refs.formulario.reset();
                 });
+            }else{
+              console.log(res);
+              window.alert("Oferta publicada");
+              this.$router.push("/buscarlibro");
             }
-            console.log(res);
-            window.alert("Oferta publicada");
-            this.$router.push("/buscarlibro");
+            
           })
           .catch(err => {
             console.log(err);

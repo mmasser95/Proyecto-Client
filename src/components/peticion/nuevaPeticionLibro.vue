@@ -145,6 +145,9 @@
                 </v-flex>
               </v-layout>
               <v-layout row wrap>
+                <v-flex xs12><input type="file" name="image" id="image"></v-flex>
+              </v-layout>
+              <v-layout row wrap>
                 <v-flex></v-flex>
                 <v-flex xs12 sm4>
                   <v-btn block dark color="teal" type="submit" form="form">
@@ -234,14 +237,19 @@ export default {
         apiService
           .postPeticionLibro(datos)
           .then(res => {
-            if (res.status === 200) {
-              // TODO Mejorar aviso
-              window.alert("Guardado");
-              this.$router.push("/");
-            }
+            let fl=document.getElementById('image').files[0]
+            let dta= new FormData();
+            dta.append('image', fl);
+            apiService
+              .putPeticionLibroImagen(res.data.saved._id, dta)
+              .then((res2) => {
+                window.alert('Guardado')
+              }).catch((err) => {
+                window.alert('Error')
+              });
           })
           .catch(err => {
-            console.log(err);
+            window.alert('Error');
           });
       }
     },

@@ -98,7 +98,7 @@ export default {
           });
         })
         .catch(err => {
-          window.alert("Error" + err);
+          console.log("Error" + err);
         });
     },
     async getPeticionesAutor() {
@@ -114,7 +114,7 @@ export default {
           });
         })
         .catch(err => {
-          window.alert("Error " + err);
+          console.log("Error " + err);
         });
     }
   },
